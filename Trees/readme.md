@@ -311,7 +311,6 @@ class Solution {
 8. [Merge Two Binary Trees](https://leetcode.com/problems/merge-two-binary-trees)
 9. [Binary Tree Tilt](https://leetcode.com/problems/binary-tree-tilt)
 
-
 ### Binary Search Tree (BST)
 Use the property of BST judiciously (the left subtree will always contain nodes with value less than root's value and 
 right subtree will contain nodes with value greater than root's value)
@@ -323,22 +322,22 @@ right subtree will contain nodes with value greater than root's value)
 6. [Range Sum of BST](https://leetcode.com/problems/range-sum-of-bst/)
 7. [Trim a Binary Search Tree](https://leetcode.com/problems/trim-a-binary-search-tree)
 8. [Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst)
-9. All Elements in Two Binary Search Trees
+9. [All Elements in Two Binary Search Trees](https://leetcode.com/problems/all-elements-in-two-binary-search-trees)
 
 ### Path problems
 You are given root, you have to perform operations on a path, (path is root to leaf). 
 Think upon the type of traversal you will apply when going from root to leaf.
-1. Binary Tree Paths
-2. Path Sum
-3. Path Sum II
-4. Sum root to leaf numbers
-5. Binary Tree Maximum Path Sum
-6. Path Sum III
-7. Pseudo-Palindromic Paths in a Binary Tree
+1. [Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/description/)
+2. [Path Sum](https://leetcode.com/problems/path-sum/description/)
+3. [Path Sum II](https://leetcode.com/problems/path-sum-ii/description/)
+4. [Sum root to leaf numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+5. [Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/description/)
+6. [Path Sum III](https://leetcode.com/problems/path-sum-iii/description/)
+7. [Pseudo-Palindromic Paths in a Binary Tree](https://leetcode.com/problems/pseudo-palindromic-paths-in-a-binary-tree/description/)
 
 ### Validate trees
-1. Validate Binary Tree Nodes
-2. Validate Binary Search Tree
+1. [Validate Binary Tree Nodes](https://leetcode.com/problems/validate-binary-tree-nodes/)
+2. [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
 
 ### Lowest Common Ancestor(LCA) problems
 1. [Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree)

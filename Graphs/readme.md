@@ -1,3 +1,27 @@
+# Table of contents
+
+- [Introduction](#introduction)
+  - [Types of Graph](#types-of-graph)
+  - [Graphs Representation](#graphs-representation)
+    - [Adjacency Matrix](#adjacency-matrix)
+    - [Adjacency List](#adjacency-list)
+  - [Graph Search or Traversals Techniques](#graph-search-or-traversals-techniques)
+    - [Depth-First Search(DFS)](#depth-first-searchdfs)
+    - [Breadth First Search(BFS)](#breadth-first-searchbfs)
+- [Patterns](#patterns)
+  - [DFS](#dfs)
+  - [BFS](#bfs)
+  - [Graph Coloring/Bipartition Problems](#graph-coloringbipartition-problems)
+  - [Single/Multi-source Shortest Path (Dijkstra's/Bellman Ford/Floyd-WarShall Algorithm)](#singlemulti-source-shortest-path-dijkstrasbellman-fordfloyd-warshall-algorithm)
+    - [Dijkstra's Algorithm](#dijkstras-algorithm)
+    - [Bellman Ford](#bellman-ford)
+    - [Floyd Warshall](#floyd-warshall)
+  - [Union-Find Problems](#union-find-problems)
+  - [Topological Sort Problems](#topological-sort-problems)
+  - [Connected components problems(Tarjan's Algorithm)](#connected-components-problemstarjans-algorithm)
+  - [Minimum Spanning Tree problems(Prim's and Kruskal's algorithm)](#minimum-spanning-tree-problemsprims-and-kruskals-algorithm)
+- [Problems](#problems)
+- [References](#references)
 
 # Introduction
 A graph is a data structure that consists of the following two components: 
