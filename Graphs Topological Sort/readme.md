@@ -1,3 +1,12 @@
+# Table of contents
+
+- [Introduction](#introduction)
+  - [Implementations](#implementations)
+    - [Using Kahn's BFS Based Algorithm](#using-kahns-bfs-based-algorithm)
+    - [Using DFS Based Algorithm](#using-dfs-based-algorithm)
+- [Problems](#problems)
+- [References](#references)
+
 # Introduction
 * Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge u v, vertex u comes before v in the ordering.
 * So, To find the Topological sorting for a graph, we just have to find in-degrees of each vertex and order the nodes from **least in-degree to the highest.**
@@ -6,20 +15,6 @@
 ![](https://assets.leetcode.com/users/images/63bd7ad6-403c-42f1-b8bb-2ea41e42af9a_1613794080.8115625.png)
 
 ## Implementations
-### Using DFS Based Algorithm
-
-#### Algorithm
-1. We can modify DFS to find Topological Sorting of a graph. In DFS, we start from a vertex, we first print it and then recursively call DFS for its adjacent vertices.
-1. In topological sorting, we use a temporary stack. We don’t print the vertex immediately, we first recursively call topological sorting for all its adjacent vertices, then push it to a stack.
-1. Finally, print contents of the stack.
-1. **Note** that a vertex is pushed to stack only when all of its adjacent vertices (and their adjacent vertices and so on) are already in the stack.
-![](https://media.geeksforgeeks.org/wp-content/uploads/20200818211917/Topological-Sorting-1.png)
-
-#### Time Complexity
-O(V+E). The above algorithm is simply DFS with an extra stack. So time complexity is the same as DFS which is.
-#### Space Complexity
-O(V). The extra space is needed for the stack.
-
 ### Using Kahn's BFS Based Algorithm
 The approach is based on the below fact that, A DAG G has at least one vertex with in-degree 0 and one vertex with out-degree 0.
 #### Algorithm
@@ -57,10 +52,44 @@ O(V+E). The outer for loop will be executed V number of times and the inner for 
 #### Space Complexity
 O(V). The queue needs to store all the vertices of the graph
 
+### Using DFS Based Algorithm
+The key observation is that, leaf nodes should always come after their parents and ancestors. Following this intuition we can apply DFS and output nodes from leaves to the root.
+
+#### Algorithm
+1. We can modify DFS to find Topological Sorting of a graph. In DFS, we start from a vertex, we first print it and then recursively call DFS for its adjacent vertices.
+1. In topological sorting, we use a temporary stack. We don’t print the vertex immediately, we first recursively call topological sorting for all its adjacent vertices, then push it to a stack.
+1. Finally, print contents of the stack.
+1. **Note** that a vertex is pushed to stack only when all of its adjacent vertices (and their adjacent vertices and so on) are already in the stack.
+![](https://media.geeksforgeeks.org/wp-content/uploads/20200818211917/Topological-Sorting-1.png)
+![](https://assets.leetcode.com/users/images/e482f21d-a612-4333-ac80-807eb90c1495_1613794550.934654.png)
+
+```
+def topological_sort():
+    for each node:
+        if visited[node] is False:
+            dfs(node)
+
+def dfs(node):
+    visited[node] = True
+    for nei in neighbours[node]:
+        dfs(node)
+	if visited(node) = false:
+		ret.insert_at_the _front(node)
+```
+
+#### Time Complexity
+O(V+E). The above algorithm is simply DFS with an extra stack. So time complexity is the same as DFS which is.
+#### Space Complexity
+O(V). The extra space is needed for the stack.
 
 
 # Problems
-
+1. [Course Schedule](https://leetcode.com/problems/course-schedule/)
+1. [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
+1. [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/)
+1. [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/solution/)
+1. [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/)
+1. [Sort Items by Groups Respecting Dependencies](https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies/)
 
 # References
 * https://leetcode.com/discuss/interview-question/1409160/7.-Topological-Sorting
