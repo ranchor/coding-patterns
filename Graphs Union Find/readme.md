@@ -46,6 +46,43 @@ For example, in Figure 5, the root node of vertices 3 and 2 is 0. As for 0, it i
 
 ## Implementation with Quick Find
 
+```java
+// UnionFind.class
+class UnionFind {
+    private int[] root;
+
+    public UnionFind(int size) {
+        root = new int[size];
+        // Initially, all elements are in their own set.
+        for (int i = 0; i < size; i++) {
+            root[i] = i;
+        }
+    }
+
+    // find - O(1)
+    public int find(int x) {
+        return root[x];
+    }
+		
+    // union - O(n)    
+    public void union(int x, int y) {
+        int rootOfX = find(x);
+        int rootOfY = find(y);
+        if (rootOfX != rootOfY) {
+            for (int i = 0; i < root.length; i++) {
+                if (root[i] == rootOfY) {
+                    root[i] = rootOfX;
+                }
+            }
+        }
+    }
+
+    public boolean connected(int x, int y) {
+        return find(x) == find(y);
+    }
+}
+```
+
 ### Time Complexity
 |  | Union-find Constructor | Find |  Union | Connected |
 |---|---|---|---|---|
@@ -53,7 +90,41 @@ For example, in Figure 5, the root node of vertices 3 and 2 is 0. As for 0, it i
 ### Space Complexity
 We need ``O(N)`` space to store the array of size ``N.``
 
+
 ## Implementation with Quick Union
+```java
+class UnionFind {
+    private int[] parents;
+
+    public UnionFind(int size) {
+        parents = new int[size];
+        for (int i = 0; i < size; i++) {
+             // Initially, all elements are in their own set
+            parents[i] = i;
+        }
+    }
+
+    public int find(int x) {
+        while (x != parents[x]) {
+            x = parents[x];
+        }
+        return x;
+    }
+
+    public void union(int x, int y) {
+        int rootOfX = find(x);
+        int rootOfY = find(y);
+        if (rootOfX != rootOfY) {
+            parents[rootOfY] = rootOfX;
+        }
+    }
+
+    public boolean connected(int x, int y) {
+        return find(x) == find(y);
+    }
+}
+```
+Quick Union is more efficient than Quick Find. 
 
 ### Time Complexity
 |  | Union-find Constructor | Find |  Union | Connected |
@@ -172,4 +243,6 @@ Do Union(2, 3)
 
 # References
 * https://leetcode.com/explore/learn/card/graph/618/disjoint-set/3881/
+* https://jojozhuang.github.io/algorithm/algorithm-union-find/
 * https://leetcode.com/discuss/general-discussion/1072418/Disjoint-Set-Union-(DSU)Union-Find-A-Complete-Guide
+

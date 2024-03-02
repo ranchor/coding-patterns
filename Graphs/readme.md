@@ -29,6 +29,7 @@ A graph is a data structure that consists of the following two components:
 1. A finite set of ordered pair of the form (u, v) called as edge. The pair is ordered because (u, v) is not the same 
 as (v, u) in case of a directed graph(di-graph). The pair of the form (u, v) indicates that there is an edge from vertex u to vertex v. 
 The edges may contain weight/value/cost.
+
 ## Types of Graph
 #### Undirected graph
 An undirected graph (graph) is a graph in which edges have no orientation. The edge (x, y) is identical to edge (y, x), 
@@ -49,6 +50,7 @@ A Connected graph has a path between every pair of vertices. In other words, the
 A disconnected graph is a graph that is not connected.
 
 ![](https://www.techiedelight.com/wp-content/uploads/2016/11/Connected-graph.png)
+
 #### Directed Acyclic Graph (DAG)
 A Directed Acyclic Graph (DAG) is a directed graph that contains no cycles.
 #### Bipartite Graph
@@ -88,6 +90,37 @@ i.e., every vertex stores a list of adjacent vertices.
 * For most applications, adjacency list are more efficient [2].
 ![](https://miro.medium.com/max/1400/1*sHYasThtSfMwi4K8naRxKQ.png)
 
+### Graph Class Example
+```java
+public class Graph<T> {
+    private final HashMap<T, List<T>> adjList;
+    private final boolean bidirection;
+
+    public HashMap<T, List<T>> getAdjList() {
+        return adjList;
+    }
+
+    public Graph(boolean bidirection) {
+        adjList = new HashMap<>();
+        this.bidirection = bidirection;
+    }
+
+    public void addVertex(T v){
+        adjList.put(v, new ArrayList<T>());
+    }
+
+    public void addEdge(T source, T destination){
+        if(!adjList.containsKey(source))
+            addVertex(source);
+        if (!adjList.containsKey(destination))
+            addVertex(destination);
+        adjList.get(source).add(destination);
+        if (bidirection)
+            adjList.get(destination).add(source);
+    }
+}
+```
+
 ## Graph Search or Traversals Techniques
 ### Depth-First Search(DFS)
 The Depth–first search (DFS) algorithm starts at the root of the tree (or some arbitrary node for a graph) and explored as far as possible along each branch before backtracking.
@@ -126,65 +159,116 @@ In other words, BFS explores vertices in the order of their distance from the so
 
 # Patterns
 ## DFS
-1. DFS from boundary
-This variant is used to mark regions that are connected to the boundary of the grid.
-    1. [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/)
-    2. [Number of Enclaves](https://leetcode.com/problems/number-of-enclaves/)
-2. Shortest time
-    1. [Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees/)
-3. Islands Variants
+1. Islands Variants
     1. [Number of Islands](https://leetcode.com/problems/number-of-islands/)
-    2. [Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
-    3. [Number of Closed Islands](https://leetcode.com/problems/number-of-closed-islands/)
-    4. [Coloring A Border](https://leetcode.com/problems/coloring-a-border/)
-    5. [Keys and Rooms](https://leetcode.com/problems/keys-and-rooms/)
-    6. [Robot Room Cleaner](https://leetcode.com/problems/robot-room-cleaner/)
-    7. [Flood Fill](https://leetcode.com/problems/flood-fill/)
+    1. [Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
+    1. [Number of Closed Islands](https://leetcode.com/problems/number-of-closed-islands/)
+    1. [Coloring A Border](https://leetcode.com/problems/coloring-a-border/)
+    1. [Keys and Rooms](https://leetcode.com/problems/keys-and-rooms/)
+    1. [Robot Room Cleaner](https://leetcode.com/problems/robot-room-cleaner/)
+    1. [Flood Fill](https://leetcode.com/problems/flood-fill/)
 ```java
 int numIslands(char[][] grid) {
     int count = 0;
     boolean[][] visited = new boolean[grid.length][grid[0].length];
+    int[][] DIRS = = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     for (int i = 0; i < grid.length; i++) {
         for (int j = 0; j < grid[0].length; j++) {
             if (grid[i][j] == '1' && visited[i][j]==false) {
                 count++;
-                dfsExploreIsland(grid, visited, i, j);
+                dfsExploreIsland(grid, visited, DIRS, i, j);
             }
         }
     }
     return count;
 }
 
-void dfsExploreIsland(char[][] grid, boolean[][] visited, int row, int col) {
-    if (outOfBounds(row, col) || grid[row][col] == '0' || visited[row][col]) return;
+void dfsExploreIsland(char[][] grid, boolean[][] visited, int[][] dirs, int row, int col) {
+    // Base Condition
+    if (!isValid(row, col) || grid[row][col] == '0' || visited[row][col]) return;
     
     // If you don't want to avoid extra space of using visited boolean array then you can modify the existing array.
     visited[row][col] = true; 
     
     // Explore neighbors
+    for(int[] dir: dirs) {
+        dfsExploreIsland(grid, visited, dirs, row+dir[0], col+dir[1]);
+    }
+    /*
     dfsExploreIsland(grid, visited, row - 1, col);
     dfsExploreIsland(grid, visited, row + 1, col);
     dfsExploreIsland(grid, visited, row, col - 1);
     dfsExploreIsland(grid, visited, row, col + 1);
-
-    /*
-    int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-    for (int[] dir : dirs) {
-        dfsExploreIsland(grid, row+dir[0], col+dir[1]);
-    }
     */
 }
 
-boolean outOfBounds(char[][] grid, int row, int col) {
-    return row < 0 || row >= grid.length || col < 0 || col >= grid[0].length;
+boolean isValid(char[][] grid, int row, int col) {
+    return row >=0 && row < grid.length && col >= 0 && col < grid[0].length;
 }
 ```
-4. Hash/DFS
+
+1. Start DFS from nodes at boundary
+This variant is used to mark regions that are connected to the boundary of the grid.
+    1. [Number of Enclaves](https://leetcode.com/problems/number-of-enclaves/)
+    1. [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/)
+    1. [Pacific Atlantic Waterflow](https://leetcode.com/problems/pacific-atlantic-water-flow/)
+```java
+int numEnclaves(int[][] grid) {
+    int[][] DIRS = = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    for (int i = 0; i < grid.length; i++) {
+        for (int j = 0; j < grid[0].length; j++) {
+            // only doing DFS on boundary nodes
+            if (grid[i][j]==1 && (i == 0 || j == 0 || i == rows - 1 || j == cols - 1)) {
+                count++;
+                dfs(grid, DIRS, i, j);
+            }
+        }
+    }
+
+    int totalMoves = 0;
+    for(int i=0;i<grid.length;i++) {
+        for(int j=0;j<grid[0].length;j++) {
+            if(grid[i][j]==1) {
+                totalMoves++;
+            } 
+        }
+    }
+
+    return totalMoves;
+}
+
+void dfs(int[][] grid, int[][] dirs, int row, int col) {
+    // Base Condition
+    if (!isValid(row, col)) return;
+    
+    // Not using visited boolean array. Modiying it in place.
+    grid[row][col] = 0;
+    
+    // Explore neighbors
+    for(int[] dir: dirs) {
+        dfs(grid, dirs, row+dir[0], col+dir[1]);
+    }
+    /*
+    dfs(grid, row - 1, col);
+    dfs(grid, row + 1, col);
+    dfs(grid, row, col - 1);
+    dfs(grid, row, col + 1);
+    */
+}
+
+boolean isValid(char[][] grid, int row, int col) {
+    return row >=0 && row < grid.length && col >= 0 && col < grid[0].length && grid[row][col]==1;
+}
+```
+1. Shortest time
+    1. [Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees/)
+
+1. Hash/DFS
 Use a combination of hashing and DFS to solve problems efficiently
     1. [Clone Graph](https://leetcode.com/problems/clone-graph/)
-    2. [Employee Importance](https://leetcode.com/problems/employee-importance/)
-    3. [Find the Town Judge](https://leetcode.com/problems/find-the-town-judge/)
-5. Cycle Find
+    1. [Employee Importance](https://leetcode.com/problems/employee-importance/)
+    1. [Find the Town Judge](https://leetcode.com/problems/find-the-town-judge/)
+1. Cycle Find
     1. [Find Eventual Safe States](https://leetcode.com/problems/find-eventual-safe-states/)
 
 
@@ -251,8 +335,8 @@ public class BFS {
 2. [Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/)
 
 
-## Single/Multi-source Shortest Path (Dijkstra's/Bellman Ford/Floyd-WarShall Algorithm)
-* This variant involves finding the shortest path from a source node to all other nodes in a weighted graph.
+## Single Source Shortest Path (Dijkstra's/Bellman Ford Algorithm)
+This variant involves finding the shortest path from a source node to all other nodes in a weighted graph.
 
 ### Dijkstra's Algorithm
 Dijkstra's algorithm is used to find the shortest paths from a single source to all other nodes in a weighted graph with non-negative edge weights. It maintains a priority queue to select the node with the shortest distance at each step.
@@ -261,6 +345,8 @@ Dijkstra's algorithm is used to find the shortest paths from a single source to 
 * Requires a **priority queue or min-heap** to select the node with the shortest distance at each step. 
 * Best suited for finding single-source shortest paths.
 
+[![](https://img.youtube.com/vi/XB4MIexjvY0/maxresdefault.jpg)](https://www.youtube.com/watch?v=XB4MIexjvY0)
+
 ```java
 import java.util.*;
 
@@ -268,24 +354,29 @@ public class Solution {
     // Adjacency list to store edges and their respective travel times
     Map<Integer, List<Pair<Integer, Integer>>> adj = new HashMap<>();
 
-    private void dijkstra(int[] signalReceivedAt, int source, int n) {
+    private void dijkstra(Map<Integer, List<Pairs<Integer, Integer>>> graph, int[] dist,  int source, int n) {
+
+        // Initialize an array to store the shortest signal times for each node
+        int[] dist = new int[n + 1];
+        Arrays.fill(signalReceivedAt, Integer.MAX_VALUE);
+
         // Priority Queue to select the node with the shortest signal time
         PriorityQueue<Pair<Integer, Integer>> pq = new PriorityQueue<>(
-                Comparator.comparing(Pair::getKey)
+                Comparator.comparing(Pair::getValue)
         );
-        pq.add(new Pair(0, source));
+        pq.add(new Pair(source, 0));
 
         // Initialize the signal time for the source node
-        signalReceivedAt[source] = 0;
+        dist[source] = 0;
 
         while (!pq.isEmpty()) {
             Pair<Integer, Integer> topPair = pq.poll();
 
-            int currNode = topPair.getValue();
-            int currNodeTime = topPair.getKey();
+            int currNode = topPair.getKey();
+            int currNodeTime = topPair.getValue();
 
             // Skip this node if we already found a shorter path to it
-            if (currNodeTime > signalReceivedAt[currNode]) {
+            if (currNodeTime > dist[currNode]) {
                 continue;
             }
 
@@ -303,9 +394,9 @@ public class Solution {
                 int signalTime = currNodeTime + time;
 
                 // If the new signal time is shorter, update it and add to the queue
-                if (signalReceivedAt[neighborNode] > signalTime) {
-                    signalReceivedAt[neighborNode] = signalTime;
-                    pq.add(new Pair(signalReceivedAt[neighborNode], neighborNode));
+                if (dist[neighborNode] > signalTime) {
+                    dist[neighborNode] = signalTime;
+                    pq.add(new Pair(neighborNode, dist[neighborNode]));
                 }
             }
         }
@@ -325,12 +416,9 @@ public class Solution {
             adj.get(source).add(new Pair(travelTime, dest));
         }
 
-        // Initialize an array to store the shortest signal times for each node
-        int[] signalReceivedAt = new int[n + 1];
-        Arrays.fill(signalReceivedAt, Integer.MAX_VALUE);
-
+       
         // Apply Dijkstra's algorithm to compute signal times
-        dijkstra(signalReceivedAt, k, n);
+        dijkstra(adj, k, n);
 
         // Find the maximum signal time to get the network delay time
         int networkDelayTime = Integer.MIN_VALUE;
@@ -349,7 +437,8 @@ public class Solution {
 * Time complexity: ``O(E + V*log(V))`` with a priority queue, where E is the number of edges.
 * Space complexity: ``O(E+V)`` with an array, where V is the number of vertices.
 
-
+#### Problems
+1. [Network Delay Time](https://leetcode.com/problems/network-delay-time/)
 
 ### Bellman Ford
 The Bellman-Ford algorithm is used to find the shortest paths from a single source to all other nodes in a weighted graph, even if it contains negative weight edges. It detects negative weight cycles.
@@ -420,6 +509,12 @@ public class Solution {
 
 #### Complexity Analysis
 
+#### Problems
+1. [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/)
+
+
+
+## Multi-source Shortest Path (Floyd Warshall Algorithm)
 ### Floyd Warshall
 The Floyd-Warshall algorithm is used to find the shortest paths between all pairs of nodes in a weighted graph. It can handle both positive and negative weight edges but does not detect negative weight cycles.
 * Works for all types of edge weights.
@@ -430,49 +525,47 @@ The Floyd-Warshall algorithm is used to find the shortest paths between all pair
 
 #### Complexity Analysis
 
-
-1. [Network Delay Time](https://leetcode.com/problems/network-delay-time/)
-2. [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/)
-3. https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
-
+#### Problems
+1. [Find the City With the Smallest Number of Neighbors at a Threshold Distance](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/)
 
 ## Union-Find Problems
+Identify if problems talks about finding groups or components.
 1. [Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/)
-2. [Redundant Connection](https://leetcode.com/problems/redundant-connection/)
-3. [Evaluate Division](https://leetcode.com/problems/evaluate-division/)
-4. [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/)
-5. [Satisfiability of Equality Equations](https://leetcode.com/problems/satisfiability-of-equality-equations/)
-6. [Accounts Merge](https://leetcode.com/problems/accounts-merge/)
-7. [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/)
-8. [Number of Operations to Make Network Connected](https://leetcode.com/problems/number-of-operations-to-make-network-connected/)
-9. [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)
+1. [Redundant Connection](https://leetcode.com/problems/redundant-connection/)
+1. [Evaluate Division](https://leetcode.com/problems/evaluate-division/)
+1. [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/)
+1. [Satisfiability of Equality Equations](https://leetcode.com/problems/satisfiability-of-equality-equations/)
+1. [Accounts Merge](https://leetcode.com/problems/accounts-merge/)
+1. [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/)
+1. [Number of Operations to Make Network Connected](https://leetcode.com/problems/number-of-operations-to-make-network-connected/)
+1. [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)
 
 
 ## Topological Sort Problems
+Check if its directed acyclic graph(DAG) and we have to arrange the elements in an order in which we need to select the most independent node at first.
 1. [Course Schedule](https://leetcode.com/problems/course-schedule/)
-2. [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
-3. [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/)
-4. [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/solution/)
+1. [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
+1. [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/)
+1. [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/solution/)
 
 
 ## Connected components problems(Tarjan's Algorithm)
 1. [Number of Provinces](https://leetcode.com/problems/number-of-provinces/)
-2. [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/)
-3. Critical Connections in a Network: https://leetcode.com/problems/critical-connections-in-a-network/
+1. [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/)
+1. [Critical Connections in a Network](https://leetcode.com/problems/critical-connections-in-a-network/)
 
 
 ## Minimum Spanning Tree problems(Prim's and Kruskal's algorithm)
-* [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)
-* [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)
-
+1. [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)
+1. [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)
 
 
 # Problems
 
 
-
 # References
 * https://leetcode.com/discuss/general-discussion/655708/graph-for-beginners-problems-pattern-sample-solutions/
+* https://leetcode.com/discuss/study-guide/3900838/%22Mastering-Graph-Algorithms%3A-A-Comprehensive-DSA-Graph-Common-Question-Patterns-CheatSheet%22
 * https://leetcode.com/discuss/study-guide/1326900/graph-algorithms-problems-to-practice
 * https://leetcode.com/discuss/interview-question/753236/List-of-graph-algorithms-for-coding-interview
 * https://leetcode.com/discuss/general-discussion/969327/Graph-Algorithms-One-Place-or-Dijkstra-or-Bellman-Ford-or-Floyd-Warshall-or-Prims-or-Kruskals-or-DSU

@@ -1,3 +1,13 @@
+# Table of contents
+- [Introduction](#introduction)
+  - [Identification Strategy](#identification-strategy)
+  - [Types of Two Pointers Patterns](#types-of-two-pointers-patterns)
+    - [[Pattern#1] Collision/Running from both ends of an array - One array, move from two sides to middle.](#pattern1-collisionrunning-from-both-ends-of-an-array---one-array-move-from-two-sides-to-middle)
+    - [[Pattern#2] Forward - One array, both move forward](#pattern2-forward---one-array-both-move-forward)
+    - [[Pattern#3] Parallel - Two arrays, each array has been assigned with a pointer.](#pattern3-parallel---two-arrays-each-array-has-been-assigned-with-a-pointer)
+    - [[Pattern#4] Split & Merge of an array / Divide & Conquer](#pattern4-split--merge-of-an-array--divide--conquer)
+- [Problems](#problems)
+- [References](#references)
 
 # Introduction
 Two Pointers is a pattern where two pointers iterate through the data structure in tandem until one or both of the pointers
@@ -69,8 +79,10 @@ private void swap(char[] str, int i, int j) {
 Next type is using two pointers with different speed of movement. Typically they starts from the left end,
 then the first pointer advances fast and give some feedback to the slow pointer and do some calculation.
 ![](https://assets.leetcode.com/users/images/f6ecb6b1-679e-48f9-91b5-de4602436865_1642138215.8872066.jpeg)
-#### Linked List Cycle
+#### Fast and Slow
+* [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/description/)
 * [Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii)
+* [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/description/)
 #### Sliding Window/Caterpillar Method
 * [Longest Substring Without Repeating Characters ](https://leetcode.com/problems/longest-substring-without-repeating-characters)
 #### Remove Duplicate
@@ -94,9 +106,9 @@ backwards instead of forwards through the array. It can completely change the pr
 The last one is similar to previous category but there is one thing is added. First, you need to split the given list
 into 2 separate lists and then do two pointers approach to merge or unify them. There aren't many tasks here.
 ![](https://assets.leetcode.com/users/images/1d3c2ed7-95ca-440d-9693-f3e31360b826_1642138190.9125686.jpeg)
-### Partition
+#### Partition
 * [Partition List](https://leetcode.com/problems/partition-list/)
-### Sorting
+#### Sorting
 * [Sort List](https://leetcode.com/problems/sort-list/)
 
 
