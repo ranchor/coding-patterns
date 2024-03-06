@@ -70,10 +70,76 @@ first (which typically recurse down to solve the sub-problems).
 1. [Target Sum](https://leetcode.com/problems/target-sum/)
 1. [Last Stone Weight](https://leetcode.com/problems/last-stone-weight-ii/)
 
+### Top-Down
+```java
+ // Function to solve the 0/1 Knapsack problem using top-down dynamic programming
+    static int knapsack(int[] weights, int[] values, int w, int n, int[][] dp) {
+        // Base case: If either w or number of items is 0, return 0
+        if (n == 0 || w == 0)
+            return 0;
+
+        // If the result is already calculated, return it
+        if (dp[n][w] != -1)
+            return dp[n][w];
+
+        // If the weight of the current item exceeds the capacity, skip it
+        if (weights[n - 1] > w)
+            return dp[n][w] = knapsack(weights, values, w, n - 1, dp);
+
+        // Otherwise, return the maximum of including and excluding the current item
+        else
+            return dp[n][w] = Math.max(values[n - 1] + knapsack(weights, values, w - weights[n - 1], n - 1, dp), knapsack(weights, values, w, n - 1, dp));
+    }
+
+    // Function to initialize the DP array and call the recursive function
+    static int knapsack(int[] weights, int[] values, int w) {
+        int n = weights.length;
+        // Create DP array and initialize it with -1
+        int[][] dp = new int[n + 1][w + 1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        // Call the recursive function
+        return knapsack(weights, values, w, n, dp);
+    }
+```
+### Bottom-Up
+```java
+ // Function to solve the 0/1 Knapsack problem using bottom-up dynamic programming
+    static int knapsack(int[] weights, int[] values, int w) {
+        int n = weights.length;
+        // Create DP array
+        int[][] dp = new int[n + 1][w + 1];
+
+        // Build DP table in bottom-up manner
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= w; j++) {
+                if (i == 0 || j == 0) {
+                    dp[i][j] = 0; // Base case: If either no items or no capacity, value is 0
+                } else if (weights[i - 1] <= j) {
+                    // If weight of current item is less than or equal to current capacity,
+                    // choose the maximum of including and excluding the item
+                    dp[i][j] = Math.max(values[i - 1] + dp[i - 1][j - weights[i - 1]], dp[i - 1][j]);
+                } else {
+                    // If weight of current item is greater than current capacity, exclude the item
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[n][w]; // Return the maximum value that can be obtained
+    }
+```
+
+### Notes
+* Identify the dimensions of memo or tab array - Generally varying inputs in recursive function
+* Identify the initialization conditions
+* Identify the decision tree
+
 ## Pattern 4: Unbounded Knapsack
 1. [Unbounded Knapsack](https://www.geeksforgeeks.org/unbounded-knapsack-repetition-items-allowed/)
 1. [Coin Change](https://leetcode.com/problems/coin-change/)
 1. [Coin Change II](https://leetcode.com/problems/coin-change-2/)
+1. [Integer Break](https://leetcode.com/problems/integer-break/)
 1. [Rod Cutting](https://www.geeksforgeeks.org/cutting-a-rod-dp-13/)
 1. [Maximum Ribbon Cut](https://www.geeksforgeeks.org/maximum-number-segments-lengths-b-c/)
 1. [Minimum Cost for Tickets](https://leetcode.com/problems/minimum-cost-for-tickets/)
@@ -83,20 +149,96 @@ first (which typically recurse down to solve the sub-problems).
 1. [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
 1. [Number of Longest Increasing Subsequence](https://leetcode.com/problems/number-of-longest-increasing-subsequence/)
 1. [Maximum Sum Increasing Subsequence](https://www.geeksforgeeks.org/maximum-sum-increasing-subsequence-dp-14/)
+1. [Longest Bitonic Subsequence](https://www.geeksforgeeks.org/longest-bitonic-subsequence-dp-15/)
 1. [Increasing Triplet Subsequence](https://leetcode.com/problems/increasing-triplet-subsequence/)
 1. [Minimum Number of Removals to Make Mountain Array](https://leetcode.com/problems/minimum-number-of-removals-to-make-mountain-array/)
+**Bottom-Up**
+```java
+  public int lengthOfLIS(int[] nums) {
+        // Create an array to store the length of the longest increasing subsequence ending at each index
+        int[] dp = new int[nums.length];
+        // Initialize the array with 1, as each element is a subsequence of length 1
+        Arrays.fill(dp, 1);
+        
+        // Iterate through the array
+        for (int i = 1; i < nums.length; i++) {
+            // For each element at index i, iterate through elements before it
+            for (int j = 0; j < i; j++) {
+                // If the current element is greater than the element at index j,
+                // update the length of the LIS ending at index i
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1); // Update the length of LIS ending at index i
+                }
+            }
+        }
+        
+        int longest = 0;
+        // Find the maximum value in the dp array, which represents the longest increasing subsequence length
+        for (int c: dp) {
+            longest = Math.max(longest, c);
+        }
+        
+        return longest; // Return the length of the longest increasing subsequence
+    }
+```
 
 ## Pattern 6: Longest Common Subsequence (LCS)
-1. [Longest Common Substring](https://www.geeksforgeeks.org/longest-common-substring-dp-29/)
 1. [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)
+1. [Longest Common Substring](https://www.geeksforgeeks.org/longest-common-substring-dp-29/)
 1. [Shortest Common Supersequence](https://leetcode.com/problems/shortest-common-supersequence/)
+1. [Longest repeating subsequence](https://www.geeksforgeeks.org/longest-repeating-subsequence/)
 1. [Minimum Deletions and Insertions to Transform a String into another](https://www.geeksforgeeks.org/minimum-number-deletions-insertions-transform-one-string-another/)
 1. [Minimum deletions to make sequence sorted](https://www.geeksforgeeks.org/minimum-number-deletions-make-sorted-sequence/)
-1. [Longest repeating subsequence](https://www.geeksforgeeks.org/longest-repeating-subsequence/)
-1. [Longest Bitonic Subsequence](https://www.geeksforgeeks.org/longest-bitonic-subsequence-dp-15/)
 1. [Longest Alternating Subsequence](https://www.geeksforgeeks.org/longest-alternating-subsequence/)
 1. [Edit Distance](https://leetcode.com/problems/edit-distance//)
 1. [String Interleaving](https://www.geeksforgeeks.org/find-if-a-string-is-interleaved-of-two-other-strings-dp-33/)
+
+
+**Top-Down**
+```java
+    // Function to calculate Longest Common Subsequence
+    static int lcs(String a, String b, int m, int n, int[][] dp) {
+        // Base case
+        if (m == 0 || n == 0) return 0;
+
+        // Check if the result is already calculated
+        if (dp[m][n] != -1) return dp[m][n];
+
+        // If characters match, include them in the LCS
+        if (a.charAt(m - 1) == b.charAt(n - 1))
+            return dp[m][n] = 1 + lcs(a, b, m - 1, n - 1, dp);
+        else
+            // If characters don't match, choose the maximum length LCS from the two possible cases
+            return dp[m][n] = Math.max(lcs(a, b, m - 1, n, dp), lcs(a, b, m, n - 1, dp));
+    }
+     public static void main(String[] args) {
+        static final int MAX_M = 1005;
+        static final int MAX_N = 1005;
+        int[][] dp = new int[MAX_M][MAX_N];
+        // Initialize dp array with -1
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        lcs(a, b, m, n, dp);
+    }
+```
+**Bottom-up**
+```java
+  static int lcs(String a, String b, int m, int n) {
+        int[][] dp = new int[m + 1][n + 1];
+        
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (a.charAt(i - 1) == b.charAt(j - 1))
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                else
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+        return dp[m][n];
+    }
+```
 
 ## Pattern 7: Palindromes
 1. [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)
@@ -106,7 +248,39 @@ first (which typically recurse down to solve the sub-problems).
 1. [Minimum deletions to make a string palindrome](https://www.geeksforgeeks.org/minimum-number-deletions-make-string-palindrome/)
 1. [Palindromic Partitioning](https://leetcode.com/problems/palindrome-partitioning/)
 
+```java
+ // Function to find the length of the Longest Palindromic Subsequence (LPS) from index 'start' to 'end'
+    static int lps(String s, int start, int end, int[][] dp) {
+        // Base case: If start index is greater than end index, return 0
+        if (start > end)
+            return 0;
 
+        // Base case: If start index is equal to end index, LPS length is 1
+        if (start == end)
+            return 1;
+
+        // If the result for the current state is already calculated, return it
+        if (dp[start][end] != 0)
+            return dp[start][end];
+
+        // If characters at start and end index are equal, increment LPS length by 2
+        if (s.charAt(start) == s.charAt(end))
+            return dp[start][end] = 2 + lps(s, start + 1, end - 1, dp);
+
+        // If characters are not equal, find the maximum LPS length by excluding either the start or end character
+        return dp[start][end] = Math.max(lps(s, start + 1, end, dp), lps(s, start, end - 1, dp));
+    }
+
+    // Function to find the length of the Longest Palindromic Subsequence (LPS) in the string 's'
+    static int longestPalindromicSubsequence(String s) {
+        int n = s.length();
+        // Initialize DP array with 0s
+        int[][] dp = new int[n][n];
+        // Call the recursive function to find the length of LPS from index 0 to 'n-1'
+        return lps(s, 0, n - 1, dp);
+    }
+
+```
 ## Pattern 8: Matrix Chain Multiplication (MCM)
 1. [Burst Balloons](https://leetcode.com/problems/burst-balloons/)
 1. Evaluate expression to true / boolean parenthesize
@@ -143,7 +317,9 @@ first (which typically recurse down to solve the sub-problems).
 * https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews
 * https://leetcode.com/discuss/general-discussion/458695/Dynamic-Programming-Patterns
     * https://www.youtube.com/watch?v=wHzI0NCpjpI&t=127s   
+    * https://www.youtube.com/watch?v=mBNrRy2_hVs
 * https://leetcode.com/discuss/study-guide/1308617/Dynamic-Programming-Patterns
 * https://leetcode.com/discuss/general-discussion/662866/DP-for-Beginners-Problems-or-Patterns-or-Sample-Solutions
 * https://leetcode.com/discuss/explore/april-leetcoding-challenge-2021/1159786/fibonacci-number-easy-solution-w-multiple-approaches-explained
 * [Difference between Subarray, SubString, Subsequence and Subset](https://www.techiedelight.com/difference-between-subarray-subsequence-subset/)
+* [Aditya's Verma DP Playlist](https://www.youtube.com/playlist?list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go)
