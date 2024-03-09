@@ -1,3 +1,11 @@
+# Table of contents
+
+- [Introduction](#introduction)
+  - [Identification Strategy](#identification-strategy)
+  - [Generic Template](#generic-template)
+- [Problems](#problems)
+- [References](#references)
+
 # Introduction
 This pattern describes an efficient technique to deal with overlapping intervals. 
 In a lot of problems involving intervals, we either need to find overlapping intervals or merge intervals if they overlap.
@@ -23,7 +31,7 @@ Understanding the above six cases will help us in solving all intervals related 
 
 ## Generic Template
 
-```
+```java
   public boolean genericTemplate(int[][] intervals) {
         if (intervals.length == 0) {
             // Handle the case when there are no intervals (if needed)

@@ -5,13 +5,12 @@ class Solution {
         int countZeros = 0;
         while (right < nums.length) {
             if (nums[right] == 0) countZeros++;
-
+            right++;
             // for invalid window contract the window
             while (countZeros > 1) {
                 if (nums[left++] == 0) countZeros--;
             }
 
-            right++;
             // update our longest sequence answer
             maxLength = Math.max(maxLength, right - left);
 

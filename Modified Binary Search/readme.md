@@ -1,3 +1,17 @@
+# Table of contents
+
+- [Introduction](#introduction)
+  - [3 Parts of a Successful Binary Search](#3-parts-of-a-successful-binary-search)
+  - [Binary Search Template I](#binary-search-template-i)
+  - [Binary Search Template II](#binary-search-template-ii)
+  - [Binary Search Template III](#binary-search-template-iii)
+  - [Exponential Binary Search (Binary Search on Infinite Arrays)](#exponential-binary-search-binary-search-on-infinite-arrays)
+  - [Rotated Sorted Array (Search in Rotated Sorted Array)](#rotated-sorted-array-search-in-rotated-sorted-array)
+  - [Fractional Binary Search](#fractional-binary-search)
+  - [Binary Search Template Analysis(I,II and III)](#binary-search-template-analysisiii-and-iii)
+- [Problems](#problems)
+- [References](#references)
+
 # Introduction
 In its simplest form, Binary Search operates on a contiguous sequence with a specified left and right index. 
 This is called the **Search Space**. Binary Search maintains the **left**, **right**, and **middle** indicies of 
@@ -15,7 +29,7 @@ Binary Search is generally composed of 3 main sections:
 ## Binary Search Template I
 Binary Search Template I is the most basic and elementary form of binary search. It includes  both the left and right left. ```[l, r]```
 
-```
+```java
 int binarySearch(int[] nums, int target){
   if(nums == null || nums.length == 0)
     return -1;
@@ -49,7 +63,7 @@ int binarySearch(int[] nums, int target){
 
 ### Modified Binary Search Template I
 Both include the left and right left. [l, r], Minimize k , s.t. condition(k) is True
-```
+```java
 int binarySearch(int[] nums){
   if(nums == null || nums.length == 0)
     return -1;
@@ -71,7 +85,7 @@ int binarySearch(int[] nums){
 
 ## Binary Search Template II
 Binary Search Template II is an advanced way to implement binary search. Use the element's right neighbor to determine if the condition is met and decide whether to go left or right.
-```
+```java
 int binarySearch(int[] nums, int target){
   if(nums == null || nums.length == 0)
     return -1;
@@ -110,7 +124,7 @@ int binarySearch(int[] nums, int target){
 ### [MOST IMPORTANT] Modified Binary Search Template II
 In this modified version of Template II, the left range is included, but the right range is not included ``([l, r))``, minimizing 'k' such that ``condition(k) is true``:
 
-```
+```java
 int binarySearch(int[] nums){
   if(nums == null || nums.length == 0)
     return -1;
@@ -131,7 +145,7 @@ int binarySearch(int[] nums){
 ```
 
 ## Binary Search Template III
-```
+```java
 int binarySearch(int[] nums, int target) {
     if (nums == null || nums.length == 0)
         return -1;
@@ -178,7 +192,7 @@ int binarySearch(int[] nums, int target) {
 
 ## Exponential Binary Search (Binary Search on Infinite Arrays)
 This template is used for problems where you need to find an element in an unbounded array, and you don't know the size of the array in advance. It involves doubling the search space in each step until the target is found.
-```
+```java
 int exponentialBinarySearch(int[] nums, int target) {
     int left = 0, right = 1;
     
@@ -212,7 +226,7 @@ int exponentialBinarySearch(int[] nums, int target) {
 
 ## Rotated Sorted Array (Search in Rotated Sorted Array)
 This pattern is for searching in a rotated and sorted array. It's an adaptation of Template I with some modifications:
-```
+```java
 public int searchInRotatedArray(int[] nums, int target) {
     int left = 0, right = nums.length - 1;
     
@@ -250,7 +264,7 @@ public int searchInRotatedArray(int[] nums, int target) {
 ## Fractional Binary Search
 This template is used to find an optimal value within a given range that satisfies a specific condition or constraint. The condition function checks if the condition is met for a given value.
 
-```
+```java
 double fractionalBinarySearch(double low, double high, double epsilon) {
     while (low + epsilon < high) {
         double mid = low + (high - low) / 2;
@@ -265,7 +279,7 @@ double fractionalBinarySearch(double low, double high, double epsilon) {
 }
 ```
 Application to "Koko Eating Bananas" Problem:
-```
+```java
 public double minEatingSpeed(int[] piles, int H) {
     double low = 1;  // Minimum possible eating rate
     double high = getMax(piles);  // Maximum possible eating rate

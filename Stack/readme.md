@@ -1,3 +1,14 @@
+# Table of contents
+
+- [Introduction](#introduction)
+  - [Simple Stack Template](#simple-stack-template)
+  - [Monotonic Increasing/Decreasing Stack Template](#monotonic-increasingdecreasing-stack-template)
+  - [Balanced Parentheses Template](#balanced-parentheses-template)
+  - [Expression Evaluation Template](#expression-evaluation-template)
+  - [Two Stacks Template](#two-stacks-template)
+- [Problems](#problems)
+- [References](#references)
+
 # Introduction
 
 ## Simple Stack Template
@@ -273,7 +284,7 @@ If a problem is suitable to use monotonic stack, it must has at least three char
 Another common stack pattern is the balanced parentheses pattern. This pattern is used to solve problems that require checking whether a string of parentheses is balanced.
 General template for solving balanced parentheses problems:
 
-```
+```java
 Initialize an empty stack.
 Iterate over the input string:
     If the current character is an opening parenthesis:
@@ -301,6 +312,44 @@ int evaluateExpression(String expression) {
 ```
 
 ## Two Stacks Template
+This template is useful in scenarios where you want to efficiently perform operations like pop and peek on a stack while maintaining the order of elements pushed into it.It's commonly used in problems where you need to simulate a queue using two stacks or efficiently implement a stack that supports pop and peek operations with O(1) amortized time complexity.
+```java
+class TwoStacks {
+    Stack<Integer> stack1;
+    Stack<Integer> stack2;
+
+    public TwoStacks() {
+        stack1 = new Stack<>();
+        stack2 = new Stack<>();
+    }
+
+    public void push(int x) {
+        stack1.push(x);
+    }
+
+    public int pop() {
+        if (stack2.isEmpty()) {
+            while (!stack1.isEmpty()) {
+                stack2.push(stack1.pop());
+            }
+        }
+        return stack2.pop();
+    }
+
+    public int peek() {
+        if (stack2.isEmpty()) {
+            while (!stack1.isEmpty()) {
+                stack2.push(stack1.pop());
+            }
+        }
+        return stack2.peek();
+    }
+
+    public boolean isEmpty() {
+        return stack1.isEmpty() && stack2.isEmpty();
+    }
+}
+```
 
 # Problems
 # References

@@ -29,8 +29,6 @@
 
 # Introduction
 
-
-
 ## BFS vs DFS
 There are two ways to traverse the tree: DFS depth first search and BFS breadth first search. Here is a small summary
 ![](https://leetcode.com/problems/binary-tree-right-side-view/Figures/199_rewrite/traversals.png)
@@ -56,7 +54,7 @@ This is a great approach but again, it would still consume some memory proportio
 Essentially, at each step, we record the size of the queue and that always corresponds to all the nodes on a particular level. 
 Once we have this size, we only process these many elements and no more. By the time we are done processing size number of elements, 
 the queue would contain all the nodes on the next level. Here's a pseudocode for the same:
-    ```
+    ```java
      while (!Q.empty())
      {
          size = Q.size()
@@ -71,19 +69,23 @@ the queue would contain all the nodes on the next level. Here's a pseudocode for
 
 ## DFS Iterative Traversal
 ### Inorder
-```
+```java
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
+
         List<Integer> list = new ArrayList<>();
+        if(root == null)
+            return list;
         Stack<TreeNode> stack = new Stack<>();
-        while(stack.size() > 0 || root != null) {
-            while(root != null) {
-                stack.add(root);
-                root = root.left;
+        TreeNode current = root;
+        while(stack.size() > 0 || current != null) {
+            while(current != null) {
+                stack.add(current);
+                current = current.left;
             }
-            root = stack.pop();
-            list.add(root.val);
-            root = root.right;
+            current = stack.pop();
+            list.add(current.val);
+            current = current.right;
         }
 
         return list;
@@ -92,22 +94,25 @@ class Solution {
 ```
 
 ### Preorder
-```
+```java
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList();
         if(root == null)
             return list;
         Stack<TreeNode> stack = new Stack<>();
-        while (!stack.isEmpty() || root != null) {
-            while (root != null) {
-                list.add(root.val);
-                stack.push(root);
-                root = root.left;
-            }
+        stack.push(root);
+        
+        while (!stack.isEmpty()) {
             root = stack.pop();
-            root = root.right;
+            list.add(root.val);
+
+            if(root.right != null)
+                stack.push(root.right);
+            if(root.left != null)
+                stack.push(root.left);
         }
+        
         
         return list;
     }
@@ -117,14 +122,15 @@ class Solution {
 ### PostOrder
 **Postorder from Preorder - Reverse the steps of pushing left and right child into stack and reverse full list in the 
 end.**
-```
+```java
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList();
         if(root == null)
             return list;
         Stack<TreeNode> stack = new Stack();
-        stack.add(root);
+        stack.push(root);
+
         while(!stack.isEmpty()) {
             root = stack.pop();
             list.add(root.val);
@@ -142,7 +148,7 @@ class Solution {
 
 ## DFS Recursive Traversal
 ### Inorder
-```
+```java
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList();
@@ -160,7 +166,7 @@ class Solution {
 }
 ```
 ### Preorder
-```
+```java
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList();
@@ -178,7 +184,7 @@ class Solution {
 }
 ```
 ### PostOrder
-```
+```java
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList();
@@ -197,7 +203,7 @@ class Solution {
 ```
 ## BFS/Level Order Traversal
 ### Level Order Traversal
-```
+```java
 class Solution {
     public List<Integer> levelOrder(TreeNode root) {
         List<Integer> result = new ArrayList();
@@ -220,7 +226,7 @@ class Solution {
 }
 ```
 ### Level Order Level By Level
-```
+```java
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList();
@@ -248,7 +254,7 @@ class Solution {
 }
 ```
 ### ZigZag Level Order
-```
+```java
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList();
@@ -261,7 +267,7 @@ class Solution {
         while(q.size() > 0) {
             int size = q.size();
             List<Integer> level = new ArrayList();
-            while(size-- > 0) {
+            for (int i = 0; i < size; i++) {
                 root = q.poll();
                 level.add(root.val);
                 if(root.left != null)

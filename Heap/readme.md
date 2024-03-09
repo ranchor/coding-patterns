@@ -1,3 +1,15 @@
+# Table of contents
+
+- [Introduction](#introduction)
+  - [Basics of PriorityQueue/Heap](#basics-of-priorityqueueheap)
+- [Patterns](#patterns)
+  - [[Pattern#1] Top K Elements](#pattern1-top-k-elements)
+  - [[Pattern#2] K Way Merge](#pattern2-k-way-merge)
+  - [[Pattern#3] Two Heaps](#pattern3-two-heaps)
+  - [[Pattern#4] Minimum Number](#pattern4-minimum-number)
+- [Problems](#problems)
+- [References](#references)
+
 # Introduction
 Heap patterns are a set of problem-solving techniques that leverage the use of Priority Queues (Heaps), a powerful data structure for maintaining and manipulating elements with specific order criteria. These patterns are particularly useful in situations where you need to efficiently access, update, or process elements based on their priority, frequency, or value.
 

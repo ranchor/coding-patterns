@@ -38,7 +38,7 @@ is equal to a target value.
 
 ## Fixed-Size Window Template
 This template is used for problems where you need to find the maximum, minimum, or a specific value within a fixed-size window as it moves through the array. The window size is fixed, and you keep track of a moving window by adding elements to the right and removing elements from the left.
-```
+```java
 public int slidingWindowFixed(int[] arr, int k) {
     int left = 0;
     int windowSum = 0;
@@ -64,14 +64,13 @@ public int slidingWindowFixed(int[] arr, int k) {
 ```
 
 ## Dynamic Size Window Template
-* **Step1**: Have a counter or hash-map to count specific array input and keep on increasing the window toward right using
- outer loop.
+* **Step1**: Have a counter or hash-map to count specific array input and keep on increasing the window toward right using outer loop.
 * **Step2**: Have while loop inside to reduce the window side by sliding toward right. Movement will be based on
  constraints of problem. Go through few examples below
 * **Step3**: Store the current maximum window size or minimum window size or number of windows based on problem requirement.
 
 ### General Template
-```
+```java
 int left = 0, right = 0;
 
 while (right < arr.length) {
@@ -90,11 +89,10 @@ while (right < arr.length) {
 ```
 
 ### Modified Template (Counting)
-```
+```java
 public int slidingWindowCounting(int[] arr, int k) {
-    int left = 0;
-    Map<Integer, Integer> charFrequency = new HashMap();
-    int right = 0;
+    Map<Character, Integer> charFrequency = new HashMap();
+    int left=0, right = 0;
 
     while (right < arr.length) {
         // Update the frequency of elements within the window
@@ -118,10 +116,59 @@ public int slidingWindowCounting(int[] arr, int k) {
 }
 ```
 
-* Data type of the window can vary depending on the situation, such as using the hash table as the counter, or you can
-  use an array to do the same, since we only deal with English letters.
-* Slightly tricky part is the valid condition, and we might have to write a lot of code to get this updated in real
-  time.
+```java
+ public List<Integer> slidingWindowTemplateForSubstringProblems(String s, String t) {
+        //init a collection or int value to save the result according the question.
+        List<Integer> result = new LinkedList<>();
+        if(t.length()> s.length()) return result;
+        
+        //create a hashmap to save the Characters of the target substring.
+        //(K, V) = (Character, Frequence of the Characters)
+        Map<Character, Integer> map = new HashMap<>();
+        for(char ch : t.toCharArray()){
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+        //maintain a counter to check whether match the target string.
+        int counter = map.size();//must be the map size, NOT the string size because the char may be duplicate.
+        
+        //Two Pointers: left - left pointer of the window; right - right pointer of the window
+        int left = 0, right = 0;
+        
+        //the length of the substring which match the target string.
+        int len = Integer.MAX_VALUE; 
+        
+        //loop at the begining of the source string
+        while(right < s.length()){
+            
+            char tempRight = s.charAt(right);//get a character
+            
+            if( map.containsKey(tempRight) ){
+                map.put(tempRight, map.get(tempRight)-1);// plus or minus one
+                if(map.get(tempRight) == 0) counter--;//modify the counter according the requirement(different condition).
+            }
+            right++;
+            
+            //increase begin pointer to make it invalid/valid again
+            while(counter == 0 /* counter condition. different question may have different condition */){
+                
+                char tempLeft = s.charAt(left);//***be careful here: choose the char at begin pointer, NOT the end pointer
+                if(map.containsKey(tempLeft)){
+                    map.put(tempLeft, map.get(tempLeft) + 1);//plus or minus one
+                    if(map.get(tempLeft) > 0) counter++;//modify the counter according the requirement(different condition).
+                }
+                
+                /* save / update(min/max) the result if find a target*/
+                // result collections or result int value
+                
+                left++;
+            }
+        }
+        return result;
+    }
+```
+
+* Data type of the window can vary depending on the situation, such as using the hash table as the counter, or you can use an array to do the same, since we only deal with English letters.
+* Slightly tricky part is the valid condition, and we might have to write a lot of code to get this updated in real time.
 **Sliding Window Template to solve all substring related problems**
 ```
 A sliding window is an abstract concept commonly used in array/string problems.

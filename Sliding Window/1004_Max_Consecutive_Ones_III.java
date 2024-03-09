@@ -7,13 +7,13 @@ class Solution {
 
         while (right < nums.length) {
             if (nums[right] == 0) countZeros++;
+            right++;
 
             // for invalid window where count of zeros greater than k contract the window
             while (countZeros > k) {
                 if (nums[left++] == 0) countZeros--;
             }
 
-            right++;
             maxLength = Math.max(maxLength, right - left);
         }
 
