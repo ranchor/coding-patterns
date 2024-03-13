@@ -51,16 +51,17 @@
 ## HashMap
 A data structure that maps keys to values. A map cannot contain duplicate keys and each key can map to at most one value.
 
-| Operation | Code | TC |
-|---|---|---|
-| **Import required** | <pre lang="java">``import java.util.HashMap;``</pre> |  |
-| **Creation (diff types)** | <pre lang="java">``HashMap hm = new HashMap<>();``</pre> |  |
-| **Add Element** | <pre lang="java">``hm.put("gopha", "ok");`` // Key is "gopha", value is "ok"</pre> | O(1) |
-| **Update Element** | <pre lang="java">``hm.put("gopha", hm.getOrDefault("gopha", "newvalue"));``</pre> <pre lang="java">``/** Note: Attempts to retrieve the value for the key "gopha". If not present,"newvalue" will be used instead and saved for the respective key of "gopha"**/``</pre> | O(1) |
-| **Remove element** | <pre lang="java">``hm.remove("gopha");``</pre> <pre lang="java"> // Specify key to remove the entire entry</pre> | O(1) |
-| **Search Element** | <pre lang="java">``hm.containsKey("gopha");``</pre> <pre lang="java"> //Returns boolean true if the presence of the key is detected else false. <br>``hm.containsValue("ok");`` //Returns true if this map maps one or more keys to the specified value.</pre> | O(1) |
-| **Size** | <pre lang="java">hm.size();</pre> |  |
-| **Accessing** | <pre lang="java">for (Map.Entry entry : hm.entrySet()) {System.out.println(entry.getKey() + " " + entry.getValue());}</pre> <pre lang="java"> for (String key : hm.keySet()) { System.out.println(key);  }</pre> <pre lang="java"> for (String value : hm.values()) { System.out.println(value); }</pre> <br> |  |
+| Operation | Code | TC | Description |
+|---|---|---|---|
+| **Import required** | <pre lang="java">import java.util.HashMap;</pre> |  | Importing the required HashMap class. |
+| **Creation (diff types)** | <pre lang="java">HashMap hm = new HashMap<>();</pre> |  | Creates a new HashMap object. |
+| **Add Element** | <pre lang="java">hm.put("gopha", "ok");</pre> | O(1) | Adds an element to the HashMap with the specified key and value. |
+| **Update Element** | <pre lang="java">hm.put("gopha", hm.getOrDefault("gopha", "newvalue"));</pre> | O(1) | Attempts to retrieve the value for the key "gopha". If not present, "newvalue" will be used instead and saved for the respective key of "gopha". |
+| **Remove element** | <pre lang="java">hm.remove("gopha");</pre> | O(1) | Removes the entry with the specified key from the HashMap. |
+| **Search Element** | <pre lang="java">hm.containsKey("gopha");</pre> <pre lang="java">hm.containsValue("ok");</pre> | O(1) | Checks if the HashMap contains the specified key or value. |
+| **Size** | <pre lang="java">hm.size();</pre> |  | Returns the number of key-value mappings in this HashMap. |
+| **Accessing** | <pre lang="java">for (Map.Entry entry : hm.entrySet()) { System.out.println(entry.getKey() + " " + entry.getValue()); }</pre> <pre lang="java">for (String key : hm.keySet()) { System.out.println(key); }</pre> <pre lang="java">for (String value : hm.values()) { System.out.println(value); }</pre> |  | Accesses the elements of the HashMap using various methods such as iterating over entries, keys, or values. |
+
 
 ## HashSet
 A collection that uses a Hash table for storage, only allowing unique elements to be added.
