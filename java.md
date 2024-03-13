@@ -55,12 +55,12 @@ A collection that uses a Hash table for storage, only allowing unique elements t
 | Operation | Code | TC |
 |---|---|---|
 | **Import required** | `import java.util.HashSet;` |  |
-| **Creation** | `<pre lang="java">HashSet<String> hs = new HashSet<>();</pre>` |  |
-| **Add Element** | `<pre lang="java">hs.add("gopha ok");</pre>` | O(1) |
-| **Remove Element** | `<pre lang="java">hs.remove("gopha ok");</pre>` | O(1) |
-| **Search element** | `<pre lang="java">hs.contains("gopha ok");</pre>` | O(1) |
-| **Size** | `<pre lang="java">hs.size();</pre>` | O(1) |
-| **Accessing** | `<pre lang="java">for (String s : hs) { System.out.println(s); }</pre>` | 
+| **Creation** | <pre lang="java">HashSet<String> hs = new HashSet<>();</pre> |  |
+| **Add Element** | <pre lang="java">hs.add("gopha ok");</pre> | O(1) |
+| **Remove Element** | <pre lang="java">hs.remove("gopha ok");</pre> | O(1) |
+| **Search element** | <pre lang="java">hs.contains("gopha ok");</pre> | O(1) |
+| **Size** | <pre lang="java">hs.size();</pre> | O(1) |
+| **Accessing** | <pre lang="java">for (String s : hs) { System.out.println(s); }</pre> | 
 
 
 
@@ -69,16 +69,17 @@ A collection of data elements sequentially ordered from 0 to length - 1. This me
 
 | Operation | Code | TC |
 |---|---|---|
-| **Import required** | `import java.util.ArrayList;` |  |
-| **Creation** | `ArrayList<Integer> list = new ArrayList<>();`<br>`List<Integer> list = new ArrayList<>();` |  |
-| **Add Element** | `list.add(1);` | O(1) |
-| **Add Element at Start** | `list.add(0, yourObject); // Inserts the specified element at the specified position in this list.` | O(n) |
-| **Update Element** | `list.set(0, 100); // Update index 0's value to 100` | O(1) |
-| **Remove Element** | `list.remove(0); // Remove index 0`<br>`list.clear(); // Remove all elements` | O(n) |
-| **Remove Last Element in List** | `List<Integer> temp = new ArrayList<>();`<br>`index=temp.size()-1; temp.remove(index);` | O(1) |
-| **Size** | `list.size();` | O(1) |
-| **Accessing** | <pre lang="java">for (int i = 0; i < list.size(); i++) {<br>    System.out.println(list.get(i));<br>}<br>for (String s : list) {<br>    System.out.println(s);<br>} </pre> | O(n) |
-| **Sorting** | `import java.util.Collections;`<br>`Collections.sort(list); // Sort ascending`<br>`Collections.sort(list, Collections.reverseOrder()); // Sort descending` | O(n log n) |
+| **Import required** | <pre lang="java">import java.util.ArrayList;</pre> |  |
+| **Creation** | <pre lang="java">ArrayList<Integer> list = new ArrayList<>();</pre><br><pre lang="java">List<Integer> list = new ArrayList<>();</pre> |  |
+| **Add Element** | <pre lang="java">list.add(1);</pre> | O(1) |
+| **Add Element at Start** | <pre lang="java">list.add(0, yourObject);<br>// Inserts the specified element at the specified position in this list.</pre> | O(n) |
+| **Update Element** | <pre lang="java">list.set(0, 100); // Update index 0's value to 100</pre> | O(1) |
+| **Remove Element** | <pre lang="java">list.remove(0); // Remove index 0</pre><br><pre lang="java">list.clear(); // Remove all elements</pre> | O(n) |
+| **Remove Last Element in List** | <pre lang="java">List<Integer> temp = new ArrayList<>();</pre><br><pre lang="java">index=temp.size()-1; temp.remove(index);</pre> | O(1) |
+| **Size** | <pre lang="java">list.size();</pre> | O(1) |
+| **Accessing** | <pre lang="java">for (int i = 0; i < list.size(); i++) {<br>    System.out.println(list.get(i));<br>}</pre><pre lang="java">for (String s : list) {<br>    System.out.println(s);<br>} </pre> | O(n) |
+| **Sorting** | <pre lang="java">import java.util.Collections;</pre><br><pre lang="java">Collections.sort(list); // Sort ascending</pre><br><pre lang="java">Collections.sort(list, Collections.reverseOrder()); // Sort descending</pre> | O(n log n) |
+
 
 
 
