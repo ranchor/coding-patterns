@@ -1,19 +1,26 @@
-
 # Table of contents
 
+- [Table of contents](#table-of-contents)
 - [General Data Structure](#general-data-structure)
   - [Arrays](#arrays)
   - [Strings](#strings)
   - [HashMap](#hashmap)
+  - [TreeMap](#treemap)
   - [HashSet](#hashset)
   - [ArrayList](#arraylist)
   - [Heap](#heap)
   - [Queue](#queue)
+  - [Dequeue](#dequeue)
   - [Stack](#stack)
   - [LinkedList](#linkedlist)
+- [StringBuilder && StringBuffer](#stringbuilder--stringbuffer)
+- [Pair Class](#pair-class)
 - [Math Utils](#math-utils)
 - [Arrays Utils](#arrays-utils)
 - [Character Utils](#character-utils)
+- [Integer Utils](#integer-utils)
+- [Collection Utils](#collection-utils)
+
 
 # General Data Structure
 
@@ -24,9 +31,6 @@
 | **Two dimensional** | <pre lang="java">int[][] myArr = new int[10][20];</pre> | Creates a two-dimensional array of integers with dimensions 10x20. |  |
 | **Array literals** | <pre lang="java">int[] myArr = new int[]{1, 2, 3};</pre> <pre lang="java">int[] myArr = {1, 2, 3};</pre> <pre lang="java">int[][] myArr = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };</pre> | Initializes arrays with literal values. |  |
 | **Accessing** | <pre lang="java">for (int i = 0; i < myArr.length; i++) { System.out.print(myArr[i]); }</pre> <pre lang="java">for (int[] row : myArr) { for (int element : row) { System.out.print(element); } }</pre> | Iterates through elements of the array using loops. |  |
-
-
-
 
 
 ## Strings
@@ -50,8 +54,6 @@
 
 
 
-
-
 ## HashMap
 A data structure that maps keys to values. A map cannot contain duplicate keys and each key can map to at most one value.
 
@@ -65,6 +67,22 @@ A data structure that maps keys to values. A map cannot contain duplicate keys a
 | **Search Element** | <pre lang="java">hm.containsKey("gopha");</pre> <pre lang="java">hm.containsValue("ok");</pre> | Checks if the HashMap contains the specified key or value. | O(1) |
 | **Size** | <pre lang="java">hm.size();</pre> | Returns the number of key-value mappings in this HashMap. |  |
 | **Accessing** | <pre lang="java">for (Map.Entry entry : hm.entrySet()) { System.out.println(entry.getKey() + " " + entry.getValue()); }</pre> <pre lang="java">for (String key : hm.keySet()) { System.out.println(key); }</pre> <pre lang="java">for (String value : hm.values()) { System.out.println(value); }</pre> | Accesses the elements of the HashMap using various methods such as iterating over entries, keys, or values. |  |
+
+
+## TreeMap
+A Red-Black tree-based NavigableMap implementation. It is sorted according to the natural ordering of its keys, or by a Comparator provided at the time of creation.
+
+| Operation | Code | Description | TC |
+|---|---|---|---|
+| **Import required** | <pre lang="java">import java.util.TreeMap;</pre> | Importing the required TreeMap class. |  |
+| **Creation** | <pre lang="java">TreeMap<Integer, String> treeMap = new TreeMap<>();</pre> | Creates a new TreeMap object with keys sorted in natural order. |  |
+| **Add Element** | <pre lang="java">treeMap.put(1, "apple");</pre> | Adds an element to the TreeMap with the specified key and value. | O(log n) |
+| **Remove element** | <pre lang="java">treeMap.remove(1);</pre> | Removes the entry with the specified key from the TreeMap. | O(log n) |
+| **Search Element** | <pre lang="java">treeMap.containsKey(1);</pre> <pre lang="java">treeMap.containsValue("apple");</pre> | Checks if the TreeMap contains the specified key or value. | O(log n) |
+| **Size** | <pre lang="java">treeMap.size();</pre> | Returns the number of key-value mappings in this TreeMap. | O(1) |
+| **Accessing** | <pre lang="java">treeMap.get(1);</pre> | Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key. | O(log n) |
+| **Navigable Operations** | <pre lang="java">treeMap.firstEntry();</pre> <pre lang="java">treeMap.lastEntry();</pre> <pre lang="java">treeMap.ceilingEntry(5);</pre> <pre lang="java">treeMap.floorEntry(5);</pre> | Provides navigational operations for retrieval based on keys. |  |
+
 
 
 ## HashSet
@@ -97,6 +115,8 @@ A collection of data elements sequentially ordered from 0 to length - 1. This me
 | **Size** | <pre lang="java">list.size();</pre> | Returns the number of elements in the list. | O(1) |
 | **Accessing** | <pre lang="java">for (int i = 0; i < list.size(); i++) { System.out.println(list.get(i)); }</pre><pre lang="java">for (String s : list) { System.out.println(s); }</pre> | Iterates through the elements of the list using both traditional and enhanced for loop. | O(n) |
 | **Sorting** | <pre lang="java">import java.util.Collections;</pre><pre lang="java">Collections.sort(list);</pre><pre lang="java">Collections.sort(list, Collections.reverseOrder());</pre> | Sorts the elements of the list in ascending or descending order. | O(n log n) |
+| **Convert to Array** | <pre lang="java">T[] arr = list.toArray(new T[0]);</pre> | Converts the list to an array. | O(n) |
+
 
 
 
@@ -130,6 +150,22 @@ A collection of elements, supporting two principle operations: enqueue, which in
 | **Remove Element** | <pre lang="java">q.poll();</pre> | Removes and returns the head of the queue, or null if the queue is empty. | O(1) |
 | **Size** | <pre lang="java">q.size();</pre><pre lang="java">q.isEmpty();</pre> | Returns the number of elements in the queue. Returns true if the queue is empty. | O(1) |
 | **Accessing** |  |  |  |
+
+## Dequeue
+A double-ended queue (pronounced "deck") that supports insertion and removal of elements from both ends.
+
+| Operation | Code | Description | TC |
+|---|---|---|---|
+| **Import required** | <pre lang="java">import java.util.Deque;</pre> | Importing the required Deque interface. |  |
+| **Creation** | <pre lang="java">Deque<Integer> deque = new LinkedList<>();</pre> | Creates a new Deque instance using LinkedList. |  |
+| **Add Element at Front** | <pre lang="java">deque.addFirst(10);</pre> | Inserts the specified element at the front of the deque. | O(1) |
+| **Add Element at End** | <pre lang="java">deque.addLast(20);</pre> | Inserts the specified element at the end of the deque. | O(1) |
+| **View First Element** | <pre lang="java">deque.peekFirst();</pre> | Retrieves, but does not remove, the first element of the deque, or returns null if the deque is empty. | O(1) |
+| **View Last Element** | <pre lang="java">deque.peekLast();</pre> | Retrieves, but does not remove, the last element of the deque, or returns null if the deque is empty. | O(1) |
+| **Remove First Element** | <pre lang="java">deque.pollFirst();</pre> | Retrieves and removes the first element of the deque, or returns null if the deque is empty. | O(1) |
+| **Remove Last Element** | <pre lang="java">deque.pollLast();</pre> | Retrieves and removes the last element of the deque, or returns null if the deque is empty. | O(1) |
+| **Size** | <pre lang="java">deque.size();</pre><pre lang="java">deque.isEmpty();</pre> | Returns the number of elements in the deque. Returns true if the deque is empty. | O(1) |
+
 
 
 
@@ -167,6 +203,45 @@ A linear collection of data elements, called nodes, each pointing to the next no
 | **Get Last Element** | <pre lang="java">list.getLast();</pre> | Returns the last element in the linked list. | O(1) |
 | **Get First Element** | <pre lang="java">list.getFirst();</pre> | Returns the first element in the linked list. | O(1) |
 
+# StringBuilder && StringBuffer
+
+### Difference
+
+| Aspect           | StringBuilder                                | StringBuffer                              |
+|------------------|----------------------------------------------|-------------------------------------------|
+| Mutability       | Mutable                                      | Mutable                                   |
+| Thread Safety    | Not thread-safe                              | Thread-safe                               |
+| Performance      | Typically faster                             | Slightly slower due to synchronization   |
+| Usability        | Preferred in single-threaded environments    | Preferred in multithreaded environments   |
+| Introduced in    | Java 5                                       | Early versions of Java                    |
+| Compatibility    | Part of Java Collections Framework           | Available for compatibility reasons      |
+| Methods          | Identical methods and behavior               | Identical methods and behavior            |
+
+
+
+### Operations
+
+
+| Operation | Code | Description | TC |
+|---|---|---|---|
+| **Creation** | <pre lang="java">StringBuilder sb = new StringBuilder();</pre><pre lang="java">StringBuffer sbf = new StringBuffer();</pre> | Creates a new instance of StringBuilder and StringBuffer respectively. |  |
+| **Append** | <pre lang="java">sb.append("hello");</pre><pre lang="java">sbf.append("world");</pre> | Appends the specified string representation to the end of the sequence. | O(1) |
+| **Insert** | <pre lang="java">sb.insert(0, "java");</pre><pre lang="java">sbf.insert(0, "hello");</pre> | Inserts the specified string representation at the specified position. | O(n) |
+| **Replace** | <pre lang="java">sb.replace(0, 2, "hi");</pre><pre lang="java">sbf.replace(0, 2, "hi");</pre> | Replaces the characters in a substring of the sequence with characters in the specified string. | O(n) |
+| **Delete** | <pre lang="java">sb.delete(0, 2);</pre><pre lang="java">sbf.delete(0, 2);</pre> | Removes the characters in a substring of this sequence. | O(n) |
+| **Reverse** | <pre lang="java">sb.reverse();</pre><pre lang="java">sbf.reverse();</pre> | Causes this character sequence to be replaced by the reverse of the sequence. | O(n) |
+| **Get Length** | <pre lang="java">sb.length();</pre><pre lang="java">sbf.length();</pre> | Returns the length (number of characters) of the character sequence. | O(1) |
+| **Convert to String** | <pre lang="java">sb.toString();</pre><pre lang="java">sbf.toString();</pre> | Returns a string representing the data in the sequence. | O(n) |
+
+
+
+# Pair Class
+| Operation | Code | Description | TC |
+|---|---|---|---|
+| **Import required** | <pre lang="java">import javafx.util.Pair;</pre> | Importing the required Pair class. |  |
+| **Pair Class** | <pre lang="java">Pair<Integer, String> pair = new Pair<>(1, "one");</pre> | Represents a generic pair of two objects. |  |
+| **Get First Item** | <pre lang="java">pair.getKey();</pre> | Returns the first item of the pair. | O(1) |
+| **Get Second Item** | <pre lang="java">pair.getValue();</pre> | Returns the second item of the pair. | O(1) |
 
 
 
@@ -189,11 +264,12 @@ A linear collection of data elements, called nodes, each pointing to the next no
 | Method Signature                             | Description                                                                                   | Example                                                                     |
 |----------------------------------------------|-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
 | `Arrays.sort(T[] arr)`                       | Sorts the specified array of objects into ascending order.                                   | `int[] arr = {3, 1, 4, 1, 5, 9, 2, 6};`<br>`Arrays.sort(arr);`            |
-| `Arrays.fill(T[] arr, T val)`               | Assigns the specified value to each element of the specified array.                          | `int[] arr = new int[5];`<br>`Arrays.fill(arr, 7);`                        |
 | `Arrays.asList(T... arr)`                   | Returns a fixed-size list backed by the specified array.                                      | `String[] arr = {"apple", "banana", "cherry"};`<br>`List<String> list = Arrays.asList(arr);` |
+| `Arrays.fill(T[] arr, T val)`               | Assigns the specified value to each element of the specified array.                          | `int[] arr = new int[5];`<br>`Arrays.fill(arr, 7);`                        |
 | `Arrays.equals(T[] arr1, T[] arr2)`         | Returns `true` if the two specified arrays of objects are equal to one another.              | `int[] arr1 = {1, 2, 3};`<br>`int[] arr2 = {1, 2, 3};`<br>`boolean isEqual = Arrays.equals(arr1, arr2);` |
 | `Arrays.copyOf(T[] original, int newLength)` | Copies the specified array, truncating or padding with zeros (if necessary) so the copy has the specified length. | `int[] arr = {1, 2, 3};`<br>`int[] newArr = Arrays.copyOf(arr, 5);`       |
 | `Arrays.toString(T[] arr)`                  | Returns a string representation of the contents of the specified array.                         | `int[] arr = {1, 2, 3};`<br>`String str = Arrays.toString(arr);`          |
+
 
 # Character Utils
 | Method Signature                                   | Description                                                                                                   | Example                                                                      |
@@ -210,18 +286,20 @@ A linear collection of data elements, called nodes, each pointing to the next no
 | `Character.digit(char ch, int radix)`            | Returns the numeric value of the specified character (for radix up to 36). Returns -1 if the character is not a digit. | `char ch = '7';`<br>`int digitValue = Character.digit(ch, 10);`             |
 
 
+# Integer Utils
+| Method Signature                                   | Description                                                                                                    | Example                                                                      |
+|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| `Integer.parseInt(String s)`                      | Parses the string argument as a signed decimal integer.                                                       | `String str = "123";`<br>`int num = Integer.parseInt(str);`                  |
+| `Integer.valueOf(int i)`                          | Returns an Integer instance representing the specified int value.                                             | `int num = 123;`<br>`Integer integer = Integer.valueOf(num);`                 |
+
+# Collection Utils
+| Method Signature                                     | Description                                                                                                                | Example                                                                        |
+|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| `Collections.sort(List<T> list)`                     | Sorts the specified list into ascending order, according to the natural ordering of its elements.                         | `List<Integer> numbers = Arrays.asList(3, 1, 2);`<br>`Collections.sort(numbers);`|
+| `Collections.sort(List<T> list, Comparator<? super T> c)` | Sorts the specified list according to the order induced by the specified comparator.                                       | `List<String> strings = Arrays.asList("banana", "apple", "orange");`<br>`Collections.sort(strings, Comparator.reverseOrder());` |
 
 
 
 
 
 
-### Notes
-* Add add StringBuilder and StringBuffer
-* Add about Integer class
-* How to insert at the start in the list
-* How to insert at the start in the string builder
-* Add TreeMap information
-* Add Dequeue information
-* Add pair class information and its corresponding import
-* String class and compareTo method
