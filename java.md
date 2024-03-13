@@ -21,7 +21,7 @@
 | Operation | Code | TC |
 |---|---|---|
 | **One Dimensional** | <pre lang="java"> int[] myArr = new int[10]; </pre> |  |
-| **Two dimensional** | <pre lang="java"> int[][] myArr = new int[10][20]; </pre> |  |
+| **Two dimensional** | <pre lang="java"> int[][] myArr = new int[10][20];</pre> |  |
 | **Array literals** | <pre lang="java"> int[] myArr = new int[]{1, 2, 3}; </pre> <pre lang="java"> int[] myArr = {1, 2, 3}; </pre> <pre lang="java"> int[][] myArr = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} }; </pre> |  |
 | **Accessing** | <pre lang="java"> for (int i = 0; i < myArr.length; i++) { System.out.print(myArr[i]); } </pre> <pre lang="java"> for (int[] row : myArr) { for (int element : row) { System.out.print(element); } } </pre>  |  |
 
@@ -32,7 +32,7 @@
 | **Creation** | <pre lang="java">String test = new String("ok");</pre> |  |
 | **String Literal** | <pre lang="java">String test = "ok";</pre> |  |
 | **Size** | <pre lang="java">test.length();</pre> |  |
-| **Accessing** | <pre lang="java">char[] chArr = test.toCharArray();<br>for (char c : chArr) { System.out.print(c); }<br>for (int i = 0; i < test.length(); i++) { System.out.print(test.charAt(i)); } </pre> |  |
+| **Accessing** | <pre lang="java">char[] chArr = test.toCharArray();</pre> <pre lang="java"> for (char c : chArr) { System.out.print(c); }</pre> <pre lang="java">for (int i = 0; i < test.length(); i++) { System.out.print(test.charAt(i)); } </pre> |  |
 
 
 ## HashMap
