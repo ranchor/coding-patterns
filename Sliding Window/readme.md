@@ -8,7 +8,6 @@
   - [Dynamic Size Window Template](#dynamic-size-window-template)
     - [General Template](#general-template)
     - [Modified Template (Counting)](#modified-template-counting)
-  - [Important Notes](#important-notes)
 - [Problems](#problems)
 - [References](#references)
 
@@ -170,7 +169,7 @@ public int slidingWindowCounting(int[] arr, int k) {
 * Data type of the window can vary depending on the situation, such as using the hash table as the counter, or you can use an array to do the same, since we only deal with English letters.
 * Slightly tricky part is the valid condition, and we might have to write a lot of code to get this updated in real time.
 **Sliding Window Template to solve all substring related problems**
-```
+```java
 A sliding window is an abstract concept commonly used in array/string problems.
 A window is a range of elements in the array/string which usually defined by the start and end indices,
 i.e. [i, j)[i,j) (left-closed, right-open). A sliding window is a window "slides" its two boundaries to the certain direction.
@@ -178,10 +177,10 @@ For example, if we slide [i, j)[i,j) to the right by 11 element, then it becomes
 ```
 A general way is to use a hashmap assisted with two pointers
 
-## Important Notes
+#### Important Notes
 * For substring problems using sliding windows left and right are [i, j)[i,j) (left-closed, right-open). If we need
   to find max/min length then do that after updating right indices. Eg:
-```
+```java
 right++;
 maxLength = Math.max(maxLength, right-left);
 ```

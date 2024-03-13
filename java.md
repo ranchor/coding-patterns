@@ -1,5 +1,21 @@
 
+# Table of contents
 
+- [General Data Structure](#general-data-structure)
+  - [Arrays](#arrays)
+  - [Strings](#strings)
+  - [HashMap](#hashmap)
+  - [HashSet](#hashset)
+  - [ArrayList](#arraylist)
+  - [Heap](#heap)
+  - [Queue](#queue)
+  - [Stack](#stack)
+  - [LinkedList](#linkedlist)
+- [Math Utils](#math-utils)
+- [Arrays Utils](#arrays-utils)
+- [Character Utils](#character-utils)
+
+# General Data Structure
 
 ## Arrays
 | Operation | Code | TC |
@@ -13,10 +29,12 @@
 ## Strings
 | Operation | Code | TC |
 |---|---|---|
-| **Creation** | <pre lang="java">``String test = new String("ok");``</pre> |  |
-| **String Literal** | <pre lang="java">``String test = "ok";``</pre> |  |
-| **Size** | <pre lang="java">``test.length();``</pre> |  |
-| **Accessing** | <pre lang="java">``char[] chArr = test.toCharArray();`` <br>``for (char c : chArr) { System.out.print(c); }``<br>``for (int i = 0; i < test.length(); i++) { System.out.print(test.charAt(i)); }`` </pre> |  |
+| **Creation** | <pre lang="java">String test = new String("ok");</pre> |  |
+| **String Literal** | <pre lang="java">String test = "ok";</pre> |  |
+| **Size** | <pre lang="java">test.length();</pre> |  |
+| **Accessing** | <pre lang="java">char[] chArr = test.toCharArray();<br>for (char c : chArr) { System.out.print(c); }<br>for (int i = 0; i < test.length(); i++) { System.out.print(test.charAt(i)); } </pre> |  |
+
+
 ## HashMap
 A data structure that maps keys to values. A map cannot contain duplicate keys and each key can map to at most one value.
 
@@ -92,6 +110,9 @@ A collection of elements, supporting two principle operations: enqueue, which in
 | **Size** | q.size(); q.isEmpty(); // Returns true if the queue is empty |
 | **Accessing** |  |
 
+
+
+
 ## Stack
 A collection of elements, with two principle operations: push, which adds to the collection, and pop, which removes the most recently added element.
 
@@ -162,3 +183,16 @@ A linear collection of data elements, called nodes, each pointing to the next no
 
 
 
+
+
+
+
+### Notes
+* Add add StringBuilder and StringBuffer
+* Add about Integer class
+* How to insert at the start in the list
+* How to insert at the start in the string builder
+* Add TreeMap information
+* Add Dequeue information
+* Add pair class information and its corresponding import
+* String class and compareTo method

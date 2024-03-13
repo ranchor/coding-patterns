@@ -28,7 +28,7 @@ represented by the node itself plus the character on the path
 For instance, if we store strings which only contains letter ``a`` to ``z``, we can declare an array whose size is ``26`` in each 
 node to store its children nodes. And for ``a`` specific character ``c``, we can use ``c - 'a'`` as the index to find the 
 corresponding child node in the array.
-```
+```java
 class TrieNode {
     // change this value to adapt to different cases
     public static final N = 26;
@@ -53,7 +53,7 @@ So there might be some waste of space
 
 ### Using Map
 We can declare a **hashmap** in each node. The key of the hashmap are characters and the value is the corresponding child node.
-```
+```java
 class TrieNode {
     Map<Character, TrieNode> children;
     boolean isWordEnd;

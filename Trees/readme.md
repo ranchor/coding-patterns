@@ -78,13 +78,16 @@ class Solution {
             return list;
         Stack<TreeNode> stack = new Stack<>();
         TreeNode current = root;
-        while(stack.size() > 0 || current != null) {
+        while(current != null || !stack.isEmpty()) {
+            // Traverse to the leftmost node
             while(current != null) {
-                stack.add(current);
+                stack.push(current);
                 current = current.left;
             }
+            // At this point, the leftmost node is at the top of the stack
             current = stack.pop();
             list.add(current.val);
+            // Move to the right subtree
             current = current.right;
         }
 
@@ -320,6 +323,52 @@ class Solution {
 ### Binary Search Tree (BST)
 Use the property of BST judiciously (the left subtree will always contain nodes with value less than root's value and 
 right subtree will contain nodes with value greater than root's value)
+```
+left < root < right    // BST Property
+```
+#### Searching
+```java
+ public TreeNode search(TreeNode root, int key) {
+    if (root == null || root.val == key) return root;
+    if (root.val < key) return search(root.right, key);
+    return search(root.left, key);
+}
+```
+#### Insertion
+```java
+ public void insert(int key) {
+        root = insertRec(root, key);
+}
+    
+private TreeNode insertRec(TreeNode root, int key) {
+    if (root == null) {
+        root = new TreeNode(key);
+        return root;
+    }
+    if (key < root.val) {
+        root.left = insertRec(root.left, key);
+    } else if (key > root.val) {
+        root.right = insertRec(root.right, key);
+    }
+    return root;
+}
+```
+#### Deletion
+* Three cases to consider:
+    * Node to be deleted has no children: Simply remove the node.
+    * Node to be deleted has one child: Replace the node with its child.
+    * Node to be deleted has two children: Find the inorder successor (or predecessor), copy its value to the node to be deleted, and then recursively delete the inorder successor (or predecessor).
+
+**Time Complexity**
+
+| Operation   | Average Case | Worst Case |
+|-------------|--------------|------------|
+| Insertion   | O(log n)     | O(n)       |
+| Deletion    | O(log n)     | O(n)       |
+| Searching   | O(log n)     | O(n)       |
+
+
+
 1. [Search in a Binary Search Tree](https://leetcode.com/problems/search-in-a-binary-search-tree)
 2. [Insert into a Binary Search Tree](https://leetcode.com/problems/insert-into-a-binary-search-tree)
 3. [Delete Node in a BST](https://leetcode.com/problems/delete-node-in-a-bst/)
@@ -330,7 +379,12 @@ right subtree will contain nodes with value greater than root's value)
 8. [Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst)
 9. [All Elements in Two Binary Search Trees](https://leetcode.com/problems/all-elements-in-two-binary-search-trees)
 
-### Path problems
+### Lowest Common Ancestor(LCA) problems
+1. [Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree)
+2. [Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree)
+3. [Lowest Common Ancestor of Deepest Leaves](https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves)
+
+### Root to leaf Path problems
 You are given root, you have to perform operations on a path, (path is root to leaf). 
 Think upon the type of traversal you will apply when going from root to leaf.
 1. [Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/description/)
@@ -345,17 +399,16 @@ Think upon the type of traversal you will apply when going from root to leaf.
 1. [Validate Binary Tree Nodes](https://leetcode.com/problems/validate-binary-tree-nodes/)
 2. [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
 
-### Lowest Common Ancestor(LCA) problems
-1. [Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree)
-2. [Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree)
-3. [Lowest Common Ancestor of Deepest Leaves](https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves)
+### Serialize and Deserialize tree
+1. [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
+1. [Serialize and Deserialize BST](https://leetcode.com/problems/serialize-and-deserialize-bst/)
 
-### Construction Problems
+### Tree Construction Problems
 1. [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
-2. [Construct Binary Tree from Inorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
-3. [Construct Binary Tree from Preorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/)
-4. [Convert Sorted Array to Binary Search Tree](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
-5. [Construct Binary Search Tree from Preorder Traversal](https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/)
+1. [Construct Binary Tree from Inorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
+1. [Construct Binary Tree from Preorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/)
+1. [Convert Sorted Array to Binary Search Tree](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
+1. [Construct Binary Search Tree from Preorder Traversal](https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/)
 
 # Problems
 
@@ -363,3 +416,11 @@ Think upon the type of traversal you will apply when going from root to leaf.
 * https://leetcode.com/discuss/study-guide/1212004/binary-trees-study-guide
 * https://leetcode.com/discuss/interview-question/1282328/trees-patterns-topics-sample-problems
 * https://leetcode.com/discuss/study-guide/937307/Iterative-or-Recursive-or-DFS-and-BFS-Tree-Traversal-or-In-Pre-Post-and-LevelOrder-or-Views
+* https://leetcode.com/discuss/study-guide/1337373/Tree-question-pattern-oror2021-placement
+* https://leetcode.com/discuss/study-guide/3743769/Crack-Easily-Any-Interview-or-Tree-Data-Structure-Patterns-With-Questions
+
+
+# Things to do
+* Add notes about BST properties
+* Add notes about construction of trees
+* Add notes where to use preorder and postorder
