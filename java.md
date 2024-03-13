@@ -64,9 +64,9 @@ A data structure that maps keys to values. A map cannot contain duplicate keys a
 | **Add Element** | <pre lang="java">hm.put("gopha", "ok");</pre> | Adds an element to the HashMap with the specified key and value. | O(1) |
 | **Update Element** | <pre lang="java">hm.put("gopha", hm.getOrDefault("gopha", "newvalue"));</pre> | Attempts to retrieve the value for the key "gopha". If not present, "newvalue" will be used instead and saved for the respective key of "gopha". | O(1) |
 | **Remove element** | <pre lang="java">hm.remove("gopha");</pre> | Removes the entry with the specified key from the HashMap. | O(1) |
-| **Search Element** | <pre lang="java">hm.containsKey("gopha");</pre> <pre lang="java">hm.containsValue("ok");</pre> | Checks if the HashMap contains the specified key or value. | O(1) |
+| **Search Element** | <pre lang="java">hm.containsKey("gopha");</pre><pre lang="java">hm.containsValue("ok");</pre> | Checks if the HashMap contains the specified key or value. | O(1) |
 | **Size** | <pre lang="java">hm.size();</pre> | Returns the number of key-value mappings in this HashMap. |  |
-| **Accessing** | <pre lang="java">for (Map.Entry entry : hm.entrySet()) { System.out.println(entry.getKey() + " " + entry.getValue()); }</pre> <pre lang="java">for (String key : hm.keySet()) { System.out.println(key); }</pre> <pre lang="java">for (String value : hm.values()) { System.out.println(value); }</pre> | Accesses the elements of the HashMap using various methods such as iterating over entries, keys, or values. |  |
+| **Accessing** | <pre lang="java">for (Map.Entry entry : hm.entrySet())</pre><pre lang="java">{ System.out.println(entry.getKey() + " " + entry.getValue()); <br>}</pre><pre lang="java">for (String key : hm.keySet()) { System.out.println(key); }</pre><pre lang="java">for (String value : hm.values()) { System.out.println(value); }</pre> | Accesses the elements of the HashMap using various methods such as iterating over entries, keys, or values. |  |
 
 
 ## TreeMap
@@ -88,15 +88,16 @@ A Red-Black tree-based NavigableMap implementation. It is sorted according to th
 ## HashSet
 A collection that uses a Hash table for storage, only allowing unique elements to be added.
 
-| Operation | Code | TC |
-|---|---|---|
-| **Import required** | <pre lang="java">import java.util.HashSet;</pre> |  |
-| **Creation** | <pre lang="java">HashSet<String> hs = new HashSet<>();</pre> |  |
-| **Add Element** | <pre lang="java">hs.add("gopha ok");</pre> | O(1) |
-| **Remove Element** | <pre lang="java">hs.remove("gopha ok");</pre> | O(1) |
-| **Search element** | <pre lang="java">hs.contains("gopha ok");</pre> | O(1) |
-| **Size** | <pre lang="java">hs.size();</pre> | O(1) |
-| **Accessing** | <pre lang="java">for (String s : hs) { System.out.println(s); }</pre> | 
+| Operation | Code | Description | TC |
+|---|---|---|---|
+| **Import required** | <pre lang="java">import java.util.HashSet;</pre> | Importing the required HashSet class. |  |
+| **Creation** | <pre lang="java">HashSet<String> hs = new HashSet<>();</pre> | Creates a new HashSet object. |  |
+| **Add Element** | <pre lang="java">hs.add("gopha ok");</pre> | Adds an element to the HashSet. | O(1) |
+| **Remove Element** | <pre lang="java">hs.remove("gopha ok");</pre> | Removes the specified element from the HashSet. | O(1) |
+| **Search element** | <pre lang="java">hs.contains("gopha ok");</pre> | Checks if the HashSet contains the specified element. | O(1) |
+| **Size** | <pre lang="java">hs.size();</pre> | Returns the number of elements in the HashSet. | O(1) |
+| **Accessing** | <pre lang="java">for (String s : hs) { System.out.println(s); }</pre> | Iterates through the elements of the HashSet. |  |
+
 
 
 
@@ -129,12 +130,13 @@ A specialized tree-based data structure that satisfies the heap property: if A i
 | Operation | Code | Description | TC |
 |---|---|---|---|
 | **Import required** | <pre lang="java">import java.util.PriorityQueue;</pre> | Importing the required PriorityQueue class. |  |
-| **Creation** | <pre lang="java">PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder);</pre><pre lang="java">PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<>( (a, b) -> a.getValue().equals(b.getValue()) ? a.getKey().compareTo(b.getKey()) : a.getValue() - b.getValue() );</pre> | Creates a PriorityQueue with specified initial capacity and comparator. | O(n) |
+| **Creation** | <pre lang="java">PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder);</pre><pre lang="java">PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<>(</pre><pre lang="java">(a, b) -> a.getValue().equals(b.getValue()) ?</pre><pre lang="java">a.getKey().compareTo(b.getKey()) : a.getValue() - b.getValue() );</pre> | Creates a PriorityQueue with specified initial capacity and comparator. | O(n) |
 | **Add Element** | <pre lang="java">pq.add(10);</pre> | Adds an element to the priority queue. | O(log n) |
 | **View Top Element** | <pre lang="java">pq.peek();</pre> | Returns but does not remove the top element from the priority queue. | O(1) |
 | **Remove Element** | <pre lang="java">pq.poll();</pre> | Returns and removes the top element from the priority queue. | O(log n) |
 | **Size** | <pre lang="java">pq.size();</pre> | Returns the number of elements in the priority queue. | O(1) |
 | **Accessing** |  |  |  |
+
 
 
 
