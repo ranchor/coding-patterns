@@ -25,20 +25,19 @@
 - [References](#references)
 
 # Introduction
-Union Find (or Disjoint Set) Data Structure helps to address the connectivity between the components of a network.
-The “network“ here can be a computer network or a social network. For instance, we can use a disjoint set to determine 
-if two people share a common ancestor.To check if two vertices are connected, we only need to check if they have the same root node.
+The Union Find (or Disjoint Set) Data Structure facilitates determining connectivity between components in a network, such as computer networks or social networks. 
+For instance, it can determine if two people share a common ancestor. Checking if two vertices are connected involves verifying if they share the same root node.
 ![](https://leetcode.com/explore/learn/card/Figures/Graph_Explore/Disjoint_Set_1_edited.png)
 
 ## Terminologies
-* **Parent node**: the direct parent node of a vertex. For example, in Figure 5, the parent node of vertex 3 is 1, 
+* **Parent node**: the direct parent node of a vertex. For example, in above figure, the parent node of vertex 3 is 1, 
 the parent node of vertex 2 is 0, and the parent node of vertex 9 is 9.
 * **Root node**: a node without a parent node; it can be viewed as the parent node of itself. 
-For example, in Figure 5, the root node of vertices 3 and 2 is 0. As for 0, it is its own root node and parent node. Likewise, the root node and parent node of vertex 9 is 9 itself. Sometimes the root node is referred to as the head node.
+For example, n above figure, the root node of vertices 3 and 2 is 0. As for 0, it is its own root node and parent node. Likewise, the root node and parent node of vertex 9 is 9 itself. Sometimes the root node is referred to as the head node.
 
 ## Implementing “disjoint sets”
 * The ``find`` function locates the root node of a given vertex. For example, in Figure 5, the output of the find function for vertex 3 is 0.
-* The ``union`` function unions two vertices and makes their root nodes the same. In Figure 5, if we union vertex 4 and vertex 5, their root node will become the same, which means the union function will modify the root node of vertex 4 or vertex 5 to the same root node.
+* The ``union`` function merges two vertices and makes their root nodes the same. In Figure 5, if we union vertex 4 and vertex 5, their root node will become the same, which means the union function will modify the root node of vertex 4 or vertex 5 to the same root node.
 
 ## Ways to implement a “disjoint set”.
 * Implementation with Quick Find
@@ -88,7 +87,7 @@ class UnionFind {
 |---|---|---|---|---|
 | Time Complexity | ``O(N)`` | ``O(1)`` | ``O(N)`` | ``O(1)`` |
 ### Space Complexity
-We need ``O(N)`` space to store the array of size ``N.``
+``O(N)``  to store the array of size ``N.``
 
 
 ## Implementation with Quick Union
@@ -131,9 +130,52 @@ Quick Union is more efficient than Quick Find.
 |---|---|---|---|---|
 | Time Complexity | ``O(N)`` | ``O(N)`` | ``O(N)`` | ``O(N)`` |
 ### Space Complexity
-We need ``O(N)`` space to store the array of size ``N.``
+``O(N)`` space to store the array of size ``N.``
 
 ## Implementation with Union by Rank
+
+```java
+class UnionFind {
+    private int[] parent;
+    private int[] rank;
+
+    public UnionFind(int size) {
+        parent = new int[size];
+        rank = new int[size];
+        for (int i = 0; i < size; i++) {
+            parent[i] = i;
+            rank[i] = 0;
+        }
+    }
+
+    public int find(int x) {
+        if (x != parent[x]) {
+            parent[x] = find(parent[x]); // Path Compression
+        }
+        return parent[x];
+    }
+
+    public void union(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rootX != rootY) {
+            if (rank[rootX] < rank[rootY]) {
+                parent[rootX] = rootY;
+            } else if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX]++;
+            }
+        }
+    }
+
+    public boolean connected(int x, int y) {
+        return find(x) == find(y);
+    }
+}
+
+```
 ### Time Complexity
 |  | Union-find Constructor | Find |  Union | Connected |
 |---|---|---|---|---|

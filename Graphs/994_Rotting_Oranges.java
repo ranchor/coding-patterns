@@ -38,9 +38,6 @@ class Solution {
         int minimumTime = -1;
         int visitedFresh = 0;
         while (!queue.isEmpty()) {
-
-            minimumTime++;
-
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 int[] temp = queue.poll();
@@ -59,16 +56,14 @@ class Solution {
                 }
             }
 
+            minimumTime++;
+
         }
 
         return visitedFresh != totalFresh ? -1 : minimumTime;
     }
 
     boolean isValid(int[][] grid, int row, int col, boolean[][] visited) {
-        if (row < 0 || col < 0 || row >= grid.length || col >= grid[row].length || grid[row][col] == 0
-                || grid[row][col] == 2 || visited[row][col])
-            return false;
-
-        return true;
+        return row>=0 && col>=0 && row<grid.length && col<grid[0].length && !visited[row][col] && grid[row][col]!=0; 
     }
 }

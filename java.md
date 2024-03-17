@@ -120,7 +120,20 @@ A collection of data elements sequentially ordered from 0 to length - 1. This me
 
 
 
+## LinkedList
+A linear collection of data elements, called nodes, each pointing to the next node by means of a pointer. It is a data structure consisting of a group of nodes which together represent a sequence. 
 
+| Operation | Code | Description | TC |
+|---|---|---|---|
+| **Import required** | <pre lang="java">import java.util.LinkedList;</pre> | Importing the required LinkedList class. |  |
+| **Creation** | <pre lang="java">LinkedList<Integer> list = new LinkedList<>();</pre><pre lang="java">LinkedList<Integer> ll = new LinkedList(C);</pre> | Creates a new LinkedList instance, either empty or containing elements from a specified collection. |  |
+| **Insert Element** | <pre lang="java">list.add(1);</pre>  | Inserts an element at the end of the linked list. | O(1) |
+| **Update Element** | <pre lang="java">list.set(0, 100);</pre> | Updates the element at the specified index with the given value. | O(1) |
+| **Remove Element** | <pre lang="java">list.remove(0);</pre><pre lang="java">list.remove(1);</pre><pre lang="java">list.clear();</pre> | Removes elements from the linked list: by index, by element, or all elements. | O(1) |
+| **Size** | <pre lang="java">list.size();</pre>  | Returns the number of elements in the linked list. | O(1) |
+| **Accessing** |  <pre lang="java">for (int i = 0; i < list.size(); i++) { System.out.println(list.get(i)); }</pre><pre lang="java">for (int i : list) { System.out.println(s); }</pre>   | Accesses elements of the linked list using a loop. | O(n) |
+| **Get Last Element** | <pre lang="java">list.getLast();</pre> | Returns the last element in the linked list. | O(1) |
+| **Get First Element** | <pre lang="java">list.getFirst();</pre> | Returns the first element in the linked list. | O(1) |
 
 
 
@@ -190,20 +203,7 @@ A collection of elements, with two principle operations: push, which adds to the
 
 
 
-## LinkedList
-A linear collection of data elements, called nodes, each pointing to the next node by means of a pointer. It is a data structure consisting of a group of nodes which together represent a sequence. 
 
-| Operation | Code | Description | TC |
-|---|---|---|---|
-| **Import required** | <pre lang="java">import java.util.LinkedList;</pre> | Importing the required LinkedList class. |  |
-| **Creation** | <pre lang="java">LinkedList<Integer> list = new LinkedList<>();</pre><pre lang="java">LinkedList<Integer> ll = new LinkedList(C);</pre> | Creates a new LinkedList instance, either empty or containing elements from a specified collection. |  |
-| **Insert Element** | <pre lang="java">list.add(1);</pre>  | Inserts an element at the end of the linked list. | O(1) |
-| **Update Element** | <pre lang="java">list.set(0, 100);</pre> | Updates the element at the specified index with the given value. | O(1) |
-| **Remove Element** | <pre lang="java">list.remove(0);</pre><pre lang="java">list.remove(1);</pre><pre lang="java">list.clear();</pre> | Removes elements from the linked list: by index, by element, or all elements. | O(1) |
-| **Size** | <pre lang="java">list.size();</pre>  | Returns the number of elements in the linked list. | O(1) |
-| **Accessing** |  <pre lang="java">for (int i = 0; i < list.size(); i++) { System.out.println(list.get(i)); }</pre><pre lang="java">for (int i : list) { System.out.println(s); }</pre>   | Accesses elements of the linked list using a loop. | O(n) |
-| **Get Last Element** | <pre lang="java">list.getLast();</pre> | Returns the last element in the linked list. | O(1) |
-| **Get First Element** | <pre lang="java">list.getFirst();</pre> | Returns the first element in the linked list. | O(1) |
 
 # StringBuilder && StringBuffer
 

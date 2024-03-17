@@ -335,8 +335,10 @@ public class BFS {
 2. [Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/)
 
 
-## Single Source Shortest Path (Dijkstra's/Bellman Ford Algorithm)
-This variant involves finding the shortest path from a source node to all other nodes in a weighted graph.
+
+
+## Single Source Shortest Path(SSSP) (Dijkstra's/Bellman Ford Algorithm)
+This variant involves finding the shortest path from a source node to all other nodes in a **weighted graph.**
 
 ### Dijkstra's Algorithm
 Dijkstra's algorithm is used to find the shortest paths from a single source to all other nodes in a weighted graph with non-negative edge weights. It maintains a priority queue to select the node with the shortest distance at each step.
@@ -346,6 +348,20 @@ Dijkstra's algorithm is used to find the shortest paths from a single source to 
 * Best suited for finding single-source shortest paths.
 
 [![](https://img.youtube.com/vi/XB4MIexjvY0/maxresdefault.jpg)](https://www.youtube.com/watch?v=XB4MIexjvY0)
+
+```
+1. Create a priority queue 'pq' to store nodes and their tentative distances.
+2. Initialize all node distances to Infinity except for the source node, which is set to 0.
+3. Add the source node to 'pq' with distance 0.
+4. While 'pq' is not empty:
+     - Extract the node 'u' with the minimum distance from 'pq'.
+     - For each neighbor 'v' of node 'u':
+         - Calculate the tentative distance to 'v' through 'u': tentative_distance = distance[u] + weight(u, v).
+         - If tentative_distance < distance[v]:
+             - Update distance[v] = tentative_distance.
+             - Enqueue node 'v' with updated distance into 'pq'.
+5. Return the distances array.
+```
 
 ```java
 import java.util.*;
@@ -446,6 +462,22 @@ The Bellman-Ford algorithm is used to find the shortest paths from a single sour
 * Uses relaxation of edges iteratively.
 * Detects negative weight cycles.
 * Suitable for single-source shortest path when negative weights are present.
+[![](https://img.youtube.com/vi/FtN3BYH2Zes/maxresdefault.jpg)](https://www.youtube.com/watch?v=FtN3BYH2Zes)
+
+```
+1. Create an array 'distance' to represent shortest path distances from source node k to all other nodes.
+2. Initialize 'distance' array with Infinity except for distance[k] = 0.
+3. Repeat (n-1) times:
+     - Relax all edges by iterating through each edge:
+         if (distance[u] + weight < distance[v]):
+             distance[v] = distance[u] + weight
+4. Check for negative cycles:
+     - Iterate through all edges:
+         if (distance[u] + weight < distance[v]):
+             return -1
+5. Find the maximum distance in 'distance' array.
+6. Return the maximum distance if it's not Infinity, otherwise return -1.
+```
 
 ```java
 import java.util.*;
@@ -508,13 +540,15 @@ public class Solution {
 ```
 
 #### Complexity Analysis
+* Time complexity: ``O(N*E)`` , where  N is the number of nodes and E is the number of edges in the graph.
+* Space complexity: ``O(N+E)`` for storing the edges list and the distance array.
 
 #### Problems
 1. [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/)
 
 
 
-## Multi-source Shortest Path (Floyd Warshall Algorithm)
+## Multi-source Shortest Path(MSSP) (Floyd Warshall Algorithm)
 ### Floyd Warshall
 The Floyd-Warshall algorithm is used to find the shortest paths between all pairs of nodes in a weighted graph. It can handle both positive and negative weight edges but does not detect negative weight cycles.
 * Works for all types of edge weights.
@@ -522,11 +556,61 @@ The Floyd-Warshall algorithm is used to find the shortest paths between all pair
 * Uses dynamic programming and a matrix to store distances.
 * Doesn't detect negative weight cycles.
 * Suitable for finding all pairs shortest paths.
+[![](https://img.youtube.com/vi/oNI0rf2P9gE/maxresdefault.jpg)](https://www.youtube.com/watch?v=oNI0rf2P9gE)
+```
+1. Initialize the distance matrix 'dist' with the weights of edges between each pair of vertices.
+2. Initialize the diagonal of the distance matrix to 0.
+3. For each intermediate vertex 'k':
+     - For each pair of vertices 'i' and 'j':
+         - If dist[i][k] + dist[k][j] < dist[i][j]:
+             - Update dist[i][j] = dist[i][k] + dist[k][j].
+4. Return the distance matrix 'dist'.
+```
+
+```java
+public static int[][] floydWarshall(int[][] graph) {
+        int V = graph.length;
+        int[][] dist = new int[V][V];
+
+        // Initialize dist matrix with graph values
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                dist[i][j] = graph[i][j];
+            }
+        }
+
+        // Apply Floyd-Warshall algorithm
+        for (int k = 0; k < V; k++) {
+            for (int i = 0; i < V; i++) {
+                for (int j = 0; j < V; j++) {
+                    if (dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE &&
+                        dist[i][k] + dist[k][j] < dist[i][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                    }
+                }
+            }
+        }
+
+        return dist;
+    }
+
+```
 
 #### Complexity Analysis
 
 #### Problems
 1. [Find the City With the Smallest Number of Neighbors at a Threshold Distance](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/)
+
+
+## Comparison Matrix
+| Algorithm       | Type          | Usage        | Time Complexity                | Space Complexity   | Negative Weight Edges |
+|-----------------|---------------|--------------|--------------------------------|--------------------|-----------------------|
+| BFS             | Traversal     | Unweighted   | O(V + E)                        | O(V)               | Not applicable       |
+| DFS             | Traversal     | Unweighted   | O(V + E)                        | O(V)               | Not applicable       |
+| Dijkstra's      | Single-Source | Weighted     | O(E + E * log(V))               | O(V)               | Not supported        |
+| Bellman-Ford    | Single-Source | Weighted     | O(V * E)                        | O(V)               | Supported            |
+| Floyd-Warshall  | All-Pairs     | Weighted     | O(V^3)                          | O(V^2)             | Supported            |
+
 
 ## Union-Find Problems
 Identify if problems talks about finding groups or components.
@@ -549,15 +633,16 @@ Check if its directed acyclic graph(DAG) and we have to arrange the elements in 
 1. [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/solution/)
 
 
+## Minimum Spanning Tree problems(Prim's and Kruskal's algorithm)
+1. [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)
+1. [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)
+
+
 ## Connected components problems(Tarjan's Algorithm)
 1. [Number of Provinces](https://leetcode.com/problems/number-of-provinces/)
 1. [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/)
 1. [Critical Connections in a Network](https://leetcode.com/problems/critical-connections-in-a-network/)
 
-
-## Minimum Spanning Tree problems(Prim's and Kruskal's algorithm)
-1. [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)
-1. [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)
 
 
 # Problems

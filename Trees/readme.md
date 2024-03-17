@@ -123,8 +123,7 @@ class Solution {
 ```
 
 ### PostOrder
-**Postorder from Preorder - Reverse the steps of pushing left and right child into stack and reverse full list in the 
-end.**
+**Postorder from Preorder - Reverse the steps of pushing left and right child into stack and reverse full list in the end.**
 ```java
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
@@ -387,6 +386,28 @@ private TreeNode insertRec(TreeNode root, int key) {
 ### Root to leaf Path problems
 You are given root, you have to perform operations on a path, (path is root to leaf). 
 Think upon the type of traversal you will apply when going from root to leaf.
+```java
+ private void traversePath(TreeNode root, List<Integer> path, List<String> result) {
+        // Base case: If the current node is null, return
+        if (root == null) return;
+        
+        // Add current node to the path
+        path.add(root.val);
+        
+        // Check if it's a leaf node
+        if (root.left == null && root.right == null) {
+            // Perform operations on the path
+            // Example: result.add(String.join("->", path)); // for Binary Tree Paths problem
+        }
+        
+        // Recursively traverse left and right subtrees
+        traversePath(root.left, path, result);
+        traversePath(root.right, path, result);
+        
+        // Backtrack: remove the current node from the path
+        path.remove(path.size() - 1);
+    }
+```
 1. [Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/description/)
 2. [Path Sum](https://leetcode.com/problems/path-sum/description/)
 3. [Path Sum II](https://leetcode.com/problems/path-sum-ii/description/)
@@ -400,6 +421,14 @@ Think upon the type of traversal you will apply when going from root to leaf.
 2. [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
 
 ### Serialize and Deserialize tree
+**Serialize**
+* Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+* *Serialize binary tree*: In that case we converting binary structure or object into string using preorder.(encode)
+
+**Deserialize**
+* Reconstruct the tree from serailize sequence data(string)
+* *Deserialize binary tree*: converting string to binary tree using preorder (decode)
+
 1. [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
 1. [Serialize and Deserialize BST](https://leetcode.com/problems/serialize-and-deserialize-bst/)
 
