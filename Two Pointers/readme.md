@@ -90,6 +90,10 @@ then the first pointer advances fast and give some feedback to the slow pointer 
 #### Rotation
 * [Rotate Array](https://leetcode.com/problems/rotate-array/)
 
+**
+Whenever you're trying to solve an array problem in place, always consider the possibility of iterating backwards instead of forwards through the array. 
+It can completely change the problem, and make it a lot easier.**
+
 ### [Pattern#3] Parallel - Two arrays, each array has been assigned with a pointer.
 In this category, you will be given 2 arrays or lists, then have to process them with individual pointers.
 ```

@@ -14,8 +14,8 @@
 Heap patterns are a set of problem-solving techniques that leverage the use of Priority Queues (Heaps), a powerful data structure for maintaining and manipulating elements with specific order criteria. These patterns are particularly useful in situations where you need to efficiently access, update, or process elements based on their priority, frequency, or value.
 
 ## Basics of PriorityQueue/Heap
-* PriorityQueue is an implementation of a min-heap (by default) or max-heap (with a custom comparator).
-* Elements are ordered by their natural order or according to the provided comparator.
+* PriorityQueue implements a min-heap (by default) or max-heap (with a custom comparator).
+* Elements are sorted naturally or according to the provided comparator.
 * The top element (at the front of the queue) is the smallest (min-heap) or largest (max-heap) element.
   
 ### Initialization
@@ -25,13 +25,46 @@ Heap patterns are a set of problem-solving techniques that leverage the use of P
 ``PriorityQueue<T> pq = new PriorityQueue<>(Collections.reverseOrder());``
 * Initialize with a custom comparator: 
 ``PriorityQueue<T> pq = new PriorityQueue<>((a, b) -> compare(a, b));``
+``PriorityQueue<String> minHeap = new PriorityQueue<>((a, b) -> Integer.compare(a.length, b.length));``
+``PriorityQueue<String> maxHeap = new PriorityQueue<>((a, b) -> Integer.compare(b.length, a.length));``
+* Custom Comparator for Objects by a Specific Field
+```java
+class Person {
+    String name;
+    int age;
+    // Constructor, getters, setters
+}
+
+PriorityQueue<Person> pq = new PriorityQueue<>(Comparator.comparingInt(person -> person.age));
+```
+* Custom Comparator for Objects by Multiple Fields
+Initializes a Priority Queue for Student objects with a custom comparator that sorts them first by age, then by GPA, and finally by name.
+```java
+class Student {
+    String name;
+    int age;
+    double gpa;
+    // Constructor, getters, setters
+}
+
+PriorityQueue<Student> pq = new PriorityQueue<>((s1, s2) -> {
+    if (s1.age != s2.age) {
+        return Integer.compare(s1.age, s2.age); // Sort by age
+    }
+    if (s1.gpa != s2.gpa) {
+        return Double.compare(s1.gpa, s2.gpa); // If age is equal, sort by GPA
+    }
+    return s1.name.compareTo(s2.name); // If age and GPA are equal, sort by name
+});
+```
 
 ### Common Operations
-* ``add(e)`` or ``offer(e)``: Adds an element to the queue.
-* ``poll()``: Removes and returns the top element.
-* ``peek()``: Returns the top element without removing it.
-* ``remove(e)``: Removes the specified element.
-* ``size()``: Returns the number of elements in the queue.
+* **Addition**: ``add(e)`` or ``offer(e)`` methods add an element to the queue.
+* **Removal**: ``poll()`` method removes and returns the top element.
+* **Peeking**: ``peek()`` method returns the top element without removing it.
+* **Removal by Element**: ``remove(e)`` method removes the specified element.
+* **Size**: ``size()`` method returns the number of elements in the queue.
+
 
 ###  Time Complexity:
 * Insertion (add/offer): ``O(log n)``
@@ -64,7 +97,7 @@ There is no need for a sorting algorithm because the heap will keep track of the
 * This pattern is widely applicable when you need to find the K smallest or largest elements.
 
 ## [Pattern#2] K Way Merge
-K-way Merge helps you solve problems that involve a set of sorted arrays.Whenever you’re given ‘K’ sorted arrays, you can use a Heap to efficiently perform a sorted traversal of all the
+K-way Merge helps you solve problems that involve a set of sorted arrays.Whenever you’re given **‘K’ sorted arrays**, you can use a Heap to efficiently perform a sorted traversal of all the
 elements of all arrays. You can push the smallest element of each array in a Min Heap to get the overall minimum. After getting the overall minimum, push the next element from the same array to the heap. Then, repeat this process 
 to make a sorted traversal of all elements.
  ![alt text](https://cdn-images-1.medium.com/max/800/0*bXCTQM9s_0i-zNqU)
@@ -91,12 +124,13 @@ in the other part. This pattern is an efficient approach to solve such problems.
 This pattern uses two Heaps to solve these problems; A **Min Heap** to find the smallest element and a **Max Heap** to find the biggest element. 
 
 ### Pseudo Code:
-1. Maintain two Heaps: a **Min Heap** to keep track of the larger half and a **Max Heap** for the smaller half.
+1. Maintain two Heaps: a Min Heap for the larger half and a Max Heap for the smaller half.
 2. Insert elements into the appropriate heap based on their values:
-   1. If an element is smaller than the largest element in the Min Heap, insert it into the Max Heap.
-   2. If an element is larger, insert it into the Min Heap.
-3. Keep the heaps balanced so that the difference in the number of elements between them is at most 1.
-4. To find the median or balance the elements, the top elements of the two heaps may be used.
+   1. If the element is smaller than the top element of the Max Heap, insert it into the Max Heap.
+   2. If the element is larger than the top element of the Min Heap, insert it into the Min Heap.
+   3. If the element falls between the top elements of the two heaps, insert it into the heap with fewer elements.
+3. Ensure that the heaps are balanced so that the absolute difference in the number of elements between them is at most 1.
+4. To find the median or balance the elements, use the top elements of the two heaps.
 
 
 ### Identification Srategy

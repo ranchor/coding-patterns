@@ -1,6 +1,20 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
+ * }
+ */
 class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
-
         List<List<Integer>> output = new ArrayList<>();
         if (root == null)
             return output;
@@ -9,13 +23,12 @@ class Solution {
         queue.add(new Pair(root, 0));
         int column;
         while (!queue.isEmpty()) {
-            Pair p = queue.poll();
-            TreeNode currNode = (TreeNode) p.getKey();
-            column = (int) p.getValue();
+            Pair<TreeNode, Integer> p = queue.poll();
+            TreeNode currNode = p.getKey();
+            column = p.getValue();
 
-            List<Integer> temp = columnTable.getOrDefault(column, new ArrayList<>());
+            List<Integer> temp = columnTable.computeIfAbsent(column, k -> new ArrayList<>());
             temp.add(currNode.val);
-            columnTable.put(column, temp);
 
             if (currNode.left != null) {
                 queue.add(new Pair(currNode.left, column - 1));

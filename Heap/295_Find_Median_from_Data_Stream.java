@@ -15,7 +15,7 @@ class MedianFinder {
         this.maxLowerHalf.offer(num);
         this.minUpperHalf.offer(this.maxLowerHalf.poll());
 
-        while (this.minUpperHalf.size() > this.maxLowerHalf.size()) {
+        if(this.minUpperHalf.size() > this.maxLowerHalf.size()) {
             maxLowerHalf.offer(minUpperHalf.poll());
         }
 

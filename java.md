@@ -116,7 +116,8 @@ A collection of data elements sequentially ordered from 0 to length - 1. This me
 | **Size** | <pre lang="java">list.size();</pre> | Returns the number of elements in the list. | O(1) |
 | **Accessing** | <pre lang="java">for (int i = 0; i < list.size(); i++) { System.out.println(list.get(i)); }</pre><pre lang="java">for (String s : list) { System.out.println(s); }</pre> | Iterates through the elements of the list using both traditional and enhanced for loop. | O(n) |
 | **Sorting** | <pre lang="java">import java.util.Collections;</pre><pre lang="java">Collections.sort(list);</pre><pre lang="java">Collections.sort(list, Collections.reverseOrder());</pre> | Sorts the elements of the list in ascending or descending order. | O(n log n) |
-| **Convert to Array** | <pre lang="java">T[] arr = list.toArray(new T[0]);</pre> | Converts the list to an array. | O(n) |
+| **Convert to Array of Non-Primitive Data Type** | <pre lang="java">T[] arr = list.toArray(new T[0]);</pre> | Converts the list to an array. | O(n) |
+| **Convert to Array of Primitive Data Type** | <pre lang="java">int[] array = list.stream().mapToInt(Integer::intValue).toArray();</pre> | Converts the list to primitive array. | O(n) |
 
 
 
@@ -302,6 +303,11 @@ A collection of elements, with two principle operations: push, which adds to the
 
 
 
+# Comparator Class
 
 
 
+
+
+## Notes
+* Add computeIfAbsent()

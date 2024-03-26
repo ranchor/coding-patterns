@@ -1,28 +1,30 @@
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
 
-        PriorityQueue<Pair<Integer, Double>> queue = new PriorityQueue<Pair<Integer, Double>>(
-                (a, b) -> (Double.compare(b.getValue(), a.getValue())));
-        for (int index = 0; index < points.length; index++) {
-            queue.add(new Pair(index, distance(points[index][0], points[index][1])));
-            while (queue.size() > k) {
-                queue.poll();
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> Integer.compare(distance(b), distance(a)));
+
+        for (int[] point : points) {
+            pq.add(point);
+
+            if (pq.size() > k) {
+                pq.poll();
             }
         }
 
-        // Use of arraylist is not required here.
-        int[][] output = new int[k][2];
-        for (int index = 0; index < k; index++) {
-            Pair<Integer, Double> p = queue.poll();
-            int[] point = points[p.getKey()];
+        int[][] output = new int[pq.size()][2];
+        int index = 0;
+        while (!pq.isEmpty()) {
+            int[] point = pq.poll();
             output[index][0] = point[0];
             output[index][1] = point[1];
+            index++;
         }
 
         return output;
+
     }
 
-    double distance(int x, int y) {
-        return Math.pow((double) x, 2.0) + Math.pow((double) y, 2.0);
+    int distance(int[] point) {
+        return point[0] * point[0] + point[1] * point[1];
     }
 }

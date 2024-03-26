@@ -1,4 +1,5 @@
 # Table of contents
+
 - [Table of contents](#table-of-contents)
 - [Introduction](#introduction)
   - [BFS vs DFS](#bfs-vs-dfs)
@@ -8,9 +9,9 @@
     - [Preorder](#preorder)
     - [PostOrder](#postorder)
   - [DFS Recursive Traversal](#dfs-recursive-traversal)
-    - [Inorder](#inorder-1)
-    - [Preorder](#preorder-1)
-    - [PostOrder](#postorder-1)
+    - [Inorder](#inorder)
+    - [Preorder](#preorder)
+    - [PostOrder](#postorder)
   - [BFS/Level Order Traversal](#bfslevel-order-traversal)
     - [Level Order Traversal](#level-order-traversal)
     - [Level Order Level By Level](#level-order-level-by-level)
@@ -19,13 +20,16 @@
     - [Traversals (BFS or DFS)](#traversals-bfs-or-dfs)
     - [View Problems](#view-problems)
     - [Basic Binary Tree problems](#basic-binary-tree-problems)
+    - [Travel child to parent problems (Radial Traversal)](#travel-child-to-parent-problems-radial-traversal)
     - [Binary Search Tree (BST)](#binary-search-tree-bst)
-    - [Path problems](#path-problems)
-    - [Validate trees](#validate-trees)
     - [Lowest Common Ancestor(LCA) problems](#lowest-common-ancestorlca-problems)
-    - [Construction Problems](#construction-problems)
+    - [Root to leaf Path problems](#root-to-leaf-path-problems)
+    - [Validate trees](#validate-trees)
+    - [Serialize and Deserialize tree](#serialize-and-deserialize-tree)
+    - [Tree Construction Problems](#tree-construction-problems)
 - [Problems](#problems)
 - [References](#references)
+- [Things to do](#things-to-do)
 
 # Introduction
 
@@ -319,6 +323,15 @@ class Solution {
 8. [Merge Two Binary Trees](https://leetcode.com/problems/merge-two-binary-trees)
 9. [Binary Tree Tilt](https://leetcode.com/problems/binary-tree-tilt)
 
+### Travel child to parent problems (Radial Traversal)
+In such type of problem we given target node [any node in tree also possibly root] and travel level by level from that node to finding ans.
+**Template**
+* Build parent and child relation map
+* Do level order traversal or DFS
+1. [All Nodes Distance K in Binary Tree](https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/)
+1. [Amount of Time for Binary Tree to Be Infected](https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected/description/)
+
+
 ### Binary Search Tree (BST)
 Use the property of BST judiciously (the left subtree will always contain nodes with value less than root's value and 
 right subtree will contain nodes with value greater than root's value)
@@ -379,9 +392,37 @@ private TreeNode insertRec(TreeNode root, int key) {
 9. [All Elements in Two Binary Search Trees](https://leetcode.com/problems/all-elements-in-two-binary-search-trees)
 
 ### Lowest Common Ancestor(LCA) problems
+Template for LCA in Binary Tree
+```java
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    // Base case: if root is null or root is either p or q, return root
+    if (root == null || root == p || root == q) {
+        return root;
+    }
+
+    // Recursively search left and right subtrees
+    TreeNode leftLCA = lowestCommonAncestor(root.left, p, q);
+    TreeNode rightLCA = lowestCommonAncestor(root.right, p, q);
+
+    // If both left and right subtrees return non-null values,
+    // then the current node is the LCA
+    if (leftLCA != null && rightLCA != null) {
+        return root;
+    }
+
+    // If only one subtree returns a non-null value, propagate it upwards
+    return leftLCA != null ? leftLCA : rightLCA;
+}
+```
+* If ``p`` and ``q`` are found in different subtrees, the current node is their LCA.
+* If ``p`` or ``q`` is found only in the left subtree, return the result from the left subtree.
+* If ``p`` or ``q`` is found only in the right subtree, return the result from the right subtree.
 1. [Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree)
-2. [Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree)
-3. [Lowest Common Ancestor of Deepest Leaves](https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves)
+1. [Lowest Common Ancestor of a Binary Tree II](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree-ii/description/)
+1. [Lowest Common Ancestor of a Binary Tree III](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree-iii/description/)
+1. [Lowest Common Ancestor of a Binary Tree IV](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree-iv/description/)
+1. [Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree)
+1. [Lowest Common Ancestor of Deepest Leaves](https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves)
 
 ### Root to leaf Path problems
 You are given root, you have to perform operations on a path, (path is root to leaf). 
