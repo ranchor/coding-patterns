@@ -367,19 +367,23 @@ public double getMax(int[] piles) {
 
 ## Binary Search Template Analysis(I,II and III) 
 ![](https://leetcode.com/explore/learn/card/binary-search/136/template-analysis/Figures/binary_search/Template_Diagram.png)
-
-### Template #1   (left <= right):
-* Search Condition can be determined without comparing to the element's neighbors (or use specific elements around it)
-* No post-processing required
-### Template #2   (left < right):
+### Template #1   (left < right):
 * Search Condition needs to access the element's immediate right neighbor
 * Use the element's right neighbor to determine if the condition is met and decide whether to go left or right
-* Post-processing required. Loop/Recursion ends when you have 1 element left. Need to assess if the remaining element meets the condition.
+* **Example Problems**: Find the first occurrence of a target, minimum k for which condition(k) is true.
+* **Key Attributes**: Post-processing is required. Loop/Recursion ends when you have 1 element left.
+
+### Template #2   (left <= right):
+* Search Condition can be determined without comparing to the element's neighbors (or use specific elements around it)
+* **Example Problems**: Standard binary search for finding an element.
+* **Key Attributes**: No post-processing required.
+
 ### Template #3  (left + 1 < right):
 * Search Condition needs to access element's immediate left and right neighbors
 * Use element's neighbors to determine if the condition is met and decide whether to go left or right
 * Guarantees Search Space is at least 3 in size at each step
-* Post-processing required. Loop/Recursion ends when you have 2 elements left. Need to assess if the remaining elements meet the condition.
+* **Example Problems**: Finding peak elements, finding local minimum/maximum.
+- **Key Attributes**: Guarantees the search space is at least 3 in size at each step. Post-processing required.
 
 ### Complexity Analysis
 Time and Space Complexity: Runtime: ``O(log n)`` -- Logorithmic Time
