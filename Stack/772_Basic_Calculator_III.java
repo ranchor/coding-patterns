@@ -3,35 +3,52 @@ class Solution {
         if (s == null || s.length() == 0)
             return 0;
 
-        // s = "23+2*2"
-        // prevOperator = *
-        // stack = [3,2]
-        // ch =3
+        Queue<Character> queue = new LinkedList<>();
+        for (char ch : s.toCharArray()) {
+            queue.offer(ch);
+        }
 
-        int number = 0;
+        return cal(queue);
+
+    }
+
+    // 4+(1+(4+5+2)-3)
+    // q = [4, -, (, 1, +, (, 4, +, 5, +, 2, ), -, 3, )]
+    // stack = [4, -9]
+    // prevOperator = -
+    // . stack = [1, 11, -3]
+    // prevOperator=
+    // stack = [4, 5, 2]
+    //
+    int cal(Queue<Character> queue) {
+        Stack<Integer> stack = new Stack<>();
         char prevOperator = '+';
-        Stack<Integer> stack = new Stack();
-        for (int index = 0; index < s.length(); index++) {
-            char ch = s.charAt(index);
+        int number = 0;
+        while (!queue.isEmpty()) {
+            char ch = queue.poll();
             if (Character.isDigit(ch)) {
                 number = number * 10 + (ch - '0');
-            }
-            if (isOperator(ch) || index == (s.length() - 1)) {
+            } else if (ch == '(') {
+                number = cal(queue);
+            } else if (isOperator(ch)) {
                 evaluate(prevOperator, number, stack);
                 prevOperator = ch;
                 number = 0;
+            } else if (ch == ')') {
+                break;
             }
+
         }
 
-        // with second else if we don't need ths outside.
-        // evaluate(prevOperator, number, stack);
+        evaluate(prevOperator, number, stack);
 
-        int output = 0;
+        int ans = 0;
         while (!stack.isEmpty()) {
-            output += stack.pop();
+            ans += stack.pop();
         }
 
-        return output;
+        return ans;
+
     }
 
     boolean isOperator(char ch) {
@@ -48,5 +65,6 @@ class Solution {
         } else if (operator == '/') {
             stack.push(stack.pop() / number);
         }
+
     }
 }

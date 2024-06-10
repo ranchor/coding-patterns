@@ -115,9 +115,7 @@ public int[] findNextGreaterIndexes(int[] arr) {
     // Initialize nextGreater array, this array holds the output
     // Initialize all the elements to -1 (invalid value)
     int[] nextGreater = new int[arr.length];
-    for (int i = 0; i < arr.length; i++) {
-        nextGreater[i] = -1;
-    }
+    Arrays.fill(nextGreater, -1);
     
     // Iterate through all the elements of the array
     for (int i = 0; i < arr.length; i++) {
@@ -135,11 +133,6 @@ public int[] findNextGreaterIndexes(int[] arr) {
         
         // Push the current element
         stack.push(i);
-    }
-
-    while (!stack.isEmpty()) {
-        int index = stack.pop();
-        nextGreater[index] = -1;
     }
     
     return nextGreater;
@@ -159,9 +152,7 @@ public int[] findPreviousGreaterIndexes(int[] arr) {
     // Initialize previousGreater array, this array holds the output
     // Initialize all the elements to -1 (invalid value)
     int[] previousGreater = new int[arr.length];
-    for (int i = 0; i < arr.length; i++) {
-        previousGreater[i] = -1;
-    }
+    Arrays.fill(previousGreater, -1);
     
     // Iterate through all the elements of the array
     for (int i = 0; i < arr.length; i++) {
@@ -201,9 +192,7 @@ public int[] findNextSmallerIndexes(int[] arr) {
     // Initialize nextSmaller array; this array holds the output
     // Initialize all the elements to -1 (invalid value)
     int[] nextSmaller = new int[arr.length];
-    for (int i = 0; i < arr.length; i++) {
-        nextSmaller[i] = -1;
-    }
+    Arrays.fill(nextSmaller, -1);
     
     // Iterate through all the elements of the array
     for (int i = 0; i < arr.length; i++) {
@@ -239,9 +228,7 @@ public int[] findPreviousSmallerIndexes(int[] arr) {
     // Initialize previousSmaller array; this array holds the output
     // Initialize all the elements to -1 (invalid value)
     int[] previousSmaller = new int[arr.length];
-    for (int i = 0; i < arr.length; i++) {
-        previousSmaller[i] = -1;
-    }
+    Arrays.fill(previousSmaller, -1);
     
     // Iterate through all the elements of the array
     for (int i = 0; i < arr.length; i++) {
@@ -348,6 +335,29 @@ class TwoStacks {
     public boolean isEmpty() {
         return stack1.isEmpty() && stack2.isEmpty();
     }
+}
+```
+
+## Trapping Rain Water Template
+This pattern helps solve problems related to trapping rainwater between heights.
+
+``` java
+public int trap(int[] height) {
+    Stack<Integer> stack = new Stack<>();
+    int water = 0;
+    for (int i = 0; i < height.length; i++) {
+        while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
+            int top = stack.pop();
+            if (stack.isEmpty()) {
+                break;
+            }
+            int distance = i - stack.peek() - 1;
+            int boundedHeight = Math.min(height[i], height[stack.peek()]) - height[top];
+            water += distance * boundedHeight;
+        }
+        stack.push(i);
+    }
+    return water;
 }
 ```
 

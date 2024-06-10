@@ -38,17 +38,104 @@ while (fast != null && fast.next != null) {
     fast = fast.next.next;
 }
 ```
+**Detecting a Cycle in a Linked List**
+```java
+public boolean hasCycle(ListNode head) {
+    if (head == null || head.next == null) {
+        return false;
+    }
+    ListNode slow = head;
+    ListNode fast = head.next;
+    while (fast != null && fast.next != null) {
+        if (slow == fast) {
+            return true;
+        }
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return false;
+}
+```
+**Finding the Start of the Cycle**
+```java
+public ListNode detectCycle(ListNode head) {
+    if (head == null || head.next == null) {
+        return null;
+    }
+    ListNode slow = head;
+    ListNode fast = head;
+    boolean hasCycle = false;
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (slow == fast) {
+            hasCycle = true;
+            break;
+        }
+    }
+    if (!hasCycle) {
+        return null;
+    }
+    ListNode ptr1 = head;
+    ListNode ptr2 = slow;
+    while (ptr1 != ptr2) {
+        ptr1 = ptr1.next;
+        ptr2 = ptr2.next;
+    }
+    return ptr1;  // Start of the cycle
+}
+```
+
+### Proof of the Meeting Point of Slow and Fast Pointers
+
+#### Basic Idea:
+When using the Fast and Slow pointers method to detect a cycle in a linked list, the fast pointer moves twice as fast as the slow pointer. If there is a cycle, the fast pointer will eventually catch up to the slow pointer within the cycle. The key insight is that the meeting point of the slow and fast pointers is at the same distance from the start of the linked list to the entry point of the cycle.
+
+#### Step-by-Step Explanation:
+
+1. **Initialization**:
+   - Both pointers (`slow` and `fast`) start at the head of the linked list.
+   - The `slow` pointer moves one step at a time.
+   - The `fast` pointer moves two steps at a time.
+
+2. **Meeting in the Cycle**:
+   - When they meet inside the cycle, the fast pointer has traveled twice the distance of the slow pointer. Let's denote the distance the slow pointer has traveled by `d`.
+   - The fast pointer, therefore, has traveled `2d`.
+
+3. **Cycle Length and Distances**:
+   - Let's break down the distances:
+     - `L`: The distance from the start of the list to the beginning of the cycle.
+     - `C`: The length of the cycle.
+     - `K`: The distance from the start of the cycle to the meeting point within the cycle.
+
+4. **Relationship Between Distances**:
+   - By the time the slow and fast pointers meet:
+     - The slow pointer has traveled `L + K` (one complete pass through the non-cyclic part and `K` within the cycle).
+     - The fast pointer has traveled `L + K + nC` (where `n` is the number of complete cycles it has made within the cycle).
+
+5. **Equation**:
+   - Since the fast pointer moves twice as fast, we can write:
+     - `2(L + K) = L + K + nC`
+   - Simplify this to:
+     - `2L + 2K = L + K + nC`
+     - `L + K = nC` (after subtracting `L + K` from both sides).
+
+6. **Conclusion**:
+   - The equation `L + K = nC` shows that the distance `L` (from the start to the cycle's entry point) plus `K` (the distance from the cycle entry to the meeting point) equals `nC` (a multiple of the cycle length).
+   - This means that when the slow and fast pointers meet, the distance they have traveled aligns such that if you start another pointer at the head of the list and move both the slow pointer and this new pointer one step at a time, they will meet at the cycle's entry point.
+
+So, the distance from the start of the linked list to the meeting point of the slow and fast pointers is equal to the distance from the start to the cycle's entry point. This proves that the meeting point is exactly at the same distance from the start to the entry point of the cycle.
 
 
 ## [Pattern#3] Two Pointers Linked List
+The two pointers technique involves using two pointers to solve various linked list problems, such as finding the kth node from the end, merging two sorted lists, or detecting intersections.
 
 
 
 ## Understanding and Utilizing Dummy Nodes in Linked Lists
 ### Introduction
-* A dummy node, also known as a **sentinel node**, is a special node placed at the front or end of a linked list.
-* It serves as a tool to simplify linked list operations, eliminate the need for special-case handling, and ensure a consistent structure.
-* Dummy nodes ensure that there is always a valid node to work with, reducing code complexity and preventing null pointer exceptions.
+A dummy node, also known as a **sentinel node**, is a special node placed at the front or end of a linked list. 
+It simplifies operations, eliminates special-case handling, and ensures a consistent structure.
 ### Benefits
 * **Consistent Logic**: The use of a dummy node eliminates the need for special-case handling when the head node needs to be deleted.
 * **Simplified Code**: The code becomes more straightforward and less error-prone, making it easier to understand and maintain.

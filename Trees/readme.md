@@ -462,18 +462,79 @@ Think upon the type of traversal you will apply when going from root to leaf.
 2. [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
 
 ### Serialize and Deserialize tree
-**Serialize**
+#### Serialize
 * Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
 * *Serialize binary tree*: In that case we converting binary structure or object into string using preorder.(encode)
 
-**Deserialize**
+#### Deserialize
 * Reconstruct the tree from serailize sequence data(string)
 * *Deserialize binary tree*: converting string to binary tree using preorder (decode)
 
 1. [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
 1. [Serialize and Deserialize BST](https://leetcode.com/problems/serialize-and-deserialize-bst/)
 
+#### General Strategy
+* For serialization, use preorder traversal to create a string representation of the tree with delimiters to separate node values.
+* For deserialization, use a queue to process the string and rebuild the tree by creating nodes and linking them based on the serialized order.
+
+
 ### Tree Construction Problems
+Tree construction problems often involve building a tree from given traversal orders (preorder, inorder, postorder). The key is to understand the properties of each traversal and how to use them to reconstruct the tree.
+
+#### General Strategy
+* Start from not inorder traversal, usually it's a preorder or postorder one, and use the traversal picture above to define the strategy to pick the nodes. For example, for preorder traversal the first value is a root, then its left child, then its right child, etc. For postorder traversal the last value is a root, then its right child, then its left child, etc
+* The value picked from preorder/postorder traversal splits the inorder traversal into left and right subtrees. The only information one needs from inorder - if the current subtree is empty (= return None) or not (= continue to construct the subtree).
+
+1. **Preorder and Inorder**:
+    * The first element in the preorder traversal is the root.
+    * Use the inorder traversal to determine the left and right subtrees.
+    * Recursively build the left and right subtrees.
+    
+    ```java
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        Map<Integer, Integer> inorderMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        return buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inorderMap);
+    }
+
+    private TreeNode buildTreeHelper(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd, Map<Integer, Integer> inorderMap) {
+        if (preStart > preEnd || inStart > inEnd) return null;
+        TreeNode root = new TreeNode(preorder[preStart]);
+        int inRoot = inorderMap.get(root.val);
+        int numsLeft = inRoot - inStart;
+        root.left = buildTreeHelper(preorder, preStart + 1, preStart + numsLeft, inorder, inStart, inRoot - 1, inorderMap);
+        root.right = buildTreeHelper(preorder, preStart + numsLeft + 1, preEnd, inorder, inRoot + 1, inEnd, inorderMap);
+        return root;
+    }
+    ```
+
+2. **Postorder and Inorder**:
+    * The last element in the postorder traversal is the root.
+    * Use the inorder traversal to determine the left and right subtrees.
+    * Recursively build the left and right subtrees.
+    
+    ```java
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        Map<Integer, Integer> inorderMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        return buildTreeHelper(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1, inorderMap);
+    }
+
+    private TreeNode buildTreeHelper(int[] inorder, int inStart, int inEnd, int[] postorder, int postStart, int postEnd, Map<Integer, Integer> inorderMap) {
+        if (inStart > inEnd || postStart > postEnd) return null;
+        TreeNode root = new TreeNode(postorder[postEnd]);
+        int inRoot = inorderMap.get(root.val);
+        int numsLeft = inRoot - inStart;
+        root.left = buildTreeHelper(inorder, inStart, inRoot - 1, postorder, postStart, postStart + numsLeft - 1, inorderMap);
+        root.right = buildTreeHelper(inorder, inRoot + 1, inEnd, postorder, postStart + numsLeft, postEnd - 1, inorderMap);
+        return root;
+    }
+    ```
+
 1. [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
 1. [Construct Binary Tree from Inorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
 1. [Construct Binary Tree from Preorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/)

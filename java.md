@@ -53,36 +53,61 @@
 | **split** | <pre lang="java">String[] parts = test.split("regex");</pre> | Splits the string into an array of substrings based on the specified regular expression. |  |
 
 
-
-## HashMap
+## Map
+### HashMap
 A data structure that maps keys to values. A map cannot contain duplicate keys and each key can map to at most one value.
 
 | Operation | Code | Description | TC |
 |---|---|---|---|
 | **Import required** | <pre lang="java">import java.util.HashMap;</pre> | Importing the required HashMap class. |  |
-| **Creation (diff types)** | <pre lang="java">HashMap hm = new HashMap<>();</pre> | Creates a new HashMap object. |  |
+| **Creation (diff types)** | <pre lang="java">HashMap&lt;String, String&gt; hm = new HashMap<>();</pre> | Creates a new HashMap object. |  |
 | **Add Element** | <pre lang="java">hm.put("gopha", "ok");</pre> | Adds an element to the HashMap with the specified key and value. | O(1) |
 | **Update Element** | <pre lang="java">hm.put("gopha", hm.getOrDefault("gopha", "newvalue"));</pre> | Attempts to retrieve the value for the key "gopha". If not present, "newvalue" will be used instead and saved for the respective key of "gopha". | O(1) |
 | **Remove element** | <pre lang="java">hm.remove("gopha");</pre> | Removes the entry with the specified key from the HashMap. | O(1) |
 | **Search Element** | <pre lang="java">hm.containsKey("gopha");</pre><pre lang="java">hm.containsValue("ok");</pre> | Checks if the HashMap contains the specified key or value. | O(1) |
 | **Size** | <pre lang="java">hm.size();</pre> | Returns the number of key-value mappings in this HashMap. |  |
-| **Accessing** | <pre lang="java">for (Map.Entry entry : hm.entrySet())</pre><pre lang="java">{ System.out.println(entry.getKey() + " " + entry.getValue()); <br>}</pre><pre lang="java">for (String key : hm.keySet()) { System.out.println(key); }</pre><pre lang="java">for (String value : hm.values()) { System.out.println(value); }</pre> | Accesses the elements of the HashMap using various methods such as iterating over entries, keys, or values. |  |
+| **Accessing** | <pre lang="java">for (Map.Entry&lt;String, String&gt; entry : hm.entrySet()) { System.out.println(entry.getKey() + " " + entry.getValue()); }</pre><pre lang="java">for (String key : hm.keySet()) { System.out.println(key); }</pre><pre lang="java">for (String value : hm.values()) { System.out.println(value); }</pre> | Accesses the elements of the HashMap using various methods such as iterating over entries, keys, or values. |  |
+| **computeIfAbsent** | <pre lang="java">hm.computeIfAbsent("key", k -> "defaultValue");</pre> | Computes the value if absent and returns the computed value associated with the key. | O(1) |
+| **computeIfAbsent with List** | <pre lang="java">import java.util.ArrayList;<br>HashMap&lt;String, List&lt;String&gt;&gt; hm = new HashMap<>();<br>hm.computeIfAbsent("key", k -> new ArrayList&lt;&gt;()).add("value");</pre> | Computes the list value if absent, returns the list associated with the key, and adds an element to the list. | O(1) |
 
+### LinkedHashMap
+A HashMap that maintains the order of insertion.
 
-## TreeMap
+| Operation | Code | Description | TC |
+|---|---|---|---|
+| **Import required** | <pre lang="java">import java.util.LinkedHashMap;</pre> | Importing the required LinkedHashMap class. |  |
+| **Creation** | <pre lang="java">LinkedHashMap&lt;String, String&gt; lhm = new LinkedHashMap<>();</pre> | Creates a new LinkedHashMap object. |  |
+| **Add Element** | <pre lang="java">lhm.put("gopha", "ok");</pre> | Adds an element to the LinkedHashMap with the specified key and value. | O(1) |
+| **Update Element** | <pre lang="java">lhm.put("gopha", lhm.getOrDefault("gopha", "newvalue"));</pre> | Attempts to retrieve the value for the key "gopha". If not present, "newvalue" will be used instead and saved for the respective key of "gopha". | O(1) |
+| **Remove Element** | <pre lang="java">lhm.remove("gopha");</pre> | Removes the entry with the specified key from the LinkedHashMap. | O(1) |
+| **Search Element** | <pre lang="java">lhm.containsKey("gopha");</pre><pre lang="java">lhm.containsValue("ok");</pre> | Checks if the LinkedHashMap contains the specified key or value. | O(1) |
+| **Size** | <pre lang="java">lhm.size();</pre> | Returns the number of key-value mappings in this LinkedHashMap. |  |
+| **Accessing** | <pre lang="java">for (Map.Entry&lt;String, String&gt; entry : lhm.entrySet()) { System.out.println(entry.getKey() + " " + entry.getValue()); }</pre><pre lang="java">for (String key : lhm.keySet()) { System.out.println(key); }</pre><pre lang="java">for (String value : lhm.values()) { System.out.println(value); }</pre> | Accesses the elements of the LinkedHashMap using various methods such as iterating over entries, keys, or values. |  |
+| **computeIfAbsent** | <pre lang="java">lhm.computeIfAbsent("key", k -> "defaultValue");</pre> | Computes the value if absent and returns the computed value associated with the key. | O(1) |
+| **computeIfAbsent with List** | <pre lang="java">import java.util.ArrayList;<br>LinkedHashMap&lt;String, List&lt;String&gt;&gt; lhm = new LinkedHashMap<>();<br>lhm.computeIfAbsent("key", k -> new ArrayList&lt;&gt;()).add("value");</pre> | Computes the list value if absent, returns the list associated with the key, and adds an element to the list. | O(1) |
+
+### TreeMap
 A Red-Black tree-based NavigableMap implementation. It is sorted according to the natural ordering of its keys, or by a Comparator provided at the time of creation.
 
 | Operation | Code | Description | TC |
 |---|---|---|---|
 | **Import required** | <pre lang="java">import java.util.TreeMap;</pre> | Importing the required TreeMap class. |  |
-| **Creation** | <pre lang="java">TreeMap<Integer, String> treeMap = new TreeMap<>();</pre> | Creates a new TreeMap object with keys sorted in natural order. |  |
+| **Creation** | <pre lang="java">TreeMap&lt;Integer, String&gt; treeMap = new TreeMap<>();</pre> | Creates a new TreeMap object with keys sorted in natural order. |  |
 | **Add Element** | <pre lang="java">treeMap.put(1, "apple");</pre> | Adds an element to the TreeMap with the specified key and value. | O(log n) |
 | **Remove element** | <pre lang="java">treeMap.remove(1);</pre> | Removes the entry with the specified key from the TreeMap. | O(log n) |
-| **Search Element** | <pre lang="java">treeMap.containsKey(1);</pre> <pre lang="java">treeMap.containsValue("apple");</pre> | Checks if the TreeMap contains the specified key or value. | O(log n) |
+| **Search Element** | <pre lang="java">treeMap.containsKey(1);</pre><pre lang="java">treeMap.containsValue("apple");</pre> | Checks if the TreeMap contains the specified key or value. | O(log n) |
 | **Size** | <pre lang="java">treeMap.size();</pre> | Returns the number of key-value mappings in this TreeMap. | O(1) |
 | **Accessing** | <pre lang="java">treeMap.get(1);</pre> | Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key. | O(log n) |
-| **Navigable Operations** | <pre lang="java">treeMap.firstEntry();</pre> <pre lang="java">treeMap.lastEntry();</pre> <pre lang="java">treeMap.ceilingEntry(5);</pre> <pre lang="java">treeMap.floorEntry(5);</pre> | Provides navigational operations for retrieval based on keys. |  |
+| **Navigable Operations** | <pre lang="java">treeMap.firstEntry();</pre><pre lang="java">treeMap.lastEntry();</pre><pre lang="java">treeMap.ceilingEntry(5);</pre><pre lang="java">treeMap.floorEntry(5);</pre> | Provides navigational operations for retrieval based on keys. | O(log n) |
 
+### Comparison
+
+| Aspect         | HashMap                                      | LinkedHashMap                               | TreeMap                                      |
+|----------------|----------------------------------------------|---------------------------------------------|---------------------------------------------|
+| **Order**      | No order                                     | Insertion order                             | Sorted order                                 |
+| **Performance**| O(1) average for add, remove, search         | O(1) average for add, remove, search        | O(log n) for add, remove, search            |
+| **Use Case**   | Fast access without concern for order        | Maintain insertion order                    | Maintain natural ordering of keys           |
+| **Structure**  | Hash table                                   | Hash table with linked list of entries      | Red-Black tree                               |
 
 
 ## HashSet
@@ -97,8 +122,6 @@ A collection that uses a Hash table for storage, only allowing unique elements t
 | **Search element** | <pre lang="java">hs.contains("gopha ok");</pre> | Checks if the HashSet contains the specified element. | O(1) |
 | **Size** | <pre lang="java">hs.size();</pre> | Returns the number of elements in the HashSet. | O(1) |
 | **Accessing** | <pre lang="java">for (String s : hs) { System.out.println(s); }</pre> | Iterates through the elements of the HashSet. |  |
-
-
 
 
 ## ArrayList
@@ -144,36 +167,40 @@ A specialized tree-based data structure that satisfies the heap property: if A i
 | Operation | Code | Description | TC |
 |---|---|---|---|
 | **Import required** | <pre lang="java">import java.util.PriorityQueue;</pre> | Importing the required PriorityQueue class. |  |
-| **Creation** | <pre lang="java">PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder);</pre><pre lang="java">PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<>(</pre><pre lang="java">(a, b) -> a.getValue().equals(b.getValue()) ?</pre><pre lang="java">a.getKey().compareTo(b.getKey()) : a.getValue() - b.getValue() );</pre> | Creates a PriorityQueue with specified initial capacity and comparator. | O(n) |
+| **Creation (Min-Heap)** | <pre lang="java">PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue<>();</pre> | Creates a PriorityQueue with default natural ordering. | O(1) |
+| **Creation (Max-Heap)** | <pre lang="java">PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue<>(Comparator.reverseOrder());</pre> | Creates a PriorityQueue with reverse order for max heap. | O(1) |
+| **Creation (Custom Comparator)** | <pre lang="java">PriorityQueue&lt;Map.Entry&lt;String, Integer&gt;&gt; pq = new PriorityQueue<>((a, b) -> a.getValue().equals(b.getValue()) ? a.getKey().compareTo(b.getKey()) : a.getValue() - b.getValue());</pre> | Creates a PriorityQueue with a custom comparator using a lambda expression. | O(1) |
+| **Custom Comparator with Lambda** | <pre lang="java">import java.util.PriorityQueue;<br>import java.util.Comparator;<br>import java.util.Map;<br><br>public class Main {<br>&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PriorityQueue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;(Comparator.comparingInt(Math::abs));<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Add elements<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pq.add(-5);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pq.add(3);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pq.add(-2);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pq.add(1);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Remove and print elements<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (!pq.isEmpty()) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(pq.poll());<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</pre> | Orders elements based on their absolute values using a lambda expression and `Comparator.comparingInt`. |
 | **Add Element** | <pre lang="java">pq.add(10);</pre> | Adds an element to the priority queue. | O(log n) |
 | **View Top Element** | <pre lang="java">pq.peek();</pre> | Returns but does not remove the top element from the priority queue. | O(1) |
 | **Remove Element** | <pre lang="java">pq.poll();</pre> | Returns and removes the top element from the priority queue. | O(log n) |
 | **Size** | <pre lang="java">pq.size();</pre> | Returns the number of elements in the priority queue. | O(1) |
-| **Accessing** |  |  |  |
+| **Accessing** | <pre lang="java">for (Integer element : pq) { System.out.println(element); }</pre> | Iterates through the elements of the priority queue (not in heap order). | O(n) |
 
 
 
 
 ## Queue
-A collection of elements, supporting two principle operations: enqueue, which inserts an element into the queue, and dequeue, which removes an element from the queue.
+A collection of elements, supporting two principal operations: enqueue, which inserts an element into the queue, and dequeue, which removes an element from the queue.
 
 | Operation | Code | Description | TC |
 |---|---|---|---|
-| **Import required** | <pre lang="java">import java.util.Queue;</pre> | Importing the required Queue interface. |  |
-| **Creation** | <pre lang="java">Queue<Integer> q = new LinkedList<>();</pre> | Creates a new Queue instance using LinkedList. |  |
-| **Add Element** | <pre lang="java">q.add(10);</pre><pre lang="java">boolean success = q.offer(10);</pre> | Adds an element to the queue. Returns true on successful insertion else it returns false. | O(1) |
+| **Import required** | <pre lang="java">import java.util.Queue;</pre><br><pre lang="java">import java.util.LinkedList;</pre> | Importing the required Queue interface and LinkedList class. |  |
+| **Creation** | <pre lang="java">Queue&lt;Integer&gt; q = new LinkedList&lt;&gt;();</pre> | Creates a new Queue instance using LinkedList. |  |
+| **Add Element** | <pre lang="java">q.add(10);</pre><br><pre lang="java">boolean success = q.offer(10);</pre> | Adds an element to the queue using `add()`, which throws an exception if the queue is full, or `offer()`, which returns false if the queue is full. | O(1) |
 | **View Top Element** | <pre lang="java">q.peek();</pre> | Returns the head of the queue, or null if the queue is empty. | O(1) |
 | **Remove Element** | <pre lang="java">q.poll();</pre> | Removes and returns the head of the queue, or null if the queue is empty. | O(1) |
-| **Size** | <pre lang="java">q.size();</pre><pre lang="java">q.isEmpty();</pre> | Returns the number of elements in the queue. Returns true if the queue is empty. | O(1) |
-| **Accessing** |  |  |  |
+| **Size** | <pre lang="java">q.size();</pre> | Returns the number of elements in the queue. | O(1) |
+| **Is Empty** | <pre lang="java">q.isEmpty();</pre> | Returns true if the queue is empty. | O(1) |
+| **Accessing** | <pre lang="java">for (Integer element : q) { System.out.println(element); }</pre> | Iterates through the elements of the queue. | O(n) |
 
 ## Dequeue
 A double-ended queue (pronounced "deck") that supports insertion and removal of elements from both ends.
 
 | Operation | Code | Description | TC |
 |---|---|---|---|
-| **Import required** | <pre lang="java">import java.util.Deque;</pre> | Importing the required Deque interface. |  |
-| **Creation** | <pre lang="java">Deque<Integer> deque = new LinkedList<>();</pre> | Creates a new Deque instance using LinkedList. |  |
+| **Import required** | <pre lang="java">import java.util.Deque;</pre><br><pre lang="java">import java.util.LinkedList;</pre> | Importing the required Deque interface and LinkedList class. |  |
+| **Creation** | <pre lang="java">Deque&lt;Integer&gt; deque = new LinkedList&lt;&gt;();</pre> | Creates a new Deque instance using LinkedList. |  |
 | **Add Element at Front** | <pre lang="java">deque.addFirst(10);</pre> | Inserts the specified element at the front of the deque. | O(1) |
 | **Add Element at End** | <pre lang="java">deque.addLast(20);</pre> | Inserts the specified element at the end of the deque. | O(1) |
 | **View First Element** | <pre lang="java">deque.peekFirst();</pre> | Retrieves, but does not remove, the first element of the deque, or returns null if the deque is empty. | O(1) |
@@ -181,25 +208,24 @@ A double-ended queue (pronounced "deck") that supports insertion and removal of 
 | **Remove First Element** | <pre lang="java">deque.pollFirst();</pre> | Retrieves and removes the first element of the deque, or returns null if the deque is empty. | O(1) |
 | **Remove Last Element** | <pre lang="java">deque.pollLast();</pre> | Retrieves and removes the last element of the deque, or returns null if the deque is empty. | O(1) |
 | **Size** | <pre lang="java">deque.size();</pre><pre lang="java">deque.isEmpty();</pre> | Returns the number of elements in the deque. Returns true if the deque is empty. | O(1) |
-
-
-
+| **Accessing** | <pre lang="java">for (Integer element : deque) { System.out.println(element); }</pre> | Iterates through the elements of the deque. | O(n) |
 
 
 
 
 ## Stack
-A collection of elements, with two principle operations: push, which adds to the collection, and pop, which removes the most recently added element.
+A collection of elements, with two principal operations: push, which adds to the collection, and pop, which removes the most recently added element.
 
 | Operation | Code | Description | TC |
 |---|---|---|---|
 | **Import required** | <pre lang="java">import java.util.Stack;</pre> | Importing the required Stack class. |  |
-| **Creation** | <pre lang="java">Stack<Integer> st = new Stack<>();</pre> | Creates a new Stack object. |  |
+| **Creation** | <pre lang="java">Stack&lt;Integer&gt; st = new Stack&lt;&gt;();</pre> | Creates a new Stack object. |  |
 | **Insert Element** | <pre lang="java">st.push(10);</pre> | Inserts an element onto the top of the stack. | O(1) |
 | **View Top Element** | <pre lang="java">st.peek();</pre> | Returns the top element of the stack without removing it. | O(1) |
 | **Remove Element** | <pre lang="java">st.pop();</pre> | Removes the top element from the stack and returns it. | O(1) |
 | **Size** | <pre lang="java">st.size();</pre><pre lang="java">st.isEmpty();</pre> | Returns the number of elements in the stack. Returns true if the stack is empty. | O(1) |
-| **Accessing** |  |  |  |
+| **Accessing** | <pre lang="java">for (Integer element : st) { System.out.println(element); }</pre> | Iterates through the elements of the stack. | O(n) |
+
 
 
 
@@ -208,22 +234,19 @@ A collection of elements, with two principle operations: push, which adds to the
 
 # StringBuilder && StringBuffer
 
-### Difference
+## Comparison
 
 | Aspect           | StringBuilder                                | StringBuffer                              |
 |------------------|----------------------------------------------|-------------------------------------------|
 | Mutability       | Mutable                                      | Mutable                                   |
 | Thread Safety    | Not thread-safe                              | Thread-safe                               |
-| Performance      | Typically faster                             | Slightly slower due to synchronization   |
+| Performance      | Typically faster                             | Slightly slower due to synchronization    |
 | Usability        | Preferred in single-threaded environments    | Preferred in multithreaded environments   |
 | Introduced in    | Java 5                                       | Early versions of Java                    |
-| Compatibility    | Part of Java Collections Framework           | Available for compatibility reasons      |
+| Compatibility    | Part of Java Collections Framework           | Available for compatibility reasons       |
 | Methods          | Identical methods and behavior               | Identical methods and behavior            |
 
-
-
-### Operations
-
+## Operations
 
 | Operation | Code | Description | TC |
 |---|---|---|---|
@@ -234,17 +257,17 @@ A collection of elements, with two principle operations: push, which adds to the
 | **Delete** | <pre lang="java">sb.delete(0, 2);</pre><pre lang="java">sbf.delete(0, 2);</pre> | Removes the characters in a substring of this sequence. | O(n) |
 | **Reverse** | <pre lang="java">sb.reverse();</pre><pre lang="java">sbf.reverse();</pre> | Causes this character sequence to be replaced by the reverse of the sequence. | O(n) |
 | **Get Length** | <pre lang="java">sb.length();</pre><pre lang="java">sbf.length();</pre> | Returns the length (number of characters) of the character sequence. | O(1) |
+| **Set Length** | <pre lang="java">sb.setLength(5);</pre><pre lang="java">sbf.setLength(5);</pre> | Sets the length of the character sequence. If the new length is greater than the current length, null characters ('\u0000') are appended to reach the specified length. If the new length is less than the current length, the sequence is truncated. | O(n) |
 | **Convert to String** | <pre lang="java">sb.toString();</pre><pre lang="java">sbf.toString();</pre> | Returns a string representing the data in the sequence. | O(n) |
 
-
-
-# Pair Class
+## Pair Class
 | Operation | Code | Description | TC |
 |---|---|---|---|
 | **Import required** | <pre lang="java">import javafx.util.Pair;</pre> | Importing the required Pair class. |  |
-| **Pair Class** | <pre lang="java">Pair<Integer, String> pair = new Pair<>(1, "one");</pre> | Represents a generic pair of two objects. |  |
+| **Pair Class** | <pre lang="java">Pair&lt;Integer, String&gt; pair = new Pair<>(1, "one");</pre> | Represents a generic pair of two objects. |  |
 | **Get First Item** | <pre lang="java">pair.getKey();</pre> | Returns the first item of the pair. | O(1) |
 | **Get Second Item** | <pre lang="java">pair.getValue();</pre> | Returns the second item of the pair. | O(1) |
+
 
 
 
@@ -261,53 +284,53 @@ A collection of elements, with two principle operations: push, which adds to the
 | `Math.round(float a)`                         | Returns the closest integer to the argument, with ties rounding to positive infinity.           | `long result = Math.round(4.5);`                            |
 | `Math.random()`                                | Returns a double value with a positive sign, greater than or equal to 0.0 and less than 1.0.     | `double result = Math.random();`                            |
 
-
-
 # Arrays Utils
 | Method Signature                             | Description                                                                                   | Example                                                                     |
 |----------------------------------------------|-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| `Arrays.sort(T[] arr)`                       | Sorts the specified array of objects into ascending order.                                   | `int[] arr = {3, 1, 4, 1, 5, 9, 2, 6};`<br>`Arrays.sort(arr);`            |
-| `Arrays.asList(T... arr)`                   | Returns a fixed-size list backed by the specified array.                                      | `String[] arr = {"apple", "banana", "cherry"};`<br>`List<String> list = Arrays.asList(arr);` |
-| `Arrays.fill(T[] arr, T val)`               | Assigns the specified value to each element of the specified array.                          | `int[] arr = new int[5];`<br>`Arrays.fill(arr, 7);`                        |
-| `Arrays.equals(T[] arr1, T[] arr2)`         | Returns `true` if the two specified arrays of objects are equal to one another.              | `int[] arr1 = {1, 2, 3};`<br>`int[] arr2 = {1, 2, 3};`<br>`boolean isEqual = Arrays.equals(arr1, arr2);` |
-| `Arrays.copyOf(T[] original, int newLength)` | Copies the specified array, truncating or padding with zeros (if necessary) so the copy has the specified length. | `int[] arr = {1, 2, 3};`<br>`int[] newArr = Arrays.copyOf(arr, 5);`       |
-| `Arrays.toString(T[] arr)`                  | Returns a string representation of the contents of the specified array.                         | `int[] arr = {1, 2, 3};`<br>`String str = Arrays.toString(arr);`          |
-
+| `Arrays.sort(T[] arr)`                       | Sorts the specified array of objects into ascending order.                                    | `int[] arr = {3, 1, 4, 1, 5, 9, 2, 6};`<br>`Arrays.sort(arr);`              |
+| `Arrays.asList(T... arr)`                    | Returns a fixed-size list backed by the specified array.                                      | `String[] arr = {"apple", "banana", "cherry"};`<br>`List<String> list = Arrays.asList(arr);` |
+| `Arrays.fill(T[] arr, T val)`                | Assigns the specified value to each element of the specified array.                           | `int[] arr = new int[5];`<br>`Arrays.fill(arr, 7);`                         |
+| `Arrays.equals(T[] arr1, T[] arr2)`          | Returns `true` if the two specified arrays of objects are equal to one another.               | `int[] arr1 = {1, 2, 3};`<br>`int[] arr2 = {1, 2, 3};`<br>`boolean isEqual = Arrays.equals(arr1, arr2);` |
+| `Arrays.copyOf(T[] original, int newLength)` | Copies the specified array, truncating or padding with zeros (if necessary) so the copy has the specified length. | `int[] arr = {1, 2, 3};`<br>`int[] newArr = Arrays.copyOf(arr, 5);`        |
+| `Arrays.toString(T[] arr)`                   | Returns a string representation of the contents of the specified array.                       | `int[] arr = {1, 2, 3};`<br>`String str = Arrays.toString(arr);`            |
 
 # Character Utils
 | Method Signature                                   | Description                                                                                                   | Example                                                                      |
 |----------------------------------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
-| `Character.isLetter(char ch)`                     | Determines if the specified character is a letter.                                                            | `char ch = 'A';`<br>`boolean isLetter = Character.isLetter(ch);`             |
-| `Character.isDigit(char ch)`                      | Determines if the specified character is a digit.                                                             | `char ch = '5';`<br>`boolean isDigit = Character.isDigit(ch);`               |
-| `Character.isWhitespace(char ch)`                 | Determines if the specified character is white space.                                                         | `char ch = ' ';`<br>`boolean isWhitespace = Character.isWhitespace(ch);`     |
-| `Character.isUpperCase(char ch)`                  | Determines if the specified character is an uppercase letter.                                                 | `char ch = 'A';`<br>`boolean isUpperCase = Character.isUpperCase(ch);`       |
-| `Character.isLowerCase(char ch)`                  | Determines if the specified character is a lowercase letter.                                                  | `char ch = 'a';`<br>`boolean isLowerCase = Character.isLowerCase(ch);`       |
-| `Character.isLetterOrDigit(char ch)`              | Determines if the specified character is a letter or digit.                                                   | `char ch = '7';`<br>`boolean isLetterOrDigit = Character.isLetterOrDigit(ch);`|
-| `Character.toUpperCase(char ch)`                 | Converts the specified character to uppercase.                                                                | `char ch = 'a';`<br>`char upperCaseCh = Character.toUpperCase(ch);`          |
-| `Character.toLowerCase(char ch)`                 | Converts the specified character to lowercase.                                                                | `char ch = 'A';`<br>`char lowerCaseCh = Character.toLowerCase(ch);`          |
-| `Character.compare(char x, char y)`              | Compares two `char` values numerically.                                                                       | `char x = 'A';`<br>`char y = 'B';`<br>`int result = Character.compare(x, y);` |
-| `Character.digit(char ch, int radix)`            | Returns the numeric value of the specified character (for radix up to 36). Returns -1 if the character is not a digit. | `char ch = '7';`<br>`int digitValue = Character.digit(ch, 10);`             |
-
+| `Character.isLetter(char ch)`                      | Determines if the specified character is a letter.                                                            | `char ch = 'A';`<br>`boolean isLetter = Character.isLetter(ch);`             |
+| `Character.isDigit(char ch)`                       | Determines if the specified character is a digit.                                                             | `char ch = '5';`<br>`boolean isDigit = Character.isDigit(ch);`               |
+| `Character.isWhitespace(char ch)`                  | Determines if the specified character is white space.                                                         | `char ch = ' ';`<br>`boolean isWhitespace = Character.isWhitespace(ch);`     |
+| `Character.isUpperCase(char ch)`                   | Determines if the specified character is an uppercase letter.                                                 | `char ch = 'A';`<br>`boolean isUpperCase = Character.isUpperCase(ch);`       |
+| `Character.isLowerCase(char ch)`                   | Determines if the specified character is a lowercase letter.                                                  | `char ch = 'a';`<br>`boolean isLowerCase = Character.isLowerCase(ch);`       |
+| `Character.isLetterOrDigit(char ch)`               | Determines if the specified character is a letter or digit.                                                   | `char ch = '7';`<br>`boolean isLetterOrDigit = Character.isLetterOrDigit(ch);`|
+| `Character.toUpperCase(char ch)`                   | Converts the specified character to uppercase.                                                                | `char ch = 'a';`<br>`char upperCaseCh = Character.toUpperCase(ch);`          |
+| `Character.toLowerCase(char ch)`                   | Converts the specified character to lowercase.                                                                | `char ch = 'A';`<br>`char lowerCaseCh = Character.toLowerCase(ch);`          |
+| `Character.compare(char x, char y)`                | Compares two `char` values numerically.                                                                       | `char x = 'A';`<br>`char y = 'B';`<br>`int result = Character.compare(x, y);` |
+| `Character.digit(char ch, int radix)`              | Returns the numeric value of the specified character (for radix up to 36). Returns -1 if the character is not a digit. | `char ch = '7';`<br>`int digitValue = Character.digit(ch, 10);`              |
 
 # Integer Utils
 | Method Signature                                   | Description                                                                                                    | Example                                                                      |
 |----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
-| `Integer.parseInt(String s)`                      | Parses the string argument as a signed decimal integer.                                                       | `String str = "123";`<br>`int num = Integer.parseInt(str);`                  |
-| `Integer.valueOf(int i)`                          | Returns an Integer instance representing the specified int value.                                             | `int num = 123;`<br>`Integer integer = Integer.valueOf(num);`                 |
+| `Integer.parseInt(String s)`                       | Parses the string argument as a signed decimal integer.                                                       | `String str = "123";`<br>`int num = Integer.parseInt(str);`                  |
+| `Integer.valueOf(int i)`                           | Returns an Integer instance representing the specified int value.                                             | `int num = 123;`<br>`Integer integer = Integer.valueOf(num);`                |
 
 # Collection Utils
-| Method Signature                                     | Description                                                                                                                | Example                                                                        |
-|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| `Collections.sort(List<T> list)`                     | Sorts the specified list into ascending order, according to the natural ordering of its elements.                         | `List<Integer> numbers = Arrays.asList(3, 1, 2);`<br>`Collections.sort(numbers);`|
-| `Collections.sort(List<T> list, Comparator<? super T> c)` | Sorts the specified list according to the order induced by the specified comparator.                                       | `List<String> strings = Arrays.asList("banana", "apple", "orange");`<br>`Collections.sort(strings, Comparator.reverseOrder());` |
-
-
+| Method Signature                                   | Description                                                                                                    | Example                                                                      |
+|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| `Collections.sort(List<T> list)`                   | Sorts the specified list into ascending order, according to the natural ordering of its elements.              | `List<Integer> numbers = Arrays.asList(3, 1, 2);`<br>`Collections.sort(numbers);` |
+| `Collections.sort(List<T> list, Comparator<? super T> c)` | Sorts the specified list according to the order induced by the specified comparator.                           | `List<String> strings = Arrays.asList("banana", "apple", "orange");`<br>`Collections.sort(strings, Comparator.reverseOrder());` |
 
 # Comparator Class
+Comparators are used to define custom orderings for collections. They provide an ordering for collections of objects that don’t have a natural ordering, or if you want a different ordering.
+
+| Operation | Code | Description | TC |
+|---|---|---|---|
+| **Import required** | <pre lang="java">import java.util.Comparator;</pre> | Importing the required Comparator interface. |  |
+| **Comparator with Lambda** | <pre lang="java">Comparator&lt;String&gt; comparator = (s1, s2) -> s1.length() - s2.length();</pre> | Creates a comparator using a lambda expression to compare strings by length. | O(1) |
+| **Comparator with Method Reference** | <pre lang="java">Comparator&lt;String&gt; comparator = Comparator.comparingInt(String::length);</pre> | Creates a comparator using a method reference to compare strings by length. | O(1) |
 
 
 
 
 
-## Notes
-* Add computeIfAbsent()
+
