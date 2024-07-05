@@ -29,7 +29,6 @@
     - [Tree Construction Problems](#tree-construction-problems)
 - [Problems](#problems)
 - [References](#references)
-- [Things to do](#things-to-do)
 
 # Introduction
 
@@ -470,12 +469,143 @@ Think upon the type of traversal you will apply when going from root to leaf.
 * Reconstruct the tree from serailize sequence data(string)
 * *Deserialize binary tree*: converting string to binary tree using preorder (decode)
 
-1. [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
 1. [Serialize and Deserialize BST](https://leetcode.com/problems/serialize-and-deserialize-bst/)
+1. [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
+1. [Serialize and Deserialize N-ary Tree](https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree/description/)
+
 
 #### General Strategy
+* **The common approach is to use a preorder recursion(serialization) and Queue(deserialization)**
 * For serialization, use preorder traversal to create a string representation of the tree with delimiters to separate node values.
 * For deserialization, use a queue to process the string and rebuild the tree by creating nodes and linking them based on the serialized order.
+https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree/solutions/364841/java-common-template-serialization-deserialization-of-bt-bst-n-ary-tree/ 
+
+#### Serialize and Deserialize BST 
+**here we need to make sure when we de-serialize, we insert the nodes to maintain the BST order.**
+
+```java
+public class Codec {
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        serializeBST(root, sb);
+        
+        return sb.toString();
+    }
+    private void serializeBST(TreeNode root, StringBuilder sb){
+        if(root == null) return;
+        sb.append(root.val).append(",");
+        serializeBST(root.left, sb);
+        serializeBST(root.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if(data.isEmpty()) return null;
+        Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
+        return deserializeBT(q, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    private TreeNode deserializeBT(Queue<String> q, Integer low, Integer high){
+        if(q.isEmpty()) return null;
+        String s = q.peek();
+        int val = Integer.valueOf(s);
+        
+        if(val < low || val > high) return null;
+        q.poll();
+        
+        TreeNode root = new TreeNode(val);
+        root.left = deserializeBT(q, low, val);
+        root.right = deserializeBT(q, val, high);
+        
+        return root;
+    }
+}
+```
+
+#### Serialize and Deserialize Binary Tree 
+**no need to compare the values, just append them to the string.**
+
+```java
+public class Codec {
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        serializeBT(root, sb);
+        return sb.toString();
+    }
+    private void serializeBT(TreeNode root, StringBuilder sb){
+        if(root == null){
+            sb.append("#").append(",");
+        }else{
+            sb.append(root.val).append(",");
+            serializeBT(root.left, sb);
+            serializeBT(root.right, sb);
+        }
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
+        return deserializeBT(q);
+    }
+    private TreeNode deserializeBT(Queue<String> q){
+        String s = q.poll();
+        if(s.equals("#")) return null;
+        
+        TreeNode root = new TreeNode(Integer.valueOf(s));
+        root.left = deserializeBT(q);
+        root.right = deserializeBT(q);
+        return root;
+    }
+}
+```
+
+#### Serialize and Deserialize N-ary Tree
+**here, we append the no.of children of each node, so that we can call that many no.of time the recursive function.**
+
+```java
+class Codec {
+
+// Encodes a tree to a single string.
+public String serialize(Node root) {
+    StringBuilder sb = new StringBuilder();
+    serialize(root, sb);
+    return sb.toString();
+}
+ 
+private void serialize(Node root, StringBuilder sb){
+    if(root == null) {
+      sb.append("#").append(",");   
+    }else{
+        sb.append(root.val).append(",");
+        sb.append(root.children.size()).append(",");
+        for(Node child : root.children){
+            serialize(child, sb);
+        }
+    }      
+}
+// Decodes your encoded data to tree.
+public Node deserialize(String data) {
+    Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
+    return deserialize(q);
+}
+private Node deserialize(Queue<String> q){
+    String s = q.poll();
+    if(s.equals("#")) return null;
+    
+    Node root = new Node(Integer.valueOf(s));
+    int children = Integer.valueOf(q.poll());
+    
+    root.children = new ArrayList<>();
+    for(int i=0; i< children; i++){
+        root.children.add(deserialize(q));
+    }
+    return root;
+}
+}
+```
+
+
 
 
 ### Tree Construction Problems
@@ -550,8 +680,3 @@ Tree construction problems often involve building a tree from given traversal or
 * https://leetcode.com/discuss/study-guide/1337373/Tree-question-pattern-oror2021-placement
 * https://leetcode.com/discuss/study-guide/3743769/Crack-Easily-Any-Interview-or-Tree-Data-Structure-Patterns-With-Questions
 
-
-# Things to do
-* Add notes about BST properties
-* Add notes about construction of trees
-* Add notes where to use preorder and postorder

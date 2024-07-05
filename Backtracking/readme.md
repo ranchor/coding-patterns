@@ -25,7 +25,7 @@ Constraints validate choices. They are the rules necessary to follow every time 
 * **The Goal**
 When do we know that the solution has been found?
 
-```
+```java
 void backtrack(arguments) {
 	if (condition == true) { // Condition when we should stop our exploration.
 		result.push_back(current);

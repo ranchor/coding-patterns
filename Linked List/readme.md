@@ -2,32 +2,58 @@
 
   
 # Introduction
+This guide covers essential patterns and techniques for solving various linked list problems commonly found in technical interviews and competitive programming.
+
 ## [Pattern#1] In-Place Reversal of Linked List
-In a lot of problems, you may be asked to reverse the links between a set of nodes of a linked list. 
-Often, the constraint is that you need to do this in-place, i.e., using the existing node objects and without 
-using extra memory. This is where the above mentioned pattern is useful.
-This pattern reverses one node at a time starting with one variable (current) pointing to the head of the linked list, 
-and one variable (previous) will point to the previous node that you have processed. In a lock-step manner, 
-you will reverse the current node by pointing it to the previous before moving on to the next node. Also, 
-you will update the variable “previous” to always point to the previous node that you have processed.
+In many problems, you may be asked to reverse the links between a set of nodes in a linked list. The constraint is often that you need to do this in-place, i.e., using the existing node objects and without using extra memory. This is where this pattern is useful. The pattern reverses one node at a time, starting with one variable (`current`) pointing to the head of the linked list, and another variable (`previous`) pointing to the previous node that you have processed. In a lock-step manner, you will reverse the current node by pointing it to the previous before moving on to the next node. Also, you will update the variable `previous` to always point to the previous node that you have processed.
+
  ![alt text](https://cdn-images-1.medium.com/max/800/0*ffeU1_ViGSyI-uEc) 
 
+ ### Iterative Reversal Technique
+**Basic Implementation:**
+```java
+public ListNode reverseList(ListNode head) {
+    ListNode prev = null;
+    ListNode curr = head;
+    
+    while (curr != null) {
+        ListNode nextTemp = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = nextTemp;
+    }
+    
+    return prev;
+}
+```
+
+### Recursive Reversal Technique
+**Basic Implementation:**
+```java
+public ListNode reverseListRecursive(ListNode head) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+    ListNode p = reverseListRecursive(head.next);
+    head.next.next = head;
+    head.next = null;
+    return p;
+}
+```
+
 ## [Pattern#2] Fast and Slow Pointers Pattern
-The **Fast and Slow pointer** approach, also known as the **Hare & Tortoise algorithm(Floyd's Cycle Finding 
-Algorithm)**,  is a pointer algorithm that uses two pointers which move through the **array (or sequence/linked list)** 
-at different speeds. This approach is quite useful when dealing with cyclic linked lists or arrays.
-By moving at different speeds (say, in a cyclic linked list), the algorithm proves that the two pointers are bound to 
-meet. The fast pointer should catch the slow pointer once both the pointers are in a cyclic loop.
+The **Fast and Slow pointer** approach, also known as the **Hare & Tortoise algorithm (Floyd's Cycle Finding Algorithm)**, is a pointer algorithm that uses two pointers moving through the **array (or sequence/linked list)** at different speeds. This approach is quite useful when dealing with cyclic linked lists or arrays. By moving at different speeds (say, in a cyclic linked list), the algorithm proves that the two pointers are bound to meet. The fast pointer should catch the slow pointer once both pointers are in a cyclic loop.
+
 ![alt text](https://cdn-images-1.medium.com/max/800/0*4gc5y94y7S2N5Hfq) 
 
 ### Key Points to Remember
-* Slow and fast ptr definitely meet (because they enter a cycle)
-* Entry point to the cycle is the duplicate number.
-* **fastPtr** would become **NULL** when there are **even elements in the list** and **not NULL for odd elements.**
-* Meeting point of slow and fast pointers is exactly at the same distance from start to enter point.
-* Use **Dummy Node/Dummy Head** when head can be modified or changed during the course of the problem-solving.
-* Alternative to Floyd's Cycle Finding Algorithm for detecting cycle is **HashTable** or **HashSet** with space 
-  complexity as **O(n)**
+- Slow and fast pointers definitely meet (because they enter a cycle).
+- The entry point to the cycle is the duplicate number.
+- **fastPtr** would become **NULL** when there are **even elements in the list** and **not NULL for odd elements.**
+- The meeting point of slow and fast pointers is exactly at the same distance from the start to the entry point.
+- Use **Dummy Node/Dummy Head** when the head can be modified or changed during problem-solving.
+- An alternative to Floyd's Cycle Finding Algorithm for detecting cycles is **HashTable** or **HashSet** with space complexity as **O(n)**.
+
 
 ```java
 ListNode slow = head;
@@ -130,6 +156,52 @@ So, the distance from the start of the linked list to the meeting point of the s
 ## [Pattern#3] Two Pointers Linked List
 The two pointers technique involves using two pointers to solve various linked list problems, such as finding the kth node from the end, merging two sorted lists, or detecting intersections.
 
+### Example 1: Finding the Kth Node from the End
+```java
+public ListNode findKthFromEnd(ListNode head, int k) {
+    ListNode first = head;
+    ListNode second = head;
+    
+    for (int i = 0; i < k; i++) {
+        if (first == null) return null;
+        first = first.next;
+    }
+    
+    while (first != null) {
+        first = first.next;
+        second = second.next;
+    }
+    
+    return second;
+}
+```
+
+### Example 2: Merging Two Sorted Lists
+```java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(0);
+    ListNode current = dummy;
+    
+    while (l1 != null && l2 != null) {
+        if (l1.val < l2.val) {
+            current.next = l1;
+            l1 = l1.next;
+        } else {
+            current.next = l2;
+            l2 = l2.next;
+        }
+        current = current.next;
+    }
+    
+    if (l1 != null) {
+        current.next = l1;
+    } else {
+        current.next = l2;
+    }
+    
+    return dummy.next;
+}
+```
 
 
 ## Understanding and Utilizing Dummy Nodes in Linked Lists
