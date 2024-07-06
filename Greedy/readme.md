@@ -1,6 +1,4 @@
 # Introduction
-
-## What is a Greedy Algorithm?
 A greedy algorithm is an approach to solving problems where the best solution is chosen at each step with the hope of finding the global optimum. It builds up a solution piece by piece, always selecting the next piece that offers the most immediate benefit or value.
 
 ## When to Use Greedy Algorithms
@@ -10,16 +8,26 @@ Greedy algorithms are used when:
 
 ## Common Patterns in Greedy Algorithms
 
-### Interval Scheduling
-#### Problem Statement
+### Sorting
+Sorting is often the first step in many greedy algorithms. By sorting the input data, we can make decisions based on the ordered elements.
+
+### Using Heaps
+Heaps (priority queues) are used to efficiently extract the minimum or maximum element. They are particularly useful in problems where we need to repeatedly select the largest or smallest remaining element.
+
+### Interval Problems
+Greedy algorithms are well-suited for interval problems. Common strategies include:
+   - **Interval Scheduling**: Select intervals based on the earliest finish time.
+   - **Minimum Platforms**: Manage overlapping intervals using two pointers or heaps.
+   - **Activity Selection**: Similar to interval scheduling, select activities based on earliest finish time.
+
+#### Interval Scheduling
 Given a set of intervals, find the maximum number of non-overlapping intervals.
 
-#### Approach
+##### Approach
 1. Sort intervals by their finishing times.
 2. Select the interval that finishes first and remove all overlapping intervals.
 3. Repeat until no intervals are left.
 
-#### Example
 ```java
 class Interval {
     int start, end;
@@ -43,15 +51,13 @@ public int intervalScheduling(List<Interval> intervals) {
 }
 ```
 
-### Minimum Number of Platforms Required
-#### Problem Statement
+#### Minimum Platforms
 Given the arrival and departure times of trains, find the minimum number of platforms required so that no train waits.
 
-#### Approach
+##### Approach
 1. Sort both arrival and departure arrays.
 2. Use two pointers to traverse both arrays and count platforms needed at a time.
 
-#### Example
 ```java
 public int findPlatform(int[] arr, int[] dep, int n) {
     Arrays.sort(arr);
@@ -74,16 +80,48 @@ public int findPlatform(int[] arr, int[] dep, int n) {
 }
 ```
 
-### Fractional Knapsack Problem
-#### Problem Statement
+#### Activity Selection Problem
+Select the maximum number of activities that don't overlap. Each activity has a start and end time.
+
+##### Approach
+1. Sort activities by their finishing times.
+2. Always select the next activity whose start time is greater than or equal to the end time of the previously selected activity.
+
+
+```java
+class Activity {
+    int start, end;
+    Activity(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+}
+
+public int activitySelection(List<Activity> activities) {
+    Collections.sort(activities, (a, b) -> a.end - b.end);
+    int count = 0, end = 0;
+    
+    for (Activity activity : activities) {
+        if (activity.start >= end) {
+            end = activity.end;
+            count++;
+        }
+    }
+    return count;
+}
+```
+
+### Fractional Selection
+In problems like the fractional knapsack, items can be divided to fit into a capacity constraint. Greedy algorithms sort items by a value-to-weight ratio and select the best fractional part.
+
+#### Fractional Knapsack 
 Given weights and values of n items, put these items in a knapsack of capacity W to get the maximum total value in the knapsack.
 
-#### Approach
+##### Approach
 1. Calculate value per unit weight for each item.
 2. Sort items by value-to-weight ratio.
 3. Take the items with the highest ratio first until the knapsack is full.
 
-#### Example
 ```java
 class Item {
     int weight;
@@ -111,47 +149,18 @@ public double fractionalKnapsack(int W, Item[] items) {
 }
 ```
 
-### Activity Selection Problem
-#### Problem Statement
-Select the maximum number of activities that don't overlap. Each activity has a start and end time.
 
-#### Approach
-1. Sort activities by their finishing times.
-2. Always select the next activity whose start time is greater than or equal to the end time of the previously selected activity.
+### Job Scheduling
+Job scheduling problems often involve deadlines and profits. The greedy approach usually involves sorting jobs by profit and using a timeline to track available slots.
 
-#### Example
-```java
-class Activity {
-    int start, end;
-    Activity(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
-}
 
-public int activitySelection(List<Activity> activities) {
-    Collections.sort(activities, (a, b) -> a.end - b.end);
-    int count = 0, end = 0;
-    
-    for (Activity activity : activities) {
-        if (activity.start >= end) {
-            end = activity.end;
-            count++;
-        }
-    }
-    return count;
-}
-```
-
-### Job Sequencing Problem
-#### Problem Statement
+#### Job Sequencing Problem
 Given a set of jobs where each job has a deadline and profit associated, maximize the total profit if only one job can be scheduled at a time.
 
-#### Approach
+##### Approach
 1. Sort jobs in decreasing order of profit.
 2. For each job, find a free time slot before the deadline and schedule it.
 
-#### Example
 ```java
 class Job {
     int id, deadline, profit;
@@ -180,17 +189,20 @@ public int jobScheduling(Job[] jobs, int t) {
     return profit;
 }
 ```
+### Greedy Selection
+Greedy selection involves making a series of decisions that seem locally optimal:
+   - **Huffman Coding**: Build a binary tree where each node represents a character's frequency. Combine the two least frequent nodes at each step.
+   - **Minimum Cost Problems**: Problems like connecting ropes (sticks) involve repeatedly combining the smallest elements to minimize the total cost.
 
-### Huffman Coding
-#### Problem Statement
+
+#### Huffman Coding
 Given frequencies of different characters, construct a Huffman Tree to minimize the total weighted path length of the tree.
 
-#### Approach
+##### Approach
 1. Create a priority queue and insert all characters with their frequencies.
 2. While there is more than one node in the queue, remove the two nodes with the highest priority (lowest frequency), combine them into a new node, and insert the new node back into the queue.
 3. The remaining node is the root of the Huffman Tree.
 
-#### Example
 ```java
 class HuffmanNode {
     int frequency;
@@ -226,7 +238,10 @@ public HuffmanNode buildHuffmanTree(char[] chars, int[] frequencies) {
 ```
 
 ### Graph-based Problems
-Greedy algorithms are also used in graph problems such as finding the minimum spanning tree and shortest path.
+In graph-related greedy problems, the aim is often to find the shortest path or minimum spanning tree.
+   - **Prim's Algorithm**: Build the MST by repeatedly adding the smallest edge connecting the MST to a new vertex.
+   - **Kruskal's Algorithm**: Build the MST by sorting edges and adding the smallest edge that doesn't form a cycle.
+   - **Dijkstra's Algorithm**: Find the shortest path from a source vertex to all other vertices by selecting the vertex with the minimum distanc
 
 #### Minimum Spanning Tree (Prim's Algorithm)
 ```java

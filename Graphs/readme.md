@@ -105,64 +105,127 @@ public class Graph<T> {
         this.bidirection = bidirection;
     }
 
-    public void addVertex(T v){
-        adjList.put(v, new ArrayList<T>());
-    }
-
-    public void addEdge(T source, T destination){
-        if(!adjList.containsKey(source))
-            addVertex(source);
-        if (!adjList.containsKey(destination))
-            addVertex(destination);
-        adjList.get(source).add(destination);
-        if (bidirection)
-            adjList.get(destination).add(source);
+    public void addEdge(T source, T destination) {
+        adjList.computeIfAbsent(source, k -> new ArrayList<>()).add(destination);
+        if (bidirection) {
+            adjList.computeIfAbsent(destination, k -> new ArrayList<>()).add(source);
+        } else {
+            adjList.computeIfAbsent(destination, k -> new ArrayList<>());
+        }
     }
 }
 ```
 
-## Graph Search or Traversals Techniques
-### Depth-First Search(DFS)
-The Depth–first search (DFS) algorithm starts at the root of the tree (or some arbitrary node for a graph) and explored as far as possible along each branch before backtracking.
+## Graph Search or Traversal Techniques
+
+### Depth-First Search (DFS)
+The Depth-First Search (DFS) algorithm starts at the root of the tree (or some arbitrary node for a graph) and explores as far as possible along each branch before backtracking.
+
 * **Recursive Implementation of DFS**
-    * A Depth–first search (DFS) is a way of traversing graphs closely related to the preorder traversal of a tree.
-    * The only catch here is, unlike trees, graphs may contain cycles (a node may be visited twice). To avoid processing a node more than once, use a boolean visited array. 
-    * **Time complexity:** ``O(V + E), where V is the number of vertices and E is the number of edges in the graph.``
-    * **Space Complexity:** ``O(V), since an extra visited array of size V is required.``
+    * DFS is a way of traversing graphs closely related to the preorder traversal of a tree.
+    * Unlike trees, graphs may contain cycles (a node may be visited twice). To avoid processing a node more than once, use a boolean visited array.
+    * **Time Complexity:** `O(V + E)`, where `V` is the number of vertices and `E` is the number of edges in the graph.
+    * **Space Complexity:** `O(V)`, since an extra visited array of size `V` is required. The recursion stack may also go as deep as `O(V)` in the worst case.
+    * **Code Example (Recursive DFS in Java):**
+    ```java
+    public void DFSRecursive(T node, boolean[] visited) {
+        visited[node] = true;
+        System.out.print(node + " ");
+        
+        for (T neighbor : adjList.get(node)) {
+            if (!visited[neighbor]) {
+                DFSRecursive(neighbor, visited);
+            }
+        }
+    }
+    ```
+
 * **Iterative Implementation of DFS**
-    * The non-recursive implementation of DFS is similar to the non-recursive implementation of BFS but differs from it in two ways:
-      * It uses a **stack** instead of a **queue.**
-      * The DFS should mark visited only after popping the vertex, not before pushing it.
-      * It uses a reverse iterator instead of an iterator to produce the same results as recursive DFS.
+    * The non-recursive implementation of DFS is similar to the non-recursive implementation of BFS but differs in two ways:
+        * It uses a **stack** instead of a **queue.**
+        * The DFS should mark visited only after popping the vertex, not before pushing it.
+        * It uses a reverse iterator instead of an iterator to produce the same results as recursive DFS.
+    * **Code Example (Iterative DFS in Java):**
+    ```java
+    public void DFSIterative(T start) {
+        Stack<T> stack = new Stack<>();
+        boolean[] visited = new boolean[adjList.size()];
+        
+        stack.push(start);
+        
+        while (!stack.isEmpty()) {
+            T node = stack.pop();
+            
+            if (!visited[node]) {
+                visited[node] = true;
+                System.out.print(node + " ");
+                
+                List<T> neighbors = adjList.get(node);
+                Collections.reverse(neighbors); // Ensure the order matches recursive DFS
+                for (T neighbor : neighbors) {
+                    if (!visited[neighbor]) {
+                        stack.push(neighbor);
+                    }
+                }
+            }
+        }
+    }
+    ```
+
 * **Applications of DFS**
     * Finding connected components in a graph.
-    * Topological sorting in a DAG(Directed Acyclic Graph).
+    * Topological sorting in a Directed Acyclic Graph (DAG).
     * Finding 2/3–(edge or vertex)–connected components.
     * Finding the bridges of a graph.
     * Finding strongly connected components.
     * Solving puzzles with only one solution, such as mazes.
-    * Finding biconnectivity in graphs
-### Breadth First Search(BFS)
-The Breadth–first search (BFS) algorithm also starts at the root of the tree (or some arbitrary node of a graph), but unlike DFS, it explores the neighbor nodes first, before moving to the next-level neighbors. 
-In other words, BFS explores vertices in the order of their distance from the source vertex, where distance is the minimum length of a path from the source vertex to the node.
+    * Finding biconnectivity in graphs.
+
+### Breadth-First Search (BFS)
+The Breadth-First Search (BFS) algorithm also starts at the root of the tree (or some arbitrary node of a graph), but unlike DFS, it explores the neighbor nodes first, before moving to the next-level neighbors. In other words, BFS explores vertices in the order of their distance from the source vertex, where distance is the minimum length of a path from the source vertex to the node.
+
 * **Implementation of BFS**
-    * **[IMPORTANT]** Graph may contain cycles that's why we use logic of visited nodes concept. We implemented visitedNodes using boolean array.
-    * BFS logic is not recursive and it uses queue. Key thing to remember is to use queue.
-    * **Time Complexity:** ``O(V+E)`` where V is a number of vertices in the graph and E is a number of edges in the graph.
+    * Graphs may contain cycles, so we use a logic of visited nodes. This is implemented using a boolean array.
+    * BFS logic is not recursive and it uses a queue. The key thing to remember is to use a queue.
+    * **Time Complexity:** `O(V + E)` where `V` is the number of vertices in the graph and `E` is the number of edges in the graph.
+    * **Space Complexity:** `O(V)`, since an extra visited array of size `V` is required, and the queue may hold up to `O(V)` vertices in the worst case.
+    * **Code Example (BFS in Java):**
+    ```java
+    public void BFS(T start) {
+        Queue<T> queue = new LinkedList<>();
+        boolean[] visited = new boolean[adjList.size()];
+        
+        visited[start] = true;
+        queue.add(start);
+        
+        while (!queue.isEmpty()) {
+            T node = queue.poll();
+            System.out.print(node + " ");
+            
+            for (T neighbor : adjList.get(node)) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.add(neighbor);
+                }
+            }
+        }
+    }
+    ```
+
 * **Applications of BFS**
-    * Shortest Path and Minimum Spanning Tree for unweighted graph
-    * In Garbage Collection: Breadth First Search is used in copying garbage collection using Cheney’s algorithm.
-    * Peer to Peer Networks.
-    * Crawlers in Search Engines
-    * Social Networking Websites
-    * GPS Navigation systems
+    * Finding the shortest path and Minimum Spanning Tree for an unweighted graph.
+    * In garbage collection: BFS is used in copying garbage collection using Cheney’s algorithm.
+    * Peer-to-peer networks.
+    * Crawlers in search engines.
+    * Social networking websites.
+    * GPS navigation systems.
 
 # Patterns
 ## DFS
-1. Islands Variants
+### Islands Variants
     1. [Number of Islands](https://leetcode.com/problems/number-of-islands/)
     1. [Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
-    1. [Number of Closed Islands](https://leetcode.com/problems/number-of-closed-islands/)
+
     1. [Coloring A Border](https://leetcode.com/problems/coloring-a-border/)
     1. [Keys and Rooms](https://leetcode.com/problems/keys-and-rooms/)
     1. [Robot Room Cleaner](https://leetcode.com/problems/robot-room-cleaner/)
@@ -207,8 +270,9 @@ boolean isValid(char[][] grid, int row, int col) {
 }
 ```
 
-1. Start DFS from nodes at boundary
+### Start DFS from nodes at boundary
 This variant is used to mark regions that are connected to the boundary of the grid.
+    1. [Number of Closed Islands](https://leetcode.com/problems/number-of-closed-islands/)
     1. [Number of Enclaves](https://leetcode.com/problems/number-of-enclaves/)
     1. [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/)
     1. [Pacific Atlantic Waterflow](https://leetcode.com/problems/pacific-atlantic-water-flow/)
@@ -260,25 +324,25 @@ boolean isValid(char[][] grid, int row, int col) {
     return row >=0 && row < grid.length && col >= 0 && col < grid[0].length && grid[row][col]==1;
 }
 ```
-1. Shortest time
+### Shortest time
     1. [Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees/)
 
-1. Hash/DFS
+### Hash/DFS
 Use a combination of hashing and DFS to solve problems efficiently
     1. [Clone Graph](https://leetcode.com/problems/clone-graph/)
     1. [Employee Importance](https://leetcode.com/problems/employee-importance/)
     1. [Find the Town Judge](https://leetcode.com/problems/find-the-town-judge/)
-1. Cycle Find
+### Cycle Find
     1. [Find Eventual Safe States](https://leetcode.com/problems/find-eventual-safe-states/)
 
 
 ## BFS
 This variant is commonly used to find the shortest path from a source node to a destination node in a graph or grid.
 1. [Rotting Oranges](https://leetcode.com/problems/rotting-oranges/)
-2. [Walls and Gates](https://leetcode.com/problems/walls-and-gates/)
-3. [01 Matrix](https://leetcode.com/problems/01-matrix/)
-4. [As Far from Land as Possible](https://leetcode.com/problems/as-far-from-land-as-possible/)
-5. [Shortest Path in Binary Matrix](https://leetcode.com/problems/shortest-path-in-binary-matrix/)
+1. [Walls and Gates](https://leetcode.com/problems/walls-and-gates/)
+1. [01 Matrix](https://leetcode.com/problems/01-matrix/)
+1. [As Far from Land as Possible](https://leetcode.com/problems/as-far-from-land-as-possible/)
+1. [Shortest Path in Binary Matrix](https://leetcode.com/problems/shortest-path-in-binary-matrix/)
 ```java
 import java.util.*;
 
@@ -332,7 +396,7 @@ public class BFS {
 
 ## Graph Coloring/Bipartition Problems
 1. [Possible Bipartition](https://leetcode.com/problems/possible-bipartition/)
-2. [Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/)
+1. [Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/)
 
 
 
@@ -370,26 +434,20 @@ public class Solution {
     // Adjacency list to store edges and their respective travel times
     Map<Integer, List<Pair<Integer, Integer>>> adj = new HashMap<>();
 
-    private void dijkstra(Map<Integer, List<Pairs<Integer, Integer>>> graph, int[] dist,  int source, int n) {
-
-        // Initialize an array to store the shortest signal times for each node
-        int[] dist = new int[n + 1];
-        Arrays.fill(signalReceivedAt, Integer.MAX_VALUE);
+    private void dijkstra(Map<Integer, List<int[]>> graph, int[] dist, int source, int n) {
+        Arrays.fill(dist, Integer.MAX_VALUE);
 
         // Priority Queue to select the node with the shortest signal time
-        PriorityQueue<Pair<Integer, Integer>> pq = new PriorityQueue<>(
-                Comparator.comparing(Pair::getValue)
-        );
-        pq.add(new Pair(source, 0));
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+        pq.add(new int[] { source, 0 });
 
         // Initialize the signal time for the source node
         dist[source] = 0;
 
         while (!pq.isEmpty()) {
-            Pair<Integer, Integer> topPair = pq.poll();
-
-            int currNode = topPair.getKey();
-            int currNodeTime = topPair.getValue();
+            int[] top = pq.poll();
+            int currNode = top[0];
+            int currNodeTime = top[1];
 
             // Skip this node if we already found a shorter path to it
             if (currNodeTime > dist[currNode]) {
@@ -402,9 +460,9 @@ public class Solution {
             }
 
             // Iterate through the edges and update signal times to neighbors
-            for (Pair<Integer, Integer> edge : adj.get(currNode)) {
-                int time = edge.getKey();       // Travel time to the neighbor
-                int neighborNode = edge.getValue(); // Neighbor node
+            for (int[] edge : adj.get(currNode)) {
+                int neighborNode = edge[0]; // Neighbor node
+                int time = edge[1]; // Travel time to the neighbor
 
                 // Calculate the time when the signal reaches the neighbor node
                 int signalTime = currNodeTime + time;
@@ -412,34 +470,33 @@ public class Solution {
                 // If the new signal time is shorter, update it and add to the queue
                 if (dist[neighborNode] > signalTime) {
                     dist[neighborNode] = signalTime;
-                    pq.add(new Pair(neighborNode, dist[neighborNode]));
+                    pq.add(new int[] { neighborNode, signalTime });
                 }
             }
         }
     }
 
-    public int networkDelayTime(int[][] times, int n, int k) {
+     public int networkDelayTime(int[][] times, int n, int k) {
         // Build the adjacency list from the input edges
         for (int[] time : times) {
             int source = time[0];
             int dest = time[1];
             int travelTime = time[2];
 
-            // Initialize the adjacency list
-            adj.putIfAbsent(source, new ArrayList<>());
-
-            // Add the neighbor and travel time to the list
-            adj.get(source).add(new Pair(travelTime, dest));
+            // Use computeIfAbsent to initialize the adjacency list
+            adj.computeIfAbsent(source, x -> new ArrayList<>()).add(new int[] { dest, travelTime });
         }
 
-       
+        // Initialize an array to store the shortest signal times for each node
+        int[] dist = new int[n + 1];
+
         // Apply Dijkstra's algorithm to compute signal times
-        dijkstra(adj, k, n);
+        dijkstra(adj, dist, k, n);
 
         // Find the maximum signal time to get the network delay time
         int networkDelayTime = Integer.MIN_VALUE;
         for (int i = 1; i <= n; i++) {
-            networkDelayTime = Math.max(networkDelayTime, signalReceivedAt[i]);
+            networkDelayTime = Math.max(networkDelayTime, dist[i]);
         }
 
         // If any node remains at its initial value, it's unreachable

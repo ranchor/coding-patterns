@@ -48,27 +48,136 @@ first (which typically recurse down to solve the sub-problems).
 
 ## Pattern 1: Fibonacci Numbers
 1. [Fibonacci Number](https://leetcode.com/problems/fibonacci-number/)
-1. [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)
-1. [Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)
 1. [Number divisors](https://www.geeksforgeeks.org/total-number-divisors-given-number/)
-1. [Jump Game](https://leetcode.com/problems/jump-game/)
+
+## Pattern 2: Minimum (Maximum) Path to Reach a Target
+### Problem Statement
+Given a target, find the minimum (or maximum) cost/path/sum to reach the target.
+
+### Approach
+- Choose the minimum (or maximum) path among all possible paths before the current state, then add the value for the current state.
+- `routes[i] = min(routes[i-1], routes[i-2], ..., routes[i-k]) + cost[i]`
+
+### Top-Down
+ Recursively choose the minimum (or maximum) path among all possible paths before the current state and add the value for the current state. Memoize results to avoid recomputation.
+```java
+for (int j = 0; j < ways.size(); ++j) {
+    result = min(result, topDown(target - ways[j]) + cost/ path / sum);
+}
+return memo[state_parameters] = result;
+```
+
+### Bottom-Up
+Iteratively solve for all possible paths from the start to the target, updating the minimum (or maximum) cost/path/sum at each step.
+```java
+for (int i = 1; i <= target; ++i) {
+   for (int j = 0; j < ways.size(); ++j) {
+       if (ways[j] <= i) {
+           dp[i] = min(dp[i], dp[i - ways[j]] + cost / path / sum);
+       }
+   }
+}
+return dp[target];
+```
+### Examples
+1. [Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)
+2. [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
+3. [Coin Change](https://leetcode.com/problems/coin-change/)
+1. [Minimum Cost for Tickets](https://leetcode.com/problems/minimum-cost-for-tickets/)
 1. [Jump Game II](https://leetcode.com/problems/jump-game-ii/)
+
+
+## Pattern 3: Distinct Ways
+### Problem Statement
+Given a target, find the number of distinct ways to reach the target.
+
+### Approach
+- Sum all possible ways to reach the current state.
+- `routes[i] = routes[i-1] + routes[i-2], ..., + routes[i-k]`
+
+### Top-Down
+```java
+for (int j = 0; j < ways.size(); ++j) {
+    result += topDown(target - ways[j]);
+}
+return memo[state_parameters] = result;
+```
+
+### Bottom-Up
+```java
+for (int i = 1; i <= target; ++i) {
+   for (int j = 0; j < ways.size(); ++j) {
+       if (ways[j] <= i) {
+           dp[i] += dp[i - ways[j]];
+       }
+   }
+}
+return dp[target];
+```
+
+### Examples
+1. [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)
+1. [Unique Paths](https://leetcode.com/problems/unique-paths/)
+1. [Unique Paths II](https://leetcode.com/problems/unique-paths/)
+1. [Number of Dice Rolls With Target Sum](https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/)
+1. [Knight Probability in Chessboard](https://leetcode.com/problems/knight-probability-in-chessboard/)
+1. [Target Sum](https://leetcode.com/problems/target-sum/)
+
+
+## Pattern 4 : Decision Making
+### Problem Statement
+Given a set of values, find an answer with an option to choose or ignore the current value.
+
+### Approach
+- If you decide to choose the current value use the previous result where the value was ignored; vice-versa,
+- If you decide to ignore the current value use previous result where value was used.
+``dp[i][j] = max(dp[i][j], dp[i-1][j] + arr[i], dp[i-1][j-1])``
+
+### Examples
 1. [House Robber](https://leetcode.com/problems/house-robber/)
 1. [House Robber II](https://leetcode.com/problems/house-robber-ii/)
+1. [Jump Game](https://leetcode.com/problems/jump-game/)
+1. [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+1. [Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
+1. [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
+1. [Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)
 
-## Pattern 2: Kadane's Algorithm
+## Pattern 5: Kadane's Algorithm
+### Problem Statement
+Find the maximum sum of a subarray or subarray product in an array.
+
+### Approach
+- Use a sliding window approach to calculate the maximum sum or product at each position.
+  ```
+  max_ending_here = max(arr[i], max_ending_here + arr[i])
+  ```
+
+### Examples
 1. [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)
 1. [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)
 1. [Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)
 
-## Pattern 3: 0/1 Knapsack
+## Pattern 6: 0/1 Knapsack
+### Problem Statement
+Given weights and values of n items, put these items in a knapsack of capacity W to get the maximum total value in the knapsack.
+
+### Approach
+- Use a DP array to store the maximum value that can be achieved for every weight from 0 to W.
+- If the weight of the current item is less than or equal to the current capacity, choose the maximum of including and excluding the item.
+  ```
+  dp[i][j] = max(dp[i-1][j], dp[i-1][j-wt[i]] + val[i])
+  ```
+
+### Examples
 1. [0/1 Knapsack Problem](https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/)
-1. [Subset Sum](https://www.geeksforgeeks.org/subset-sum-problem-dp-25/)
-1. [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)
-1. [Minimum Subset Sum Difference](https://www.geeksforgeeks.org/partition-a-set-into-two-subsets-such-that-the-difference-of-subset-sums-is-minimum/)
-1. [Count of subset sum](https://www.geeksforgeeks.org/perfect-sum-problem-print-subsets-given-sum/)
-1. [Target Sum](https://leetcode.com/problems/target-sum/)
-1. [Last Stone Weight](https://leetcode.com/problems/last-stone-weight-ii/)
+2. [Subset Sum](https://www.geeksforgeeks.org/subset-sum-problem-dp-25/)
+3. [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)
+4. [Target Sum](https://leetcode.com/problems/target-sum/)
+5. [Last Stone Weight](https://leetcode.com/problems/last-stone-weight-ii/)
+6. [Minimum Subset Sum Difference](https://www.geeksforgeeks.org/partition-a-set-into-two-subsets-such-that-the-difference-of-subset-sums-is-minimum/)
+7. [Count of Subset Sum](https://www.geeksforgeeks.org/perfect-sum-problem-print-subsets-given-sum/)
+
+
 
 ### Top-Down
 ```java
@@ -134,23 +243,55 @@ first (which typically recurse down to solve the sub-problems).
 * Identify the dimensions of memo or tab array - Generally varying inputs in recursive function
 * Identify the initialization conditions
 * Identify the decision tree
+## Pattern 7: Unbounded Knapsack
+### Problem Statement
+Given weights and values of n items, put these items in a knapsack of capacity W to get the maximum total value in the knapsack. An unlimited number of instances of each item can be used.
 
-## Pattern 4: Unbounded Knapsack
+### Approach
+- Use a DP array to store the maximum value that can be achieved for every weight from 0 to W.
+- For each item, update the DP array by considering the maximum value achievable by including the item multiple times.
+
+### Examples
 1. [Unbounded Knapsack](https://www.geeksforgeeks.org/unbounded-knapsack-repetition-items-allowed/)
-1. [Coin Change](https://leetcode.com/problems/coin-change/)
-1. [Coin Change II](https://leetcode.com/problems/coin-change-2/)
-1. [Integer Break](https://leetcode.com/problems/integer-break/)
-1. [Rod Cutting](https://www.geeksforgeeks.org/cutting-a-rod-dp-13/)
-1. [Maximum Ribbon Cut](https://www.geeksforgeeks.org/maximum-number-segments-lengths-b-c/)
-1. [Minimum Cost for Tickets](https://leetcode.com/problems/minimum-cost-for-tickets/)
+3. [Coin Change II](https://leetcode.com/problems/coin-change-2/)
+4. [Integer Break](https://leetcode.com/problems/integer-break/)
+5. [Rod Cutting](https://www.geeksforgeeks.org/cutting-a-rod-dp-13/)
+6. [Maximum Ribbon Cut](https://www.geeksforgeeks.org/maximum-number-segments-lengths-b-c/)
+
+### Code Examples
+```java
+// Unbounded Knapsack
+public class UnboundedKnapsack {
+    public int unboundedKnapsack(int W, int[] wt, int[] val, int n) {
+        int[] dp = new int[W + 1];
+        for (int i = 0; i <= W; i++) {
+            for (int j = 0; j < n; j++) {
+                if (wt[j] <= i) {
+                    dp[i] = Math.max(dp[i], dp[i - wt[j]] + val[j]);
+                }
+            }
+        }
+        return dp[W];
+    }
+}
+```
 
 
-## Pattern 5: Longest Increasing Subsequence (LIS)
+
+## Pattern 8: Longest Increasing Subsequence (LIS)
+### Problem Statement
+Given an array, find the length of the longest increasing subsequence.
+
+### Approach
+- Use nested loops to build up the length of increasing subsequences.
+- `dp[i] = max(dp[i], dp[j] + 1) if nums[i] > nums[j]`
+
+### Examples
 1. [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
 1. [Number of Longest Increasing Subsequence](https://leetcode.com/problems/number-of-longest-increasing-subsequence/)
+1. [Increasing Triplet Subsequence](https://leetcode.com/problems/increasing-triplet-subsequence/)
 1. [Maximum Sum Increasing Subsequence](https://www.geeksforgeeks.org/maximum-sum-increasing-subsequence-dp-14/)
 1. [Longest Bitonic Subsequence](https://www.geeksforgeeks.org/longest-bitonic-subsequence-dp-15/)
-1. [Increasing Triplet Subsequence](https://leetcode.com/problems/increasing-triplet-subsequence/)
 1. [Minimum Number of Removals to Make Mountain Array](https://leetcode.com/problems/minimum-number-of-removals-to-make-mountain-array/)
 **Bottom-Up**
 ```java
@@ -182,7 +323,18 @@ first (which typically recurse down to solve the sub-problems).
     }
 ```
 
-## Pattern 6: Longest Common Subsequence (LCS)
+## Pattern 9: Longest Common Subsequence (LCS)
+### Problem Statement
+Given two strings, find the length of the longest common subsequence.
+
+### Approach
+- Compare characters of the two strings and build up the LCS.
+  ```java
+  if (s1[i-1] == s2[j-1]) dp[i][j] = dp[i-1][j-1] + 1
+  else dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+  ```
+
+### Examples
 1. [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)
 1. [Longest Common Substring](https://www.geeksforgeeks.org/longest-common-substring-dp-29/)
 1. [Shortest Common Supersequence](https://leetcode.com/problems/shortest-common-supersequence/)
@@ -240,14 +392,24 @@ first (which typically recurse down to solve the sub-problems).
     }
 ```
 
-## Pattern 7: Palindromes
-1. [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)
-1. [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)
-1. [Count of Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
-1. [Minimum insertions to make a string palindrome](https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/)
-1. [Minimum deletions to make a string palindrome](https://www.geeksforgeeks.org/minimum-number-deletions-make-string-palindrome/)
-1. [Palindromic Partitioning](https://leetcode.com/problems/palindrome-partitioning/)
+## Pattern 10: Palindromes
+### Problem Statement
+Given a string, find the longest palindromic subsequence or substring.
 
+### Approach
+- Use nested loops to find the length of the longest palindromic subsequence or substring.
+  ```
+  if (s[i] == s[j]) dp[i][j] = dp[i+1][j-1] + 2
+  else dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+  ```
+
+### Examples
+1. [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)
+2. [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)
+3. [Count of Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
+4. [Minimum Insertions to Make a String Palindrome](https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/)
+5. [Minimum Deletions to Make a String Palindrome](https://www.geeksforgeeks.org/minimum-number-deletions-make-string-palindrome/)
+6. [Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/)
 ```java
  // Function to find the length of the Longest Palindromic Subsequence (LPS) from index 'start' to 'end'
     static int lps(String s, int start, int end, int[][] dp) {
@@ -282,14 +444,31 @@ first (which typically recurse down to solve the sub-problems).
 
 ```
 ## Pattern 8: Matrix Chain Multiplication (MCM)
+### Problem Statement
+Given a sequence of matrices, find the most efficient way to multiply these matrices together.
+
+### Approach
+- Use nested loops to find the optimal order of matrix multiplication.
+- `dp[i][j] = min(dp[i][k] + dp[k+1][j] + cost)`
+
+### Examples
 1. [Burst Balloons](https://leetcode.com/problems/burst-balloons/)
+1. [Super Egg Drop](https://leetcode.com/problems/super-egg-drop/)
 1. Evaluate expression to true / boolean parenthesize
 1. Minimum or maximum value of a expression
 1. Palindrome partitioning
-1. [Super Egg Drop](https://leetcode.com/problems/super-egg-drop/)
+
 
 
 ## Pattern 9: DP on 2D Grids
+### Problem Statement
+Given a 2D grid, find the number of paths or the minimum path sum from one corner to another.
+
+### Approach
+- Use nested loops to calculate paths or sums based on adjacent cells.
+- `dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]`
+
+### Examples
 1. [Unique Paths](https://leetcode.com/discuss/study-guide/1437879/dynamic-programming-patterns)
 1. [Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)
 1. [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
