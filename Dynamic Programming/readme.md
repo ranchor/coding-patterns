@@ -56,7 +56,9 @@ Given a target, find the minimum (or maximum) cost/path/sum to reach the target.
 
 ### Approach
 - Choose the minimum (or maximum) path among all possible paths before the current state, then add the value for the current state.
-- `routes[i] = min(routes[i-1], routes[i-2], ..., routes[i-k]) + cost[i]`
+```
+routes[i] = min(routes[i-1], routes[i-2], ..., routes[i-k]) + cost[i]
+```
 
 ### Top-Down
  Recursively choose the minimum (or maximum) path among all possible paths before the current state and add the value for the current state. Memoize results to avoid recomputation.
@@ -93,7 +95,9 @@ Given a target, find the number of distinct ways to reach the target.
 
 ### Approach
 - Sum all possible ways to reach the current state.
-- `routes[i] = routes[i-1] + routes[i-2], ..., + routes[i-k]`
+```
+ routes[i] = routes[i-1] + routes[i-2], ..., + routes[i-k]
+```
 
 ### Top-Down
 ```java
@@ -122,6 +126,8 @@ return dp[target];
 1. [Number of Dice Rolls With Target Sum](https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/)
 1. [Knight Probability in Chessboard](https://leetcode.com/problems/knight-probability-in-chessboard/)
 1. [Target Sum](https://leetcode.com/problems/target-sum/)
+1. [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)
+
 
 
 ## Pattern 4 : Decision Making
@@ -131,7 +137,9 @@ Given a set of values, find an answer with an option to choose or ignore the cur
 ### Approach
 - If you decide to choose the current value use the previous result where the value was ignored; vice-versa,
 - If you decide to ignore the current value use previous result where value was used.
-``dp[i][j] = max(dp[i][j], dp[i-1][j] + arr[i], dp[i-1][j-1])``
+```java
+dp[i][j] = max(dp[i][j], dp[i-1][j] + arr[i], dp[i-1][j-1])
+```
 
 ### Examples
 1. [House Robber](https://leetcode.com/problems/house-robber/)
@@ -148,9 +156,9 @@ Find the maximum sum of a subarray or subarray product in an array.
 
 ### Approach
 - Use a sliding window approach to calculate the maximum sum or product at each position.
-  ```
-  max_ending_here = max(arr[i], max_ending_here + arr[i])
-  ```
+```
+max_ending_here = max(arr[i], max_ending_here + arr[i])
+```
 
 ### Examples
 1. [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)
@@ -171,8 +179,7 @@ Given weights and values of n items, put these items in a knapsack of capacity W
 ### Examples
 1. [0/1 Knapsack Problem](https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/)
 2. [Subset Sum](https://www.geeksforgeeks.org/subset-sum-problem-dp-25/)
-3. [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)
-4. [Target Sum](https://leetcode.com/problems/target-sum/)
+
 5. [Last Stone Weight](https://leetcode.com/problems/last-stone-weight-ii/)
 6. [Minimum Subset Sum Difference](https://www.geeksforgeeks.org/partition-a-set-into-two-subsets-such-that-the-difference-of-subset-sums-is-minimum/)
 7. [Count of Subset Sum](https://www.geeksforgeeks.org/perfect-sum-problem-print-subsets-given-sum/)
@@ -469,8 +476,6 @@ Given a 2D grid, find the number of paths or the minimum path sum from one corne
 - `dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]`
 
 ### Examples
-1. [Unique Paths](https://leetcode.com/discuss/study-guide/1437879/dynamic-programming-patterns)
-1. [Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)
 1. [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
 1. [Dungeon Game](https://leetcode.com/problems/dungeon-game/)
 1. [Cherry Pickup](https://leetcode.com/problems/cherry-pickup/)
